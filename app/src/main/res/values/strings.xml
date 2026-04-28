@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">DrugDose</string>
+    <string name="accesso">Accesso</string>
+    <string name="Registrati">Registrati</string>
+    <string name="accesso_ospite">Accedi come ospite</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="button_accedi">Accedi</string>
+    <string name="log_in">Log in</string>
+    <string name="rimani_loggato">"Rimani loggato"</string>
+
+
 </resources>
