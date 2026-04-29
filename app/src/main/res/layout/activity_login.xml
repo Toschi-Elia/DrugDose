@@ -64,7 +64,7 @@
             tools:layout_editor_absoluteX="24dp">
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Title"
+                style="@style/TextAppearance.DrugDose.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -166,16 +166,19 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAccediOspite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:drawablePadding="8dp"
-                android:text="Accedi come ospite"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                app:drawableStartCompat="@drawable/icon_key" />
+                android:text="@string/accesso_ospite"
+                style="@style/Widget.DrugDose.Button.Ospite"
+
+
+                />
+
 <!--            TODO Mettere il bottone al posto di questa textview-->
         </LinearLayout>
 
