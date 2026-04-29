@@ -1,0 +1,202 @@
+[
+  {
+    "id": "rinazina_001",
+    "nome_farmaco": "RINAZINA",
+    "principio_attivo": "nafazolina nitrato 1 mg/ml",
+    "indicazione_clinica": "Decongestionante nasale in corso di riniti e faringiti acute catarrali, di riniti allergiche, di sinusiti acute",
+    "tipo_di_formula": "fissa",
+    "dosaggio_standard": {
+      "descrizione": "1-2 nebulizzazioni o gocce per narice",
+      "frequenza": "2-3 volte al giorno"
+    },
+    "unita_di_misura": "nebulizzazioni/gocce",
+    "durata_massima": "1 settimana",
+    "eta_minima": 12,
+    "alert": [
+      "Controindicato sotto i 12 anni",
+      "Controindicato per malattie cardiache gravi, ipertensione, glaucoma, ipertiroidismo",
+      "Rischio ritenzione urinaria con ipertrofia prostatica",
+      "Non usare in concomitanza con antidepressivi",
+      "Contiene benzalconio cloruro (possibile broncospasmo)"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/1136/farmaci/590/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/1136/farmaci/590/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "folina_001",
+    "nome_farmaco": "FOLINA",
+    "principio_attivo": "acido folico",
+    "indicazione_clinica": "Trattamento degli stati di carenza di folati per aumentata richiesta, insufficiente assorbimento o ridotto apporto",
+    "tipo_di_formula": "fissa",
+    "formati": [
+      {
+        "tipo": "capsule_5mg",
+        "descrizione": "1-3 capsule al giorno",
+        "limite_gravidanza": "5 mg/die (1 capsula)"
+      },
+      {
+        "tipo": "fiale_15mg_2ml",
+        "descrizione": "1 fiala al giorno per via intramuscolare"
+      }
+    ],
+    "unita_di_misura": "capsule/fiale",
+    "durata_massima": "Non specificata (terapia cronica possibile sotto controllo)",
+    "eta_minima": 0,
+    "alert": [
+      "Controindicato nei pazienti con tumori",
+      "Controindicato nell'anemia perniciosa (carenza B12)",
+      "Le capsule contengono soia: non usare se allergici a soia o arachidi",
+      "In gravidanza non superare la dose massima di 5 mg/die",
+      "Evitare l'assunzione con alcol",
+      "Attenzione all'interazione con antiepilettici (ne riduce l'efficacia)"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7046/farmaci/2309/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7046/farmaci/2309/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "xamamina_001",
+    "nome_farmaco": "XAMAMINA MAL DI VIAGGIO",
+    "principio_attivo": "dimenidrinato",
+    "indicazione_clinica": "Prevenzione e trattamento di mal di mare, d'aereo, d'auto e di treno",
+    "tipo_di_formula": "fasce_eta",
+    "regole_calcolo": [
+      {
+        "fascia": "adulti_e_12plus",
+        "eta_min": 12,
+        "eta_max": 999,
+        "dose_singola_mg": 50,
+        "descrizione_dose": "1 capsula da 50mg",
+        "ripetibile_dopo_ore": "3-4",
+        "max_dosi_24h": 4
+      },
+      {
+        "fascia": "bambini_7_12_anni",
+        "eta_min": 7,
+        "eta_max": 12,
+        "dose_singola_mg": 25,
+        "descrizione_dose": "1-2 capsule da 25mg",
+        "max_dosi_24h": 3
+      },
+      {
+        "fascia": "bambini_2_6_anni",
+        "eta_min": 2,
+        "eta_max": 6,
+        "dose_singola_mg": 25,
+        "descrizione_dose": "1 capsula da 25mg",
+        "max_dosi_24h": 3
+      }
+    ],
+    "unita_di_misura": "capsule",
+    "durata_massima": "Brevi periodi di trattamento",
+    "eta_minima": 2,
+    "alert": [
+      "Controindicato sotto i 2 anni, in gravidanza e allattamento",
+      "Provoca sonnolenza: non guidare veicoli o macchinari",
+      "Non assumere con alcool o farmaci sedativi",
+      "Può mascherare i sintomi di farmaci ototossici",
+      "Cautela con glaucoma, ipertrofia prostatica, ritenzione urinaria e asma",
+      "Contiene sorbitolo e parabeni"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/28/farmaci/2955/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/28/farmaci/2955/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "cebion_001",
+    "nome_farmaco": "CEBION",
+    "principio_attivo": "Acido ascorbico (Vitamina C)",
+    "indicazione_clinica": "Stati carenziali di vitamina C",
+    "tipo_di_formula": "fasce_eta_e_formato",
+    "formati": [
+      {
+        "tipo": "gocce_100mg_ml",
+        "regole_calcolo": [
+          {
+            "fascia": "lattanti",
+            "eta_min": 0,
+            "eta_max": 2,
+            "dose": "5-8 gocce/die"
+          },
+          {
+            "fascia": "bambini_piccoli",
+            "eta_min": 2,
+            "eta_max": 6,
+            "dose": "10 gocce/die"
+          },
+          {
+            "fascia": "bambini_scolari_e_adulti",
+            "eta_min": 6,
+            "eta_max": 999,
+            "dose": "15-20 gocce/die"
+          }
+        ]
+      },
+      {
+        "tipo": "compresse_masticabili_500mg",
+        "regole_calcolo": [
+          {
+            "fascia": "generale",
+            "eta_min": 6,
+            "eta_max": 999,
+            "dose": "1-2 compresse/die (fino a 2-3 in casi gravi)"
+          }
+        ]
+      },
+      {
+        "tipo": "effervescenti_o_granulato_1g",
+        "regole_calcolo": [
+          {
+            "fascia": "generale",
+            "eta_min": 12,
+            "eta_max": 999,
+            "dose": "1 compressa/bustina al giorno"
+          }
+        ]
+      }
+    ],
+    "unita_di_misura": "gocce/compresse/bustine",
+    "durata_massima": "Brevi periodi di trattamento",
+    "eta_minima": 0,
+    "alert": [
+      "Cautela con calcolosi renale, deficit G6PD, emocromatosi, talassemia",
+      "Può sfalsare i test del glucosio nelle urine",
+      "Contiene saccarosio (attenzione nei diabetici, preferire versione Senza Zucchero)",
+      "Contiene sodio (attenzione nelle diete iposodiche)",
+      "Dosi eccessive hanno effetto lassativo"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/2125/farmaci/3366/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/2125/farmaci/3366/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "imidazyl_001",
+    "nome_farmaco": "IMIDAZYL",
+    "principio_attivo": "nafazolina nitrato 1 mg/ml",
+    "indicazione_clinica": "Stati allergici ed infiammatori della congiuntiva (bruciore, lacrimazione, fotofobia)",
+    "tipo_di_formula": "fissa",
+    "dosaggio_standard": {
+      "descrizione": "1-2 gocce nell'occhio interessato",
+      "frequenza": "1-2 volte al giorno"
+    },
+    "unita_di_misura": "gocce",
+    "durata_massima": "Massimo 4 giorni consecutivi",
+    "eta_minima": 12,
+    "alert": [
+      "Controindicato sotto i 12 anni",
+      "Controindicato con glaucoma ad angolo stretto o gravi malattie oculari",
+      "Non usare con antidepressivi IMAO (rischio crisi ipertensive)",
+      "Cautela con ipertensione, diabete, asma, disturbi cardiaci e tiroidei",
+      "Attenzione alle lenti a contatto morbide (contiene benzalconio cloruro)"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/107/farmaci/3410/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/107/farmaci/3410/stampati?ts=FI"
+    ]
+  }
+]
