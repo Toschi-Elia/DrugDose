@@ -42,4 +42,19 @@
     </style>
     <style name="Theme.DrugDose" parent="Base.Theme.DrugDose" />
 
+    <!--    Link (password dimenticata)-->
+    <style name="TextAppearance.DrugDose.Link" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--    TextView cliccabile -->
+    <style name="Widget.DrugDose.TextView.Link" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.DrugDose.Link</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 </resources>

@@ -95,22 +95,26 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
+<!-- Da allineare -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/password"
                     android:textColor="@color/primary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    />
 
                 <TextView
+                    android:id="@+id/tvPasswordDimenticata"
+                    style="@style/Widget.DrugDose.TextView.Link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="Forgot?"
-                    android:textColor="@color/primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:text="@string/password_dimenticata"
+
+                    android:textColor="@color/primary" />
+
 <!--                TODO Bisogna farla diventare un link ad unaltra pagina -->
             </RelativeLayout>
 
@@ -161,9 +165,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/Registrati"
-                    android:textColor="@color/primary"
+                    android:text="Nuovo utente? "
+                    android:textColor="@color/grey"
                     android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegistrati"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/Registrati"
+                    style="@style/Widget.DrugDose.Button.Registrati"
+                    />
+
+
             </LinearLayout>
 
 
@@ -174,10 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/accesso_ospite"
-                style="@style/Widget.DrugDose.Button.Ospite"
-
-
-                />
+                style="@style/Widget.DrugDose.Button.Ospite"/>
 
 <!--            TODO Mettere il bottone al posto di questa textview-->
         </LinearLayout>
@@ -189,7 +201,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
         android:text="HIPAA COMPLIANT SYSTEM"
-        android:textColor="@color/secondary"
+        android:textColor="@color/grey"
         android:textSize="12sp"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/icon_key"

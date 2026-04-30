@@ -32,7 +32,7 @@
 <!--    Bottone Ospite-->
     <style name="TextAppearance.DrugDose.Ospite" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">@color/primary</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
     <style name="Widget.DrugDose.Button.Ospite" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:drawableLeft">@drawable/icon_person</item>
@@ -40,6 +40,32 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/TextAppearance.DrugDose.Ospite</item>
+    </style>
+
+<!--    Bottone Registrati-->
+    <style name="TextAppearance.DrugDose.Registrati" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="Widget.DrugDose.Button.Registrati" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.DrugDose.Registrati</item>
+    </style>
+
+<!--    Link (password dimenticata)-->
+    <style name="TextAppearance.DrugDose.Link" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+<!--    TextView cliccabile -->
+    <style name="Widget.DrugDose.TextView.Link">
+        <item name="android:textAppearance" parent="Widget.MaterialComponents.TextView">@style/TextAppearance.DrugDose.Link</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
 

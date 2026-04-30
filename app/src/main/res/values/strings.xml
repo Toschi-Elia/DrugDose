@@ -8,6 +8,7 @@
     <string name="button_accedi">Accedi</string>
     <string name="log_in">Log in</string>
     <string name="rimani_loggato">"Rimani connesso"</string>
+    <string name="password_dimenticata">Password dimenticata?</string>
 
 
 </resources>
