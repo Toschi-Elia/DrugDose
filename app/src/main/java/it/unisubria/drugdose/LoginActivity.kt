@@ -17,6 +17,20 @@ class LoginActivity : AppCompatActivity(){
             startActivity(intent)
 
         }
+        val bottoneRegistrati= findViewById<Button>(R.id.btnRegistrati)
+        buttonOspite.setOnClickListener{
+            Toast.makeText(this,"btn registrazione", Toast.LENGTH_SHORT).show()
 
+        }
+
+        val bottoneAccedi= findViewById<Button>(R.id.btn_login)
+
+        bottoneAccedi.setOnClickListener{
+            Toast.makeText(this,"btn accedi", Toast.LENGTH_SHORT).show()
+        }
     }
+
+
 }
+
+

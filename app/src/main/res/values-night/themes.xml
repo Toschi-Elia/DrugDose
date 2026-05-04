@@ -52,7 +52,7 @@
     <style name="Widget.DrugDose.TextView.Link" parent="Widget.MaterialComponents.TextView">
         <item name="android:textAppearance">@style/TextAppearance.DrugDose.Link</item>
         <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:padding">1dp</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>

@@ -92,10 +92,12 @@
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-<!-- Da allineare -->
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">                >
+<!-- Da alineare -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,7 +118,7 @@
                     android:textColor="@color/primary" />
 
 <!--                TODO Bisogna farla diventare un link ad unaltra pagina -->
-            </RelativeLayout>
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.DrugDose.TextInputLayout"
@@ -138,7 +140,7 @@
                 android:id="@+id/checkbox_keep_signed_in"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/rimani_loggato"
                 android:textColor="@color/primary" />
 
@@ -171,10 +173,13 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRegistrati"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:text="@string/Registrati"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+
                     style="@style/Widget.DrugDose.Button.Registrati"
                     />
 
@@ -213,73 +218,6 @@
         app:layout_constraintVertical_bias="1.0" />
 
 
-
-<!--        <TextView-->
-<!--            android:id="@+id/textviewSignin"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_marginStart="173dp"-->
-<!--            android:text="@string/accesso" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView3"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginStart="43dp"-->
-<!--            android:layout_marginTop="178dp"-->
-<!--            android:text="@string/email" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/editTextTextEmailAddress"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginTop="214dp"-->
-<!--            android:ems="10"-->
-<!--            android:inputType="textEmailAddress" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/textView4"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginStart="45dp"-->
-<!--            android:layout_marginTop="272dp"-->
-<!--            android:text="@string/password" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/editTextTextPassword"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_marginTop="300dp"-->
-<!--            android:ems="10"-->
-<!--            android:inputType="textPassword"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
-
-<!--        <CheckBox-->
-<!--            android:id="@+id/checkBox"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginStart="25dp"-->
-<!--            android:layout_marginEnd="244dp"-->
-<!--            android:layout_marginBottom="294dp"-->
-<!--            android:text="Rimani collegato" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginBottom="207dp"-->
-<!--            android:text="@string/button_accedi" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

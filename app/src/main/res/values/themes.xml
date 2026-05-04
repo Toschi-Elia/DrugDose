@@ -48,7 +48,7 @@
         <item name="android:textSize">13sp</item>
     </style>
     <style name="Widget.DrugDose.Button.Registrati" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/TextAppearance.DrugDose.Registrati</item>
@@ -60,10 +60,10 @@
     </style>
 
 <!--    TextView cliccabile -->
-    <style name="Widget.DrugDose.TextView.Link">
-        <item name="android:textAppearance" parent="Widget.MaterialComponents.TextView">@style/TextAppearance.DrugDose.Link</item>
+    <style name="Widget.DrugDose.TextView.Link" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance" >@style/TextAppearance.DrugDose.Link</item>
         <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:padding">2dp</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>
