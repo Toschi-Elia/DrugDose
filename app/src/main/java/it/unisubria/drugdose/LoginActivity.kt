@@ -3,6 +3,7 @@ package it.unisubria.drugdose
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -18,7 +19,9 @@ class LoginActivity : AppCompatActivity(){
 
         }
         val bottoneRegistrati= findViewById<Button>(R.id.btnRegistrati)
-        buttonOspite.setOnClickListener{
+        bottoneRegistrati.setOnClickListener{
+            val intent= Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
             Toast.makeText(this,"btn registrazione", Toast.LENGTH_SHORT).show()
 
         }
@@ -27,6 +30,11 @@ class LoginActivity : AppCompatActivity(){
 
         bottoneAccedi.setOnClickListener{
             Toast.makeText(this,"btn accedi", Toast.LENGTH_SHORT).show()
+        }
+
+        val textPasswordDimenticata= findViewById<TextView>(R.id.tvPasswordDimenticata)
+        textPasswordDimenticata.setOnClickListener {
+            Toast.makeText(this, "tb password dimenticata", Toast.LENGTH_SHORT).show()
         }
     }
 
