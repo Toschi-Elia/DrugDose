@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="android:windowBackground">@color/neutral</item>
     </style>
-
+<!--Text input-->
 <style name="Widget.DrugDose.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
     <item name="boxCornerRadiusTopStart">8dp</item>
     <item name="boxCornerRadiusTopEnd">8dp</item>
@@ -13,7 +13,8 @@
     <item name="boxStrokeColor">@color/primary</item>
     <item name="hintTextColor">@color/secondary</item>
 </style>
-    <style name="Widget.DrugDose.Button" parent="Widget.MaterialComponents.Button">
+
+    <style name="Widget.DrugDose.BottonePrimario" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint"> @color/primary</item>
         <item name="cornerRadius" > 8dp</item>
         <item name="android:textAllCaps"> false</item>
@@ -24,11 +25,18 @@
     </style>
 
 <!--    Titolo-->
-    <style name="TextAppearance.DrugDose.Title" parent="TextAppearance.AppCompat.Title">
+    <style name="TextAppearance.DrugDose.NomeApp" parent="TextAppearance.AppCompat.Title">
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/primary</item>
+        <item name="android:textColor" >@color/primary</item>
+        <item name="android:text">@string/app_name</item>
     </style>
+<!--    Slogan-->
+    <style name="TextAppearance.DrugDose.Slogan" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:text">Clinical dosing precision</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 <!--    Bottone Ospite-->
     <style name="TextAppearance.DrugDose.Ospite" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">@color/primary</item>
@@ -37,7 +45,7 @@
     <style name="Widget.DrugDose.Button.Ospite" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:drawableLeft">@drawable/icon_person</item>
         <item name="android:drawablePadding">8dp</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/TextAppearance.DrugDose.Ospite</item>
     </style>
@@ -59,13 +67,24 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-<!--    TextView cliccabile -->
+<!--    TextView cliccabile (password dimenticata) -->
     <style name="Widget.DrugDose.TextView.Link" parent="Widget.MaterialComponents.TextView">
         <item name="android:textAppearance" >@style/TextAppearance.DrugDose.Link</item>
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:padding">2dp</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+    </style>
+
+<!--    Card -->
+    <style name="Widget.DrugDose.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">@color/neutral</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="strokeColor">#E0E0E0</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
 

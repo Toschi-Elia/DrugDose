@@ -11,6 +11,7 @@ class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         val buttonOspite= findViewById<Button>(R.id.btnAccediOspite)
 
         buttonOspite.setOnClickListener{
