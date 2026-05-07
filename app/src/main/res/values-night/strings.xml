@@ -5,4 +5,6 @@
     <string name="rimani_loggato">"Rimani loggato "</string>
     <string name="password_dimenticata">Password dimenticata?</string>
     <string name="slogan">Clinical dosing precision</string>
+    <string name="mail_esempio">nome.cognome@ospedale.it</string>
+    <string name="password_esempio">••••••••</string>
 </resources>

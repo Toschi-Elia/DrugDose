@@ -85,13 +85,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
-                    app:startIconDrawable="@drawable/icon_email">
+                    app:startIconDrawable="@drawable/icon_email"
+                    app:startIconTint="@color/icon_grey">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="dr.smith@hospital.org"
-                        android:inputType="textEmailAddress" />
+                        android:hint="@string/mail_esempio"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/grey" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -120,19 +122,24 @@
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.DrugDose.TextInputLayout"
+                    style="@style/Widget.DrugDose.TextInputLayout.base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
-                    app:passwordToggleEnabled="false"
-                    app:startIconDrawable="@drawable/icon_key">
+                    app:passwordToggleTint="@color/grey"
+                    app:passwordToggleEnabled="true"
+                    app:startIconDrawable="@drawable/icon_key"
+                    app:startIconTint="@color/grey">
+
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="••••••••"
-                        android:inputType="textPassword" />
+                        android:hint="@string/password_esempio"
+                        android:inputType="textPassword"
+                        android:textColor="@color/grey" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
@@ -145,7 +152,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_login"
-                    style="@style/Widget.DrugDose.BottonePrimario"
+                    style="@style/Widget.DrugDose.button.BottonePrimario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
@@ -168,11 +175,11 @@
                         android:layout_height="wrap_content"
                         android:text="Nuovo utente? "
                         android:textColor="@color/grey"
-                        android:textStyle="bold" />
+                        />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRegistrati"
-                        style="@style/Widget.DrugDose.Button.Registrati"
+                        style="@style/Widget.DrugDose.Button.bottoneSecondario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"

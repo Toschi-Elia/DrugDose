@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@string/app_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView_logo" />
@@ -54,7 +55,10 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_slogan">
+            app:layout_constraintTop_toBottomOf="@id/tv_slogan"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="32dp">>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,16 +89,18 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.DrugDose.TextInputLayout"
+                            style="@style/Widget.DrugDose.TextInputLayout.base"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:hintEnabled="false">
+                            app:hintEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Es. Marco"
-                                android:inputType="textPersonName" />
+                                android:inputType="textPersonName"
+                                android:textColor="@color/grey"
+                                />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
@@ -115,16 +121,17 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.DrugDose.TextInputLayout"
+                            style="@style/Widget.DrugDose.TextInputLayout.base"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:hintEnabled="false">
+                            app:hintEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Es. Rossi"
-                                android:inputType="textPersonName" />
+                                android:inputType="textPersonName"
+                                android:textColor="@color/grey" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -140,18 +147,18 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.DrugDose.TextInputLayout"
+                    style="@style/Widget.DrugDose.TextInputLayout.base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:endIconDrawable="@drawable/icon_email"
-                    app:endIconMode="custom"
-                    app:hintEnabled="false">
+                    app:startIconDrawable="@drawable/icon_email"
+                    app:hintEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="nome.cognome@ospedale.it"
-                        android:inputType="textEmailAddress" />
+                        android:hint="@string/mail_esempio"
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="@color/grey"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -165,28 +172,34 @@
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.DrugDose.TextInputLayout"
+                    style="@style/Widget.DrugDose.TextInputLayout.base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintEnabled="false"
-                    app:passwordToggleEnabled="true">
+                    app:hintEnabled="true"
+                    app:passwordToggleEnabled="true"
+                    app:startIconDrawable="@drawable/icon_key"
+                    app:startIconTint="@color/icon_grey"
+                    app:passwordToggleTint="@color/icon_grey"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="••••••••"
-                        android:inputType="textPassword" />
+                        android:hint="@string/password_esempio"
+                        android:inputType="textPassword"
+                        android:textColorHint="@color/grey"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_registrati"
-                    style="@style/Widget.DrugDose.BottonePrimario"
+                    style="@style/Widget.DrugDose.button.BottonePrimario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:paddingVertical="12dp"
                     android:text="Registrati"
-                    app:iconGravity="textEnd" />
+                    app:iconGravity="textEnd"
+                    android:textColorHint="@color/grey"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -195,27 +208,28 @@
                     android:background="#E0E0E0" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hai già un account? "
+                        android:text="Nuovo utente? "
                         android:textColor="@color/grey"
-                        android:textSize="14sp" />
+                       />
 
-                    <TextView
-                        android:id="@+id/tv_login_link"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAccedi"
+                        style="@style/Widget.DrugDose.Button.bottoneSecondario"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Accedi"
-                        android:textColor="@color/primary"
-                        android:textSize="14sp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:text="@string/button_accedi"
                         />
+
                 </LinearLayout>
 
 

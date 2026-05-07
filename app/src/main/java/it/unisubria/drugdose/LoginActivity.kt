@@ -12,28 +12,26 @@ class LoginActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val buttonOspite= findViewById<Button>(R.id.btnAccediOspite)
+        val bottoneOspite= findViewById<Button>(R.id.btnAccediOspite)
+        val bottoneRegistrati= findViewById<Button>(R.id.btnRegistrati)
+        val textPasswordDimenticata= findViewById<TextView>(R.id.tvPasswordDimenticata)
+        val bottoneAccedi= findViewById<Button>(R.id.btn_login)
 
-        buttonOspite.setOnClickListener{
+        bottoneOspite.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
 
         }
-        val bottoneRegistrati= findViewById<Button>(R.id.btnRegistrati)
+
         bottoneRegistrati.setOnClickListener{
             val intent= Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-            Toast.makeText(this,"btn registrazione", Toast.LENGTH_SHORT).show()
-
         }
-
-        val bottoneAccedi= findViewById<Button>(R.id.btn_login)
 
         bottoneAccedi.setOnClickListener{
             Toast.makeText(this,"btn accedi", Toast.LENGTH_SHORT).show()
         }
 
-        val textPasswordDimenticata= findViewById<TextView>(R.id.tvPasswordDimenticata)
         textPasswordDimenticata.setOnClickListener {
             Toast.makeText(this, "tb password dimenticata", Toast.LENGTH_SHORT).show()
         }
