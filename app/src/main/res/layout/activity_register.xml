@@ -100,6 +100,7 @@
                                 android:hint="Es. Marco"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/grey"
+                                android:id="@+id/text_nome"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
@@ -131,7 +132,9 @@
                                 android:layout_height="wrap_content"
                                 android:hint="Es. Rossi"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/grey" />
+                                android:textColor="@color/grey"
+                                android:id="@+id/text_cognome"
+                                />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -158,7 +161,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/mail_esempio"
                         android:inputType="textEmailAddress"
-                        android:textColorHint="@color/grey"/>
+                        android:textColorHint="@color/grey"
+                        android:id="@+id/text_mail"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -187,7 +192,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/password_esempio"
                         android:inputType="textPassword"
-                        android:textColorHint="@color/grey"/>
+                        android:textColorHint="@color/grey"
+                        android:id="@+id/text_password"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
