@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(HomeFragment())
                     true
                 }
-
+                R.id.nav_farmaci -> {
+                    replaceFragment(FarmaciFragment())
+                    true
+                }
                 else -> false
             }
         }
