@@ -7,8 +7,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
+
+    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +47,21 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        testLetturaFirestore()
+    }
+
+    private fun testLetturaFirestore() {
+        db.collection("farmaci")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("FirestoreTest", "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("FirestoreTest", "Errore nel recupero dei documenti.", exception)
+            }
     }
 
     private fun replaceFragment(fragment: Fragment) {
