@@ -82,82 +82,15 @@
     </com.google.android.material.card.MaterialCardView>
 
     <!-- Contenitore Lista / Bozza Card -->
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_farmaci"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:paddingBottom="24dp"
         app:layout_constraintTop_toBottomOf="@id/card_search"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Card Primo Farmaco (Cliccabile per aprire BottomSheet) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_farmaco_draft"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#E0E0E0"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:gravity="center_vertical">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_draft_nome_farmaco"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="RINAZINA"
-                            android:textColor="#1F2937"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv_draft_principio_attivo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="nafazolina nitrato 1 mg/ml"
-                            android:textColor="#6B7280"
-                            android:textSize="14sp"
-                            android:textStyle="italic" />
-                    </LinearLayout>
-
-                    <!-- Icona per indicare che è cliccabile -->
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@android:drawable/ic_media_play"
-                        app:tint="#D1D5DB"
-                        android:rotation="180"
-                        android:scaleX="-1" />
-                        <!-- L'icona è provvisoria, simula un chevron right (>) usando il tasto play riflesso -->
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_farmaco" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
