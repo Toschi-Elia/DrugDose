@@ -11,4 +11,5 @@
 
     <color name="icon_grey" >#717683</color>
 
+    <color name="error_red">#D11111</color>
 </resources>

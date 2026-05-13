@@ -15,12 +15,14 @@ import it.unisubria.drugdose.databinding.ActivityRegisterBinding
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.registerRoot) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,23 +31,28 @@ class RegisterActivity : AppCompatActivity() {
         }
         var authRepo = AuthRepository()
 
-
-
-
         binding.btnAccediOspite.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         binding.btnRegistrati.setOnClickListener{
-            val textNome = binding.textNome.text.toString()
-            val textCognome = binding.textCognome.text.toString()
-            val mailInserita = binding.textMail.text.toString()
-            val pswInserita = binding.textPassword.text.toString()
+            val nome = binding.textNome.text.toString()
+            val cognome = binding.textCognome.text.toString()
+            val mail = binding.textMail.text.toString()
+            val psw = binding.textPassword.text.toString()
+
+            var error=false
+            if(nome.isEmpty()) {
+                error = true
+                binding.layoutNome.error = getString(R.string.error_nome)
+            }
+
+        //todo gestione errori
 
 
 
-            authRepo.registraUtente(mailInserita, pswInserita) { successo, errore ->
+            authRepo.registraUtente(mail, psw) { successo, errore ->
                 if (successo) {
                     Toast.makeText(this, "Registrazione effettuata", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)

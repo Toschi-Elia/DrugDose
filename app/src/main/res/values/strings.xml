@@ -14,4 +14,11 @@
     <string name="password_esempio">••••••••</string>
 
 
+<!--    errori-->
+    <string name="error_email_empty">L\'email è obbligatoria</string>
+    <string name="error_invalid_email">L\'email non è valida</string>
+    <string name="error_password_empty">La password è obbligatoria</string>
+    <string name="error_invalid_credentials">Credenziali non valide</string>
+    <string name="error_nome">Nome obbligatorio</string>
+    <string name="error_cognome">cognome obbligatorio</string>
 </resources>

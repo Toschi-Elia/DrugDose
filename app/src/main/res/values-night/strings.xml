@@ -7,4 +7,8 @@
     <string name="slogan">Clinical dosing precision</string>
     <string name="mail_esempio">nome.cognome@ospedale.it</string>
     <string name="password_esempio">••••••••</string>
+
+    <string name="error_email_empty">L\'email è obbligatoria</string>
+    <string name="error_password_empty">La password è obbligatoria</string>
+    <string name="error_invalid_credentials">Credenziali non valide</string>
 </resources>

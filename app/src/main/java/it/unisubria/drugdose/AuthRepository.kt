@@ -33,4 +33,6 @@ class AuthRepository {
     fun eseguiLogout() {
         auth.signOut()
     }
+
+
 }

@@ -78,19 +78,23 @@
                     android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.DrugDose.TextInputLayout.base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
                     app:startIconDrawable="@drawable/icon_email"
-                    app:startIconTint="@color/icon_grey">
+                    app:startIconTint="@color/icon_grey"
+                    android:id="@+id/layoutEmail"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/mail_esempio"
                         android:inputType="textEmailAddress"
-                        android:textColor="@color/grey" />
+                        android:textColor="@color/grey"
+                        android:id="@+id/tv_email"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
@@ -128,7 +132,9 @@
                     app:passwordToggleTint="@color/grey"
                     app:passwordToggleEnabled="true"
                     app:startIconDrawable="@drawable/icon_key"
-                    app:startIconTint="@color/grey">
+                    app:startIconTint="@color/grey"
+                    android:id="@+id/layoutPassword"
+                    app:errorEnabled="true">
 
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -137,6 +143,7 @@
                         android:hint="@string/password_esempio"
                         android:inputType="textPassword"
                         android:textColor="@color/grey"
+                        android:id="@+id/tv_password"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
