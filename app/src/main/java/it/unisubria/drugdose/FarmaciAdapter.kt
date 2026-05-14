@@ -46,6 +46,22 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
             sheetView.findViewById<TextView>(R.id.bs_indicazione).text =
                 farmaco.indicazione_clinica
 
+            sheetView.findViewById<TextView>(R.id.bs_tipo_formula).text =
+                "Formula: ${farmaco.tipo_di_formula}"
+            sheetView.findViewById<TextView>(R.id.bs_unita_misura).text =
+                "Unità di misura: ${farmaco.unita_di_misura}"
+            
+            sheetView.findViewById<TextView>(R.id.bs_limitazioni).text =
+                "Età minima: ${farmaco.eta_minima} anni\nDurata max: ${farmaco.durata_massima}"
+            
+            val alertTextView = sheetView.findViewById<TextView>(R.id.bs_alert)
+            if (farmaco.alert.isNotEmpty()) {
+                alertTextView.visibility = View.VISIBLE
+                alertTextView.text = farmaco.alert.joinToString("\n") { "- $it" }
+            } else {
+                alertTextView.visibility = View.GONE
+            }
+
             dialog.setContentView(sheetView)
             dialog.show()
         }
