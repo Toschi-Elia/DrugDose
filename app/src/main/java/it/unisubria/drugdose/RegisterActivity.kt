@@ -2,14 +2,14 @@ package it.unisubria.drugdose
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.doOnTextChanged
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import it.unisubria.drugdose.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -36,35 +36,80 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val listTesti= listOf(binding.textNome to binding.layoutNome,
+            binding.textCognome to binding.layoutCognome,
+            binding.textMail to binding.layoutEmail,
+            binding.textPassword to binding.layoutPassword)
+
+
+        listTesti.forEach { (editText,textInputLayout)-> editText.doOnTextChanged { _,_,_,_ ->
+            if(textInputLayout.error!=null)
+                textInputLayout.error=null
+        } }
+
+
         binding.btnRegistrati.setOnClickListener{
-            val nome = binding.textNome.text.toString()
-            val cognome = binding.textCognome.text.toString()
-            val mail = binding.textMail.text.toString()
-            val psw = binding.textPassword.text.toString()
+
+            binding.layoutNome.error = null
+            binding.layoutCognome.error = null
+            binding.layoutEmail.error = null
+            binding.layoutPassword.error = null
+
+            val nome = binding.textNome.text.toString().trim()
+            val cognome = binding.textCognome.text.toString().trim()
+            val mail = binding.textMail.text.toString().trim()
+            val psw = binding.textPassword.text.toString().trim()
 
             var error=false
             if(nome.isEmpty()) {
                 error = true
                 binding.layoutNome.error = getString(R.string.error_nome)
             }
+            if(cognome.isEmpty())
+            {
+                error=true
+                binding.layoutCognome.error =getString(R.string.error_cognome)
+            }
 
-        //todo gestione errori
+            if(mail.isEmpty())
+            {
+                error=true
+                binding.layoutEmail.error=getString(R.string.error_email_empty)
+            }else if(!mail.isValidEmail())
+            {
+                error=true
+                binding.layoutEmail.error=getString(R.string.error_invalid_email)
+            }
+            if(psw.isEmpty())
+            {
+                error=true
+                binding.layoutPassword.error=getString(R.string.error_password_empty)
+            }else if(!psw.isStrongPassword())
+            {
+                error=true
+                binding.layoutPassword.error=getString(R.string.error_psw_not_strong)
+            }
+
+            if(error)
+                return@setOnClickListener
 
 
-
-            authRepo.registraUtente(mail, psw) { successo, errore ->
+            authRepo.registraUtente(nome,cognome, mail ,psw) { successo, errore ->
                 if (successo) {
-                    Toast.makeText(this, "Registrazione effettuata", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this, "Errore $errore", Toast.LENGTH_SHORT).show()
-                    binding.textMail.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
+                    val msg= when(errore)
+                    {
+                        is FirebaseAuthUserCollisionException ->getString(R.string.error_firebase_mail_presente)
+                        is FirebaseNetworkException -> getString(R.string.error_firebase_no_internet)
+                        is UidNotFoundException ->getString(R.string.errore_uid_non_trovato)
+                        else -> getString(R.string.error_generic_register)
+                    }
+                    binding.layoutEmail.error=msg
                 }
             }
-
-
         }
 
         binding.btnAccedi.setOnClickListener{
@@ -73,10 +118,6 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
-    }
-    fun verificaPassword(str: String): Boolean {
-
-        return true
     }
 
 

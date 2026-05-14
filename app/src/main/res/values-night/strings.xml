@@ -11,4 +11,5 @@
     <string name="error_email_empty">L\'email è obbligatoria</string>
     <string name="error_password_empty">La password è obbligatoria</string>
     <string name="error_invalid_credentials">Credenziali non valide</string>
+    <string name="errore_uid_non_trovato">Errore: UID non trovato</string>
 </resources>

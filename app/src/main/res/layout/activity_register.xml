@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="4dp"
-                    android:text="Email Professionale"
+                    android:text="Email"
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -195,7 +195,9 @@
                     app:startIconTint="@color/icon_grey"
                     app:passwordToggleTint="@color/icon_grey"
                     android:id="@+id/layoutPassword"
-                    app:errorEnabled="true">
+                    app:errorEnabled="true"
+                    app:helperText="@string/helper_password"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

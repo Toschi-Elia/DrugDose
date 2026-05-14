@@ -13,6 +13,7 @@
     <string name="mail_esempio">nome.cognome@ospedale.it</string>
     <string name="password_esempio">••••••••</string>
 
+    <string name="helper_password"><![CDATA[Minimo 8 caratteri, una lettera maiuscola, una minuscola e un carattere speciale (@#$%^&+=!_-)]]></string>
 
 <!--    errori-->
     <string name="error_email_empty">L\'email è obbligatoria</string>
@@ -21,4 +22,17 @@
     <string name="error_invalid_credentials">Credenziali non valide</string>
     <string name="error_nome">Nome obbligatorio</string>
     <string name="error_cognome">cognome obbligatorio</string>
+    <string name="error_psw_not_strong">Password non sicura </string>
+
+
+<!--    Errori firebase-->
+    <string name="error_firebase_mail_presente">Esiste già un account con questa email.</string>
+    <string name="error_firebase_no_internet">Controlla la tua connessione a internet</string>
+    <string name="error_generic_register">Errore durante la registrazione. Riprova</string>
+    <string name="errore_uid_non_trovato">Errore: UID non trovato</string>
+
+    <string name="error_firebase_credenziali_errate" >Credeenziali errate</string>
+    <string name="error_generic_login">Errore durante l\'accesso. Riprova</string>
+
+
 </resources>
