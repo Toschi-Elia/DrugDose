@@ -139,6 +139,16 @@
                     android:text="Unità: mg"
                     android:textColor="#4B5563"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/bs_dosaggio_standard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Dose: 1-2 gocce"
+                    android:textColor="#1F2937"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -194,6 +204,52 @@
                     android:textColor="#DC2626"
                     android:textSize="14sp"
                     android:textStyle="italic" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 5. Fonti -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="#F3F4F6" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="@color/primary"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FONTI CLINICHE"
+                    android:textColor="#6B7280"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/bs_fonti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="RCP AIFA..."
+                    android:textColor="#2563EB"
+                    android:textSize="12sp"
+                    android:autoLink="web" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
