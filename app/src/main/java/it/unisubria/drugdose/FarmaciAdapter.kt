@@ -46,6 +46,40 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
             sheetView.findViewById<TextView>(R.id.bs_indicazione).text =
                 farmaco.indicazione_clinica
 
+            sheetView.findViewById<TextView>(R.id.bs_tipo_formula).text =
+                "Formula: ${farmaco.tipo_di_formula}"
+            sheetView.findViewById<TextView>(R.id.bs_unita_misura).text =
+                "Unità di misura: ${farmaco.unita_di_misura}"
+            
+            sheetView.findViewById<TextView>(R.id.bs_limitazioni).text =
+                "Età minima: ${farmaco.eta_minima} anni\nDurata max: ${farmaco.durata_massima}"
+            
+            val alertTextView = sheetView.findViewById<TextView>(R.id.bs_alert)
+            if (farmaco.alert.isNotEmpty()) {
+                alertTextView.visibility = View.VISIBLE
+                alertTextView.text = farmaco.alert.joinToString("\n") { "- $it" }
+            } else {
+                alertTextView.visibility = View.GONE
+            }
+
+            // Dosaggio standard
+            val dosaggioTextView = sheetView.findViewById<TextView>(R.id.bs_dosaggio_standard)
+            if (farmaco.dosaggio_standard != null) {
+                dosaggioTextView.visibility = View.VISIBLE
+                dosaggioTextView.text = "Dose: ${farmaco.dosaggio_standard.descrizione}\nFrequenza: ${farmaco.dosaggio_standard.frequenza}"
+            } else {
+                dosaggioTextView.visibility = View.GONE
+            }
+
+            // Fonti
+            val fontiTextView = sheetView.findViewById<TextView>(R.id.bs_fonti)
+            if (farmaco.fonti.isNotEmpty()) {
+                fontiTextView.visibility = View.VISIBLE
+                fontiTextView.text = farmaco.fonti.joinToString("\n\n")
+            } else {
+                fontiTextView.visibility = View.GONE
+            }
+
             dialog.setContentView(sheetView)
             dialog.show()
         }
