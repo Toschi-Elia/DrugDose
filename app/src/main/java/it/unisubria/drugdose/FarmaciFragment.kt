@@ -1,20 +1,20 @@
 package it.unisubria.drugdose
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
-import it.unisubria.drugdose.models.Farmaco
+import kotlinx.coroutines.launch
 
 class FarmaciFragment : Fragment() {
 
-    private val db = FirebaseFirestore.getInstance()
     private lateinit var adapter: FarmaciAdapter
+    private lateinit var farmaciViewModel: FarmaciViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,33 +26,22 @@ class FarmaciFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
+
         // 1. Collega l'Adapter alla RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_farmaci)
         adapter = FarmaciAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // 2. Scarica i farmaci da Firestore e aggiorna la lista
-        caricaFarmaciDaFirestore()
-    }
-
-    private fun caricaFarmaciDaFirestore() {
-        db.collection("farmaci")
-            .get()
-            .addOnSuccessListener { result ->
-                val listaFarmaci = result.mapNotNull { document ->
-                    try {
-                        document.toObject(Farmaco::class.java)
-                            .copy(id = document.id)
-                    } catch (e: Exception) {
-                        Log.w("FarmaciFragment", "Errore nel parsing del documento ${document.id}", e)
-                        null
-                    }
-                }
+        // 2. Osserva i farmaci caricati dal ViewModel condiviso
+        viewLifecycleOwner.lifecycleScope.launch {
+            farmaciViewModel.farmaci.collect { listaFarmaci ->
                 adapter.aggiorna(listaFarmaci)
             }
-            .addOnFailureListener { exception ->
-                Log.w("FarmaciFragment", "Errore nel caricamento dei farmaci.", exception)
-            }
+        }
+
+        // 3. Chiede il caricamento. Il ViewModel evita chiamate duplicate.
+        farmaciViewModel.caricaFarmaci()
     }
 }
