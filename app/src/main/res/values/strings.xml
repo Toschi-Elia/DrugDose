@@ -26,13 +26,16 @@
 
 
 <!--    Errori firebase-->
+<!--    Registrazione-->
     <string name="error_firebase_mail_presente">Esiste già un account con questa email.</string>
     <string name="error_firebase_no_internet">Controlla la tua connessione a internet</string>
     <string name="error_generic_register">Errore durante la registrazione. Riprova</string>
     <string name="errore_uid_non_trovato">Errore: UID non trovato</string>
-
-    <string name="error_firebase_credenziali_errate" >Credeenziali errate</string>
+<!--    login-->
+    <string name="error_firebase_credenziali_errate" >Credenziali errate</string>
     <string name="error_generic_login">Errore durante l\'accesso. Riprova</string>
-
+<!--Password dimenticata-->
+    <string name="error_email_non_nel_db">Nessun account associato a questa email.</string>
+    <string name="error_generic_psw_dimenticata">Errore nell\'invio dell\'email di reset.</string>
 
 </resources>

@@ -42,6 +42,21 @@ class AuthRepository {
             }
     }
 
+    fun recuperaPassword(email:String, onResult: (Boolean, kotlin.Exception?) -> Unit)
+    {
+        if(email.isEmpty())
+        {
+            onResult(false, Exception("Email vuota"))
+            return
+        }
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {task ->
+            if(task.isSuccessful)
+                onResult(true,null)
+            else
+                onResult(false, task.exception)
+        }
+    }
+
     // l'utente è già loggato
     fun getUtenteAttuale() = auth.currentUser
 

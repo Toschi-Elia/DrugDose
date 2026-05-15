@@ -201,7 +201,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/accesso_ospite" />
+                    android:text="@string/accesso_ospite"
+                    app:icon="@drawable/icon_person"
+                    app:iconGravity="textStart" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

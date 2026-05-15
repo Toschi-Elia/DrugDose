@@ -15,6 +15,7 @@ import it.unisubria.drugdose.databinding.ActivityRegisterBinding
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loadingDialog = LoadingDialog(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.registerRoot) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -93,8 +95,9 @@ class RegisterActivity : AppCompatActivity() {
             if(error)
                 return@setOnClickListener
 
-
+            loadingDialog.mostraCaricamento()
             authRepo.registraUtente(nome,cognome, mail ,psw) { successo, errore ->
+                loadingDialog.nascondiCaricamento()
                 if (successo) {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)

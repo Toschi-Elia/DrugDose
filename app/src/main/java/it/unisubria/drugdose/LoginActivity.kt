@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -14,6 +13,8 @@ import it.unisubria.drugdose.databinding.ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var loadingDialog: LoadingDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loadingDialog = LoadingDialog(this)
 
         var authRepo = AuthRepository()
         binding.btnAccediOspite.setOnClickListener {
@@ -48,10 +50,49 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        binding.tvPasswordDimenticata.setOnClickListener {
+            binding.layoutEmail.error=null
+            binding.layoutPassword.error= null
+
+            val email= binding.textEmail.text.toString().trim()
+
+            var error=false
+            if(email.isEmpty())
+            {
+                error=true
+                binding.layoutEmail.error=getString(R.string.error_email_empty)
+            }else if(!email.isValidEmail())
+            {
+                error=true
+                binding.layoutEmail.error=getString(R.string.error_invalid_email)
+            }
+
+            if(error)
+                return@setOnClickListener
+
+            loadingDialog.mostraCaricamento()
+            authRepo.recuperaPassword(email){
+                successo,eccezione->
+                loadingDialog.nascondiCaricamento()
+                if(successo)
+                    Toast.makeText(this, "Email di reset inviata a\n $email", Toast.LENGTH_SHORT).show()
+                else
+                {
+                    val msg= when(eccezione)
+                    {
+                        is FirebaseAuthInvalidUserException ->getString(R.string.error_email_non_nel_db)
+                        is FirebaseNetworkException -> getString(R.string.error_firebase_no_internet)
+                        else ->getString(R.string.error_generic_psw_dimenticata)
+                    }
+                }
+            }
+
+
+        }
+
 
         binding.btnLogin.setOnClickListener {
 
-            Toast.makeText(this, "btn accedi", Toast.LENGTH_SHORT).show()
             binding.layoutEmail.error = null
             binding.layoutPassword.error = null
 
@@ -76,10 +117,12 @@ class LoginActivity : AppCompatActivity() {
             if (error)
                 return@setOnClickListener
 
+            loadingDialog.mostraCaricamento()
             authRepo.eseguiLogin(
                 email,
                 password
             ) { successo, errore ->
+                loadingDialog.nascondiCaricamento()
                 if (successo) {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -105,7 +148,6 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
-
                 binding.tvPasswordDimenticata.setOnClickListener {
                     Toast.makeText(this, "tb password dimenticata", Toast.LENGTH_SHORT).show()
                 }
