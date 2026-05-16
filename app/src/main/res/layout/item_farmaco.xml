@@ -46,6 +46,16 @@
                 android:textColor="#6B7280"
                 android:textSize="14sp"
                 android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tv_item_formula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Formula: fissa"
+                android:textColor="@color/primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ImageView

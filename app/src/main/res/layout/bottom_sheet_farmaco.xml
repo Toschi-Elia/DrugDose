@@ -149,6 +149,17 @@
                     android:textColor="#1F2937"
                     android:textSize="14sp"
                     android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/bs_regole_calcolo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Regole di dosaggio"
+                    android:textColor="#1F2937"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 

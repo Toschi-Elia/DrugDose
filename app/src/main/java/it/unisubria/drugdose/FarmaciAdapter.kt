@@ -15,6 +15,7 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
     class FarmacoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNome: TextView = itemView.findViewById(R.id.tv_item_nome_farmaco)
         val tvPrincipioAttivo: TextView = itemView.findViewById(R.id.tv_item_principio_attivo)
+        val tvFormula: TextView = itemView.findViewById(R.id.tv_item_formula)
     }
 
     // Crea il layout della card
@@ -30,6 +31,7 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
 
         holder.tvNome.text = farmaco.nome_farmaco.uppercase()
         holder.tvPrincipioAttivo.text = farmaco.principio_attivo
+        holder.tvFormula.text = "Formula: ${farmaco.tipo_di_formula} - ${farmaco.unita_di_misura}"
 
         // Apre il BottomSheet con i dettagli al click
         holder.itemView.setOnClickListener {
@@ -71,6 +73,15 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
                 dosaggioTextView.visibility = View.GONE
             }
 
+            val regoleTextView = sheetView.findViewById<TextView>(R.id.bs_regole_calcolo)
+            val regoleText = creaTestoRegole(farmaco)
+            if (regoleText.isNotBlank()) {
+                regoleTextView.visibility = View.VISIBLE
+                regoleTextView.text = regoleText
+            } else {
+                regoleTextView.visibility = View.GONE
+            }
+
             // Fonti
             val fontiTextView = sheetView.findViewById<TextView>(R.id.bs_fonti)
             if (farmaco.fonti.isNotEmpty()) {
@@ -92,5 +103,61 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
     fun aggiorna(nuovaLista: List<Farmaco>) {
         lista = nuovaLista
         notifyDataSetChanged()
+    }
+
+    private fun creaTestoRegole(farmaco: Farmaco): String {
+        val testo = StringBuilder()
+
+        if (!farmaco.regole_calcolo.isNullOrEmpty()) {
+            testo.append("Regole di dosaggio\n")
+
+            farmaco.regole_calcolo.forEach { regola ->
+                testo.append("- ")
+                testo.append(regola.fascia.replace('_', ' '))
+
+                if (regola.descrizione_dose != null) {
+                    testo.append(": ").append(regola.descrizione_dose)
+                } else if (regola.dose != null) {
+                    testo.append(": ").append(regola.dose)
+                } else if (regola.dose_fissa != null) {
+                    testo.append(": ").append(regola.dose_fissa).append(" mg")
+                }
+
+                testo.append("\n")
+            }
+        }
+
+        farmaco.formati?.forEach { formato ->
+            if (!formato.regole_calcolo.isNullOrEmpty()) {
+                if (testo.isNotBlank()) {
+                    testo.append("\n\n")
+                }
+
+                val titoloFormato = if (formato.descrizione != null) {
+                    formato.descrizione
+                } else {
+                    formato.tipo
+                }
+
+                testo.append(titoloFormato).append("\n")
+
+                formato.regole_calcolo.forEach { regola ->
+                    testo.append("- ")
+                    testo.append(regola.fascia.replace('_', ' '))
+
+                    if (regola.descrizione_dose != null) {
+                        testo.append(": ").append(regola.descrizione_dose)
+                    } else if (regola.dose != null) {
+                        testo.append(": ").append(regola.dose)
+                    } else if (regola.dose_fissa != null) {
+                        testo.append(": ").append(regola.dose_fissa).append(" mg")
+                    }
+
+                    testo.append("\n")
+                }
+            }
+        }
+
+        return testo.toString().trim()
     }
 }
