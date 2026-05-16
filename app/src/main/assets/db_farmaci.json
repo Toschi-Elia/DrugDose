@@ -68,6 +68,7 @@
         "fascia": "adulti_e_12plus",
         "eta_min": 12,
         "eta_max": 999,
+        "dose_fissa": 50,
         "dose_singola_mg": 50,
         "descrizione_dose": "1 capsula da 50mg",
         "ripetibile_dopo_ore": "3-4",
@@ -77,6 +78,7 @@
         "fascia": "bambini_7_12_anni",
         "eta_min": 7,
         "eta_max": 12,
+        "dose_fissa": 25,
         "dose_singola_mg": 25,
         "descrizione_dose": "1-2 capsule da 25mg",
         "max_dosi_24h": 3
@@ -85,6 +87,7 @@
         "fascia": "bambini_2_6_anni",
         "eta_min": 2,
         "eta_max": 6,
+        "dose_fissa": 25,
         "dose_singola_mg": 25,
         "descrizione_dose": "1 capsula da 25mg",
         "max_dosi_24h": 3
@@ -107,96 +110,278 @@
     ]
   },
   {
-    "id": "cebion_001",
-    "nome_farmaco": "CEBION",
-    "principio_attivo": "Acido ascorbico (Vitamina C)",
-    "indicazione_clinica": "Stati carenziali di vitamina C",
-    "tipo_di_formula": "fasce_eta_e_formato",
-    "formati": [
-      {
-        "tipo": "gocce_100mg_ml",
-        "regole_calcolo": [
-          {
-            "fascia": "lattanti",
-            "eta_min": 0,
-            "eta_max": 2,
-            "dose": "5-8 gocce/die"
-          },
-          {
-            "fascia": "bambini_piccoli",
-            "eta_min": 2,
-            "eta_max": 6,
-            "dose": "10 gocce/die"
-          },
-          {
-            "fascia": "bambini_scolari_e_adulti",
-            "eta_min": 6,
-            "eta_max": 999,
-            "dose": "15-20 gocce/die"
-          }
-        ]
-      },
-      {
-        "tipo": "compresse_masticabili_500mg",
-        "regole_calcolo": [
-          {
-            "fascia": "generale",
-            "eta_min": 6,
-            "eta_max": 999,
-            "dose": "1-2 compresse/die (fino a 2-3 in casi gravi)"
-          }
-        ]
-      },
-      {
-        "tipo": "effervescenti_o_granulato_1g",
-        "regole_calcolo": [
-          {
-            "fascia": "generale",
-            "eta_min": 12,
-            "eta_max": 999,
-            "dose": "1 compressa/bustina al giorno"
-          }
-        ]
-      }
-    ],
-    "unita_di_misura": "gocce/compresse/bustine",
-    "durata_massima": "Brevi periodi di trattamento",
-    "eta_minima": 0,
+    "id": "efacti_001",
+    "nome_farmaco": "EFACTI",
+    "principio_attivo": "ivermectina 10 mg/g crema",
+    "indicazione_clinica": "Trattamento topico delle lesioni infiammatorie della rosacea papulo-pustolosa nell'adulto",
+    "tipo_di_formula": "fissa_topica",
+    "dosaggio_standard": {
+      "descrizione": "Applicare una piccola quantità una volta al giorno sulle aree interessate del viso",
+      "frequenza": "1 volta al giorno"
+    },
+    "unita_di_misura": "applicazione topica",
+    "durata_massima": "Fino a 4 mesi secondo valutazione clinica",
+    "eta_minima": 18,
     "alert": [
-      "Cautela con calcolosi renale, deficit G6PD, emocromatosi, talassemia",
-      "Può sfalsare i test del glucosio nelle urine",
-      "Contiene saccarosio (attenzione nei diabetici, preferire versione Senza Zucchero)",
-      "Contiene sodio (attenzione nelle diete iposodiche)",
-      "Dosi eccessive hanno effetto lassativo"
+      "Uso cutaneo: evitare occhi, labbra e mucose",
+      "Non adatto a calcolo mg/kg: incluso perché dermatologico e presente nel catalogo AIFA",
+      "Valutare gravidanza/allattamento e ipersensibilità agli eccipienti"
     ],
     "fonti": [
-      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/2125/farmaci/3366/stampati?ts=RCP",
-      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/2125/farmaci/3366/stampati?ts=FI"
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7073/farmaci/43463/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7073/farmaci/43463/stampati?ts=FI"
     ]
   },
   {
-    "id": "imidazyl_001",
-    "nome_farmaco": "IMIDAZYL",
-    "principio_attivo": "nafazolina nitrato 1 mg/ml",
-    "indicazione_clinica": "Stati allergici ed infiammatori della congiuntiva (bruciore, lacrimazione, fotofobia)",
-    "tipo_di_formula": "fissa",
-    "dosaggio_standard": {
-      "descrizione": "1-2 gocce nell'occhio interessato",
-      "frequenza": "1-2 volte al giorno"
-    },
-    "unita_di_misura": "gocce",
-    "durata_massima": "Massimo 4 giorni consecutivi",
+    "id": "aisoskin_001",
+    "nome_farmaco": "AISOSKIN",
+    "principio_attivo": "isotretinoina capsule molli 10 mg / 20 mg",
+    "indicazione_clinica": "Acne grave resistente a terapia standard con antibatterici sistemici e trattamento topico",
+    "tipo_di_formula": "peso",
+    "regole_calcolo": [
+      {
+        "fascia": "dose_iniziale",
+        "eta_min": 12,
+        "eta_max": 999,
+        "dose_per_kg": 0.5,
+        "dose": "0.5 mg/kg/die",
+        "descrizione_dose": "Dose giornaliera = 0,5 × peso_kg; assumere con cibo in 1-2 somministrazioni"
+      },
+      {
+        "fascia": "range_mantenimento",
+        "eta_min": 12,
+        "eta_max": 999,
+        "dose_per_kg_min": 0.5,
+        "dose_per_kg_max": 1,
+        "dose": "0.5-1 mg/kg/die",
+        "descrizione_dose": "Titolare in base a risposta e tollerabilità; monitorare dose cumulativa"
+      }
+    ],
+    "unita_di_misura": "mg/kg/die",
+    "durata_massima": "Tipicamente 16-24 settimane; secondo RCP e controllo specialistico",
     "eta_minima": 12,
     "alert": [
-      "Controindicato sotto i 12 anni",
-      "Controindicato con glaucoma ad angolo stretto o gravi malattie oculari",
-      "Non usare con antidepressivi IMAO (rischio crisi ipertensive)",
-      "Cautela con ipertensione, diabete, asma, disturbi cardiaci e tiroidei",
-      "Attenzione alle lenti a contatto morbide (contiene benzalconio cloruro)"
+      "Altamente teratogena: programma di prevenzione della gravidanza",
+      "Controindicata in gravidanza/allattamento",
+      "Monitorare funzionalità epatica e lipidi",
+      "Evitare associazione con tetracicline"
     ],
     "fonti": [
-      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/107/farmaci/3410/stampati?ts=RCP",
-      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/107/farmaci/3410/stampati?ts=FI"
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/646/farmaci/35258/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/646/farmaci/35258/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "sandimmun_001",
+    "nome_farmaco": "SANDIMMUN",
+    "principio_attivo": "ciclosporina capsule molli / soluzione orale",
+    "indicazione_clinica": "Psoriasi severa o dermatite atopica severa quando la terapia sistemica è appropriata",
+    "tipo_di_formula": "peso",
+    "regole_calcolo": [
+      {
+        "fascia": "iniziale",
+        "eta_min": 16,
+        "eta_max": 999,
+        "dose_per_kg": 2.5,
+        "dose": "2.5 mg/kg/die",
+        "descrizione_dose": "Dose giornaliera = 2,5 × peso_kg, divisa in 2 somministrazioni"
+      },
+      {
+        "fascia": "massima",
+        "eta_min": 16,
+        "eta_max": 999,
+        "dose_per_kg": 5,
+        "dose": "5 mg/kg/die",
+        "descrizione_dose": "Non superare 5 × peso_kg al giorno salvo diversa indicazione specialistica"
+      }
+    ],
+    "unita_di_misura": "mg/kg/die",
+    "durata_massima": "Terapia specialistica con rivalutazione periodica",
+    "eta_minima": 16,
+    "alert": [
+      "Richiede monitoraggio pressione arteriosa, creatinina e funzionalità renale",
+      "Interazioni importanti tramite CYP3A4/P-gp",
+      "Non sostituire formulazione senza controllo medico",
+      "Uso specialistico"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/25306/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/25306/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "lamisil_001",
+    "nome_farmaco": "LAMISIL",
+    "principio_attivo": "terbinafina cloridrato 250 mg compresse",
+    "indicazione_clinica": "Micosi cutanee e onicomicosi da dermatofiti quando è indicata terapia sistemica",
+    "tipo_di_formula": "fasce_peso",
+    "regole_calcolo": [
+      {
+        "fascia": "bambini_20_40kg",
+        "eta_min": 2,
+        "eta_max": 17,
+        "peso_min_kg": 20,
+        "peso_max_kg": 40,
+        "dose_fissa": 125,
+        "dose_singola_mg": 125,
+        "descrizione_dose": "125 mg una volta al giorno"
+      },
+      {
+        "fascia": "bambini_oltre_40kg",
+        "eta_min": 2,
+        "eta_max": 17,
+        "peso_min_kg": 40,
+        "dose_fissa": 250,
+        "dose_singola_mg": 250,
+        "descrizione_dose": "250 mg una volta al giorno"
+      },
+      {
+        "fascia": "adulti",
+        "eta_min": 18,
+        "eta_max": 999,
+        "dose_fissa": 250,
+        "dose_singola_mg": 250,
+        "descrizione_dose": "250 mg una volta al giorno"
+      }
+    ],
+    "unita_di_misura": "mg/die per fascia di peso",
+    "durata_massima": "Variabile: cute 2-6 settimane, unghie più lunga secondo sede e risposta",
+    "eta_minima": 2,
+    "alert": [
+      "Valutare funzionalità epatica prima/durante terapia",
+      "Sospendere e valutare se segni di epatotossicità",
+      "Controllare interazioni farmacologiche"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/28176/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/28176/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "dravyr_001",
+    "nome_farmaco": "DRAVYR",
+    "principio_attivo": "aciclovir compresse 200 mg / 400 mg",
+    "indicazione_clinica": "Infezioni da Herpes simplex e Varicella zoster; utile per test dose pediatrica per peso",
+    "tipo_di_formula": "peso",
+    "regole_calcolo": [
+      {
+        "fascia": "varicella_bambini",
+        "eta_min": 2,
+        "eta_max": 17,
+        "dose_per_kg": 20,
+        "dose": "20 mg/kg/dose",
+        "descrizione_dose": "Dose singola = 20 × peso_kg, 4 volte al giorno; massimo 800 mg per dose",
+        "max_dosi_24h": 4
+      },
+      {
+        "fascia": "adulti_varicella_zoster",
+        "eta_min": 18,
+        "eta_max": 999,
+        "dose_fissa": 800,
+        "dose_singola_mg": 800,
+        "descrizione_dose": "800 mg 5 volte al giorno secondo indicazione",
+        "max_dosi_24h": 5
+      }
+    ],
+    "unita_di_misura": "mg/kg/dose",
+    "durata_massima": "Generalmente 5-7 giorni secondo indicazione clinica",
+    "eta_minima": 2,
+    "alert": [
+      "Adeguare in insufficienza renale",
+      "Assicurare idratazione adeguata",
+      "Verificare indicazione e timing dall'esordio"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7314/farmaci/28242/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7314/farmaci/28242/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "dupixent_001",
+    "nome_farmaco": "DUPIXENT",
+    "principio_attivo": "dupilumab soluzione iniettabile 200 mg / 300 mg",
+    "indicazione_clinica": "Dermatite atopica da moderata a severa in pazienti candidati a terapia sistemica",
+    "tipo_di_formula": "fasce_peso",
+    "regole_calcolo": [
+      {
+        "fascia": "adolescenti_15_60kg",
+        "eta_min": 12,
+        "eta_max": 17,
+        "peso_min_kg": 15,
+        "peso_max_kg": 60,
+        "dose_carico_fissa": 400,
+        "dose_fissa": 200,
+        "dose": "carico 400 mg, poi 200 mg ogni 2 settimane",
+        "descrizione_dose": "2 iniezioni da 200 mg come dose iniziale, poi 200 mg ogni 2 settimane"
+      },
+      {
+        "fascia": "adolescenti_oltre_60kg",
+        "eta_min": 12,
+        "eta_max": 17,
+        "peso_min_kg": 60,
+        "dose_carico_fissa": 600,
+        "dose_fissa": 300,
+        "dose": "carico 600 mg, poi 300 mg ogni 2 settimane",
+        "descrizione_dose": "2 iniezioni da 300 mg come dose iniziale, poi 300 mg ogni 2 settimane"
+      },
+      {
+        "fascia": "adulti",
+        "eta_min": 18,
+        "eta_max": 999,
+        "dose_carico_fissa": 600,
+        "dose_fissa": 300,
+        "dose": "carico 600 mg, poi 300 mg ogni 2 settimane",
+        "descrizione_dose": "Schema standard adulti per dermatite atopica"
+      }
+    ],
+    "unita_di_misura": "mg per fascia di peso",
+    "durata_massima": "Terapia continuativa con rivalutazione clinica periodica",
+    "eta_minima": 12,
+    "alert": [
+      "Uso specialistico",
+      "Segnalare congiuntivite/cheratite o peggioramento oculare",
+      "Non interrompere bruscamente eventuali corticosteroidi sistemici senza supervisione"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/5884/farmaci/45676/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/5884/farmaci/45676/stampati?ts=FI"
+    ]
+  },
+  {
+    "id": "enbrel_001",
+    "nome_farmaco": "ENBREL",
+    "principio_attivo": "etanercept soluzione/polvere per iniezione sottocutanea",
+    "indicazione_clinica": "Psoriasi a placche pediatrica e adulta quando indicata terapia sistemica biologica",
+    "tipo_di_formula": "peso",
+    "regole_calcolo": [
+      {
+        "fascia": "psoriasi_pediatrica",
+        "eta_min": 6,
+        "eta_max": 17,
+        "dose_per_kg": 0.8,
+        "dose": "0.8 mg/kg/settimana",
+        "descrizione_dose": "Dose settimanale = 0,8 × peso_kg; massimo 50 mg a settimana"
+      },
+      {
+        "fascia": "adulti",
+        "eta_min": 18,
+        "eta_max": 999,
+        "dose_fissa": 50,
+        "dose_singola_mg": 50,
+        "descrizione_dose": "50 mg una volta a settimana; schemi alternativi secondo RCP"
+      }
+    ],
+    "unita_di_misura": "mg/kg/settimana",
+    "durata_massima": "Terapia specialistica con rivalutazione periodica; valutare risposta dopo periodo previsto dal RCP",
+    "eta_minima": 6,
+    "alert": [
+      "Screening infezioni, inclusa tubercolosi, prima della terapia",
+      "Non iniziare in presenza di infezione attiva clinicamente rilevante",
+      "Uso specialistico e monitoraggio immunosoppressione"
+    ],
+    "fonti": [
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/4849/farmaci/34675/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/4849/farmaci/34675/stampati?ts=FI"
     ]
   }
 ]
