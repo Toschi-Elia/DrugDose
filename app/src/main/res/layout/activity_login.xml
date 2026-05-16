@@ -150,12 +150,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
-                    android:id="@+id/checkbox_keep_signed_in"
+                    android:id="@+id/checkbox_biometric"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/rimani_loggato"
-                    android:textColor="@color/primary" />
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/usa_biometrica"
+                    android:textColor="@color/primary"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_login"

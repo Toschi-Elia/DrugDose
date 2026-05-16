@@ -7,7 +7,7 @@
     <string name="password">Password</string>
     <string name="button_accedi">Accedi</string>
     <string name="log_in">Log in</string>
-    <string name="rimani_loggato">"Rimani connesso"</string>
+    <string name="usa_biometrica">"Usa biometrica"</string>
     <string name="password_dimenticata">Password dimenticata?</string>
     <string name="slogan">Clinical dosing precision</string>
     <string name="mail_esempio">nome.cognome@ospedale.it</string>
@@ -37,5 +37,10 @@
 <!--Password dimenticata-->
     <string name="error_email_non_nel_db">Nessun account associato a questa email.</string>
     <string name="error_generic_psw_dimenticata">Errore nell\'invio dell\'email di reset.</string>
+
+    <!--    Biometrica-->
+    <string name="sblocco_biometric_title">Sblocco DrugDose</string>
+    <string name="sblocco_biometric_subtitle">Autenticazione richiesta per accedere ai dati medici</string>
+    <string name="biometric_usa_psw">Usa password</string>
 
 </resources>

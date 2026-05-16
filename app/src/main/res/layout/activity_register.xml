@@ -210,12 +210,20 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <CheckBox
+                    android:id="@+id/checkbox_biometric"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/usa_biometrica"
+                    android:textColor="@color/primary"/>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_registrati"
                     style="@style/Widget.DrugDose.button.BottonePrimario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:paddingVertical="12dp"
                     android:text="Registrati"
                     app:iconGravity="textEnd"

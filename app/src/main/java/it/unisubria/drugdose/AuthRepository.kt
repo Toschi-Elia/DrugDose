@@ -49,6 +49,7 @@ class AuthRepository {
             onResult(false, Exception("Email vuota"))
             return
         }
+        auth.useAppLanguage()
         auth.sendPasswordResetEmail(email).addOnCompleteListener {task ->
             if(task.isSuccessful)
                 onResult(true,null)

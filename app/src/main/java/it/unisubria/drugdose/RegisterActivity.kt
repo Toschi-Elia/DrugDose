@@ -1,10 +1,13 @@
 package it.unisubria.drugdose
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
@@ -23,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configuraInterfacciaBiometrica()
 
         loadingDialog = LoadingDialog(this)
 
@@ -60,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
             val nome = binding.textNome.text.toString().trim()
             val cognome = binding.textCognome.text.toString().trim()
             val mail = binding.textMail.text.toString().trim()
-            val psw = binding.textPassword.text.toString().trim()
+            val psw = binding.textPassword.text.toString()
 
             var error=false
             if(nome.isEmpty()) {
@@ -99,6 +103,11 @@ class RegisterActivity : AppCompatActivity() {
             authRepo.registraUtente(nome,cognome, mail ,psw) { successo, errore ->
                 loadingDialog.nascondiCaricamento()
                 if (successo) {
+                    val biometrica=binding.checkboxBiometric.isChecked
+
+                    val sharedPref= getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                    sharedPref.edit().putBoolean("usa_biometria", biometrica).apply()
+
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -123,5 +132,44 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    private fun configuraInterfacciaBiometrica() {
+        val biometricManager = BiometricManager.from(this)
+        val esitoControllo =
+            biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+
+        when (esitoControllo) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                // Il telefono ha il sensore E l'utente ha registrato l'impronta!
+                // Mostriamo la checkbox
+                binding.checkboxBiometric.visibility = View.VISIBLE
+
+                // Opzionale: se nel login vogliamo che la casella sia già spuntata
+                // se l'aveva scelta in passato, la leggiamo dalle SharedPreferences
+                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                binding.checkboxBiometric.isChecked = sharedPref.getBoolean("usa_biometria", false)
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                // Il telefono HA il sensore, ma l'utente non ha mai configurato l'impronta
+                // nelle impostazioni del suo telefono. Meglio nascondere la checkbox.
+                binding.checkboxBiometric.visibility = View.GONE
+
+                // (Volendo potresti lasciarla visibile e mostrare un Toast che dice
+                // "Vai nelle impostazioni del telefono a registrare l'impronta", ma nasconderla è più pulito)
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                // Il telefono è vecchio o non ha proprio il sensore
+                binding.checkboxBiometric.visibility = View.GONE
+
+                // Siccome non può usare la biometria, forziamo la preferenza a 'false'
+                // così non cercherà mai di fargli apparire il pop-up all'avvio
+                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                sharedPref.edit().putBoolean("usa_biometria", false).apply()
+            }
+
+        }
+    }
 
 }

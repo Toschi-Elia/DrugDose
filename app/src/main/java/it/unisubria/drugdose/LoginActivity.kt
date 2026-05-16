@@ -1,27 +1,34 @@
 package it.unisubria.drugdose
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import it.unisubria.drugdose.databinding.ActivityLoginBinding
+import androidx.biometric.BiometricManager
+import android.view.View
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loadingDialog: LoadingDialog
-
+    private val auth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        controllaSessioneEBiometria()
+        configuraInterfacciaBiometrica()
         loadingDialog = LoadingDialog(this)
 
         var authRepo = AuthRepository()
@@ -83,7 +90,9 @@ class LoginActivity : AppCompatActivity() {
                         is FirebaseAuthInvalidUserException ->getString(R.string.error_email_non_nel_db)
                         is FirebaseNetworkException -> getString(R.string.error_firebase_no_internet)
                         else ->getString(R.string.error_generic_psw_dimenticata)
+
                     }
+                    binding.layoutEmail.error = msg
                 }
             }
 
@@ -124,6 +133,10 @@ class LoginActivity : AppCompatActivity() {
             ) { successo, errore ->
                 loadingDialog.nascondiCaricamento()
                 if (successo) {
+                    val biometrica=binding.checkboxBiometric.isChecked
+
+                    val sharedPref= getSharedPreferences("ImpostazioniApp", android.content.Context.MODE_PRIVATE)
+                    sharedPref.edit().putBoolean("usa_biometria", biometrica).apply()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -148,14 +161,107 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
-                binding.tvPasswordDimenticata.setOnClickListener {
-                    Toast.makeText(this, "tb password dimenticata", Toast.LENGTH_SHORT).show()
-                }
+
             }
 
 
         }
+
     }
+    private fun configuraInterfacciaBiometrica() {
+        val biometricManager = BiometricManager.from(this)
+        val esitoControllo =
+            biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+
+        when (esitoControllo) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                // Il telefono ha il sensore E l'utente ha registrato l'impronta!
+                // Mostriamo la checkbox
+                binding.checkboxBiometric.visibility = View.VISIBLE
+
+                // Opzionale: se nel login vogliamo che la casella sia già spuntata
+                // se l'aveva scelta in passato, la leggiamo dalle SharedPreferences
+                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                binding.checkboxBiometric.isChecked = sharedPref.getBoolean("usa_biometria", false)
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                // Il telefono HA il sensore, ma l'utente non ha mai configurato l'impronta
+                // nelle impostazioni del suo telefono. Meglio nascondere la checkbox.
+                binding.checkboxBiometric.visibility = View.GONE
+
+                // (Volendo potresti lasciarla visibile e mostrare un Toast che dice
+                // "Vai nelle impostazioni del telefono a registrare l'impronta", ma nasconderla è più pulito)
+            }
+
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                // Il telefono è vecchio o non ha proprio il sensore
+                binding.checkboxBiometric.visibility = View.GONE
+
+                // Siccome non può usare la biometria, forziamo la preferenza a 'false'
+                // così non cercherà mai di fargli apparire il pop-up all'avvio
+                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                sharedPref.edit().putBoolean("usa_biometria", false).apply()
+            }
+
+        }
+    }
+    private fun controllaSessioneEBiometria()
+    {
+        val utenteCorrente= auth.currentUser
+        if(utenteCorrente!=null)
+        {
+            val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+            val usaBiometria = sharedPref.getBoolean("usa_biometria", false)
+            if(usaBiometria)
+                mostraPromtBiometrico()
+            else
+            {
+                auth.signOut()
+            }
+        }
+    }
+
+    private fun mostraPromtBiometrico()
+    {
+        val executor = ContextCompat.getMainExecutor(this)
+        val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                // L'utente annulla. forziamo il logout
+                auth.signOut()
+                Toast.makeText(applicationContext,"Accesso biometrico annullato. Inserisci la password.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                //impronta corretta
+                Toast.makeText(applicationContext, "Bentornato in DrugDose", Toast.LENGTH_SHORT).show()
+                goHome()
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+            }
+        })
+        val promptInfo=BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.sblocco_biometric_title))
+            .setSubtitle(getString(R.string.sblocco_biometric_subtitle))
+            . setNegativeButtonText(getString(R.string.biometric_usa_psw))
+            .build()
+        //appare pop-up
+        biometricPrompt.authenticate(promptInfo)
+    }
+    private fun goHome()
+    {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }
 
 
