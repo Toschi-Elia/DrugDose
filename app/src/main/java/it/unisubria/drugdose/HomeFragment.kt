@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import it.unisubria.drugdose.models.DosaggioStandard
 import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.models.Formato
+import it.unisubria.drugdose.models.RegolaCalcolo
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -20,6 +21,7 @@ class HomeFragment : Fragment() {
     private var farmacoSelezionato: Farmaco? = null
     private var formatoSelezionato: Formato? = null
     private var dosaggioStandardSelezionato: DosaggioStandard? = null
+    private var regolaSelezionata: RegolaCalcolo? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +36,7 @@ class HomeFragment : Fragment() {
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
 
         val dropdownFarmaco = view.findViewById<AutoCompleteTextView>(R.id.dropdown_farmaco)
-        val dropdownFormato = view.findViewById<AutoCompleteTextView>(R.id.dropdown_formato)
+        val dropdownSchema = view.findViewById<AutoCompleteTextView>(R.id.dropdown_formato)
 
         viewLifecycleOwner.lifecycleScope.launch {
             farmaciViewModel.farmaci.collect { listaFarmaci ->
@@ -51,39 +53,64 @@ class HomeFragment : Fragment() {
         dropdownFarmaco.setOnItemClickListener { _, _, position, _ ->
             val elemento = dropdownFarmaco.adapter.getItem(position) as? FarmacoDropdownItem
             farmacoSelezionato = elemento?.farmaco
-            aggiornaDropdownFormati(dropdownFormato, farmacoSelezionato)
+            aggiornaDropdownSchemi(dropdownSchema, farmacoSelezionato)
         }
 
         farmaciViewModel.caricaFarmaci()
     }
 
-    private fun aggiornaDropdownFormati(
-        dropdownFormato: AutoCompleteTextView,
+    private fun aggiornaDropdownSchemi(
+        dropdownSchema: AutoCompleteTextView,
         farmaco: Farmaco?
     ) {
         formatoSelezionato = null
         dosaggioStandardSelezionato = null
+        regolaSelezionata = null
 
-        val elementiDose = if (!farmaco?.formati.isNullOrEmpty()) {
-            farmaco?.formati.orEmpty().map { DoseDropdownItem(formato = it) }
-        } else {
-            farmaco?.dosaggio_standard
-                ?.let { listOf(DoseDropdownItem(dosaggioStandard = it)) }
-                .orEmpty()
+        val elementiSchema = mutableListOf<SchemaDropdownItem>()
+
+        if (farmaco != null) {
+            if (!farmaco.regole_calcolo.isNullOrEmpty()) {
+                farmaco.regole_calcolo.forEach { regola ->
+                    elementiSchema.add(SchemaDropdownItem(regola = regola))
+                }
+            } else if (!farmaco.formati.isNullOrEmpty()) {
+                farmaco.formati.forEach { formato ->
+                    if (!formato.regole_calcolo.isNullOrEmpty()) {
+                        formato.regole_calcolo.forEach { regola ->
+                            elementiSchema.add(
+                                SchemaDropdownItem(
+                                    formato = formato,
+                                    regola = regola
+                                )
+                            )
+                        }
+                    } else {
+                        elementiSchema.add(SchemaDropdownItem(formato = formato))
+                    }
+                }
+            } else if (farmaco.dosaggio_standard != null) {
+                elementiSchema.add(
+                    SchemaDropdownItem(
+                        dosaggioStandard = farmaco.dosaggio_standard
+                    )
+                )
+            }
         }
 
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_dropdown_item_1line,
-            elementiDose
+            elementiSchema
         )
-        dropdownFormato.setAdapter(adapter)
-        dropdownFormato.setText("", false)
+        dropdownSchema.setAdapter(adapter)
+        dropdownSchema.setText("", false)
 
-        dropdownFormato.setOnItemClickListener { _, _, position, _ ->
-            val elemento = dropdownFormato.adapter.getItem(position) as? DoseDropdownItem
+        dropdownSchema.setOnItemClickListener { _, _, position, _ ->
+            val elemento = dropdownSchema.adapter.getItem(position) as? SchemaDropdownItem
             formatoSelezionato = elemento?.formato
             dosaggioStandardSelezionato = elemento?.dosaggioStandard
+            regolaSelezionata = elemento?.regola
         }
     }
 
@@ -91,11 +118,29 @@ class HomeFragment : Fragment() {
         override fun toString(): String = farmaco.nome_farmaco
     }
 
-    private data class DoseDropdownItem(
+    private data class SchemaDropdownItem(
         val formato: Formato? = null,
+        val regola: RegolaCalcolo? = null,
         val dosaggioStandard: DosaggioStandard? = null
     ) {
         override fun toString(): String {
+            if (formato != null && regola != null) {
+                val nomeFormato = formato.descrizione ?: formato.tipo
+                return "$nomeFormato - ${regola.fascia.replace('_', ' ')}"
+            }
+
+            if (regola != null) {
+                if (regola.descrizione_dose != null) {
+                    return "${regola.fascia.replace('_', ' ')} - ${regola.descrizione_dose}"
+                }
+
+                if (regola.dose != null) {
+                    return "${regola.fascia.replace('_', ' ')} - ${regola.dose}"
+                }
+
+                return regola.fascia.replace('_', ' ')
+            }
+
             if (formato != null) {
                 return formato.descrizione ?: formato.tipo
             }

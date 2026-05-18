@@ -9,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import it.unisubria.drugdose.models.Farmaco
 
 class FarmaciAdapter(private var lista: List<Farmaco>) :
-    RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {
+    RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {  
 
     // ViewHolder con riferimenti alle view della card
     class FarmacoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
