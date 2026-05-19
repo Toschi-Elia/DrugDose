@@ -33,6 +33,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
+
     }
     buildFeatures {
         viewBinding = true
@@ -52,5 +54,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
 }

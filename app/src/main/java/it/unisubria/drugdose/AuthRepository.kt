@@ -58,12 +58,12 @@ class AuthRepository {
         }
     }
 
-    // l'utente è già loggato
     fun getUtenteAttuale() = auth.currentUser
 
     fun eseguiLogout() {
         auth.signOut()
     }
+
 
 
 }

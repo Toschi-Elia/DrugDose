@@ -27,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         controllaSessioneEBiometria()
         configuraInterfacciaBiometrica()
         loadingDialog = LoadingDialog(this)
@@ -82,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
                 successo,eccezione->
                 loadingDialog.nascondiCaricamento()
                 if(successo)
-                    Toast.makeText(this, "Email di reset inviata a\n $email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.email_di_reset_toast)+"\n $email", Toast.LENGTH_SHORT).show()
                 else
                 {
                     val msg= when(eccezione)

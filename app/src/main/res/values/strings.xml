@@ -23,9 +23,15 @@
     <string name="error_nome">Nome obbligatorio</string>
     <string name="error_cognome">cognome obbligatorio</string>
     <string name="error_psw_not_strong">Password non sicura </string>
+    <string name="error_data_nascita_obl">Data di nascita obbligatoria </string>
+    <string name="error_altezza_obl">Altezza obbligatoria </string>
+    <string name="error_peso_obl">Peso obbligatorio </string>
 
 
-<!--    Errori firebase-->
+
+
+
+    <!--    Errori firebase-->
 <!--    Registrazione-->
     <string name="error_firebase_mail_presente">Esiste già un account con questa email.</string>
     <string name="error_firebase_no_internet">Controlla la tua connessione a internet</string>
@@ -42,5 +48,25 @@
     <string name="sblocco_biometric_title">Sblocco DrugDose</string>
     <string name="sblocco_biometric_subtitle">Autenticazione richiesta per accedere ai dati medici</string>
     <string name="biometric_usa_psw">Usa password</string>
+    <string name="email_di_reset_toast">Email di reset inviata a</string>
+    <string name="nuovo_paziente">Nuovo Paziente</string>
+    <string name="nome">Nome</string>
+    <string name="cognome">Cognome</string>
+    <string name="data_nascita">Data di Nascita</string>
+    <string name="peso_kg">Peso (kg)</string>
+    <string name="altezza_cm">Altezza (cm)</string>
+    <string name="salva_paziente">Salva Paziente</string>
+    <string name="es_peso">Es. 75.5</string>
+    <string name="es_altezza">Es. 180</string>
+    <string name="es_data_nascita">Seleziona data</string>
+    <string name="es_nome">Es. Marco</string>
+    <string name="es_cognome">Es. Rossi</string>
+    <string name="error_peso_non_valido">Il peso inserito non è valido</string>
+    <string name="altezza_non_valida">Altezza non valida</string>
+    <string name="date_picker_title">Seleziona data di nascita</string>
+    <string name="calendario_nascita">CALENDARIO_NASCITA</string>
+    <string name="error_data_futura">La data non può essere nel futuro</string>
+    <string name="error_eta_magg_130"><![CDATA[Data non valida (età > 130 anni)]]></string>
+    <string name="error_formato_data_non_valido">Formato data non valido</string>
 
 </resources>

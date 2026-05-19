@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#747474</color>
 
+<!--    modalita light-->
     <color name="primary">#0056B3</color>
     <color name="secondary">#00E5FF</color>
     <color name="tertiary">#973C00</color>

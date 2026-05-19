@@ -132,6 +132,7 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    //todo insserisci risorse
     private fun configuraInterfacciaBiometrica() {
         val biometricManager = BiometricManager.from(this)
         val esitoControllo =
