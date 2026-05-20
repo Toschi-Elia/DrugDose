@@ -3,95 +3,87 @@ package it.unisubria.drugdose
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import it.unisubria.drugdose.databinding.BottomSheetFarmacoBinding
+import it.unisubria.drugdose.databinding.ItemFarmacoBinding
 import it.unisubria.drugdose.models.Farmaco
 
 class FarmaciAdapter(private var lista: List<Farmaco>) :
-    RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {  
+    RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {
 
     // ViewHolder con riferimenti alle view della card
-    class FarmacoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvNome: TextView = itemView.findViewById(R.id.tv_item_nome_farmaco)
-        val tvPrincipioAttivo: TextView = itemView.findViewById(R.id.tv_item_principio_attivo)
-        val tvFormula: TextView = itemView.findViewById(R.id.tv_item_formula)
-    }
+    class FarmacoViewHolder(val binding: ItemFarmacoBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // Crea il layout della card
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FarmacoViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_farmaco, parent, false)
-        return FarmacoViewHolder(view)
+        val binding = ItemFarmacoBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return FarmacoViewHolder(binding)
     }
 
     // Popola la card con i dati del farmaco
     override fun onBindViewHolder(holder: FarmacoViewHolder, position: Int) {
         val farmaco = lista[position]
 
-        holder.tvNome.text = farmaco.nome_farmaco.uppercase()
-        holder.tvPrincipioAttivo.text = farmaco.principio_attivo
-        holder.tvFormula.text = "Formula: ${farmaco.tipo_di_formula} - ${farmaco.unita_di_misura}"
+        holder.binding.tvItemNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
+        holder.binding.tvItemPrincipioAttivo.text = farmaco.principio_attivo
+        holder.binding.tvItemFormula.text =
+            "Formula: ${farmaco.tipo_di_formula} - ${farmaco.unita_di_misura}"
 
         // Apre il BottomSheet con i dettagli al click
-        holder.itemView.setOnClickListener {
-            val context = holder.itemView.context
+        holder.binding.root.setOnClickListener {
+            val context = holder.binding.root.context
             val dialog = BottomSheetDialog(context)
-            val sheetView = LayoutInflater.from(context)
-                .inflate(R.layout.bottom_sheet_farmaco, null)
+            val sheetBinding = BottomSheetFarmacoBinding.inflate(LayoutInflater.from(context))
 
             // Popola il BottomSheet
-            sheetView.findViewById<TextView>(R.id.bs_nome_farmaco).text =
-                farmaco.nome_farmaco.uppercase()
-            sheetView.findViewById<TextView>(R.id.bs_principio_attivo).text =
-                farmaco.principio_attivo
-            sheetView.findViewById<TextView>(R.id.bs_indicazione).text =
-                farmaco.indicazione_clinica
+            sheetBinding.bsNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
+            sheetBinding.bsPrincipioAttivo.text = farmaco.principio_attivo
+            sheetBinding.bsIndicazione.text = farmaco.indicazione_clinica
 
-            sheetView.findViewById<TextView>(R.id.bs_tipo_formula).text =
-                "Formula: ${farmaco.tipo_di_formula}"
-            sheetView.findViewById<TextView>(R.id.bs_unita_misura).text =
-                "Unità di misura: ${farmaco.unita_di_misura}"
-            
-            sheetView.findViewById<TextView>(R.id.bs_limitazioni).text =
+            sheetBinding.bsTipoFormula.text = "Formula: ${farmaco.tipo_di_formula}"
+            sheetBinding.bsUnitaMisura.text = "Unità di misura: ${farmaco.unita_di_misura}"
+            sheetBinding.bsLimitazioni.text =
                 "Età minima: ${farmaco.eta_minima} anni\nDurata max: ${farmaco.durata_massima}"
-            
-            val alertTextView = sheetView.findViewById<TextView>(R.id.bs_alert)
+
             if (farmaco.alert.isNotEmpty()) {
-                alertTextView.visibility = View.VISIBLE
-                alertTextView.text = farmaco.alert.joinToString("\n") { "- $it" }
+                sheetBinding.bsAlert.visibility = View.VISIBLE
+                sheetBinding.bsAlert.text = farmaco.alert.joinToString("\n") { "- $it" }
             } else {
-                alertTextView.visibility = View.GONE
+                sheetBinding.bsAlert.visibility = View.GONE
             }
 
             // Dosaggio standard
-            val dosaggioTextView = sheetView.findViewById<TextView>(R.id.bs_dosaggio_standard)
             if (farmaco.dosaggio_standard != null) {
-                dosaggioTextView.visibility = View.VISIBLE
-                dosaggioTextView.text = "Dose: ${farmaco.dosaggio_standard.descrizione}\nFrequenza: ${farmaco.dosaggio_standard.frequenza}"
+                sheetBinding.bsDosaggioStandard.visibility = View.VISIBLE
+                sheetBinding.bsDosaggioStandard.text =
+                    "Dose: ${farmaco.dosaggio_standard.descrizione}\nFrequenza: ${farmaco.dosaggio_standard.frequenza}"
             } else {
-                dosaggioTextView.visibility = View.GONE
+                sheetBinding.bsDosaggioStandard.visibility = View.GONE
             }
 
-            val regoleTextView = sheetView.findViewById<TextView>(R.id.bs_regole_calcolo)
             val regoleText = creaTestoRegole(farmaco)
             if (regoleText.isNotBlank()) {
-                regoleTextView.visibility = View.VISIBLE
-                regoleTextView.text = regoleText
+                sheetBinding.bsRegoleCalcolo.visibility = View.VISIBLE
+                sheetBinding.bsRegoleCalcolo.text = regoleText
             } else {
-                regoleTextView.visibility = View.GONE
+                sheetBinding.bsRegoleCalcolo.visibility = View.GONE
             }
 
             // Fonti
-            val fontiTextView = sheetView.findViewById<TextView>(R.id.bs_fonti)
             if (farmaco.fonti.isNotEmpty()) {
-                fontiTextView.visibility = View.VISIBLE
-                fontiTextView.text = farmaco.fonti.joinToString("\n\n")
+                sheetBinding.bsFonti.visibility = View.VISIBLE
+                sheetBinding.bsFonti.text = farmaco.fonti.joinToString("\n\n")
             } else {
-                fontiTextView.visibility = View.GONE
+                sheetBinding.bsFonti.visibility = View.GONE
             }
 
-            dialog.setContentView(sheetView)
+            dialog.setContentView(sheetBinding.root)
             dialog.show()
         }
     }

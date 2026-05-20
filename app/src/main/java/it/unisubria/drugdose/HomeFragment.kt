@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import it.unisubria.drugdose.databinding.FragmentHomeBinding
 import it.unisubria.drugdose.models.DosaggioStandard
 import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.models.Formato
@@ -17,6 +18,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private lateinit var farmaciViewModel: FarmaciViewModel
     private var farmacoSelezionato: Farmaco? = null
     private var formatoSelezionato: Formato? = null
@@ -27,16 +30,14 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
-
-        val dropdownFarmaco = view.findViewById<AutoCompleteTextView>(R.id.dropdown_farmaco)
-        val dropdownSchema = view.findViewById<AutoCompleteTextView>(R.id.dropdown_formato)
 
         viewLifecycleOwner.lifecycleScope.launch {
             farmaciViewModel.farmaci.collect { listaFarmaci ->
@@ -46,17 +47,22 @@ class HomeFragment : Fragment() {
                     android.R.layout.simple_dropdown_item_1line,
                     elementiFarmaco
                 )
-                dropdownFarmaco.setAdapter(adapter)
+                binding.dropdownFarmaco.setAdapter(adapter)
             }
         }
 
-        dropdownFarmaco.setOnItemClickListener { _, _, position, _ ->
-            val elemento = dropdownFarmaco.adapter.getItem(position) as? FarmacoDropdownItem
+        binding.dropdownFarmaco.setOnItemClickListener { _, _, position, _ ->
+            val elemento = binding.dropdownFarmaco.adapter.getItem(position) as? FarmacoDropdownItem
             farmacoSelezionato = elemento?.farmaco
-            aggiornaDropdownSchemi(dropdownSchema, farmacoSelezionato)
+            aggiornaDropdownSchemi(binding.dropdownFormato, farmacoSelezionato)
         }
 
         farmaciViewModel.caricaFarmaci()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun aggiornaDropdownSchemi(

@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import it.unisubria.drugdose.databinding.FragmentFarmaciBinding
 import kotlinx.coroutines.launch
 
 class FarmaciFragment : Fragment() {
 
+    private var _binding: FragmentFarmaciBinding? = null
+    private val binding get() = _binding!!
     private lateinit var adapter: FarmaciAdapter
     private lateinit var farmaciViewModel: FarmaciViewModel
 
@@ -20,7 +22,8 @@ class FarmaciFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_farmaci, container, false)
+        _binding = FragmentFarmaciBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,10 +32,9 @@ class FarmaciFragment : Fragment() {
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
 
         // 1. Collega l'Adapter alla RecyclerView
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_farmaci)
         adapter = FarmaciAdapter(emptyList())
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        binding.recyclerFarmaci.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerFarmaci.adapter = adapter
 
         // 2. Osserva i farmaci caricati dal ViewModel condiviso
         viewLifecycleOwner.lifecycleScope.launch {
@@ -43,5 +45,10 @@ class FarmaciFragment : Fragment() {
 
         // 3. Chiede il caricamento. Il ViewModel evita chiamate duplicate.
         farmaciViewModel.caricaFarmaci()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
