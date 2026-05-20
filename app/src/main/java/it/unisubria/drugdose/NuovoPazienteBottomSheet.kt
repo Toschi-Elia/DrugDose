@@ -8,8 +8,6 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import it.unisubria.drugdose.databinding.BottomSheetNuovoPazienteBinding
 import com.google.android.material.datepicker.MaterialDatePicker
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -37,14 +35,22 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         loadingDialog = LoadingDialog(requireActivity())
 
         binding.textDataNascita.setOnClickListener {
+            val vincoli = com.google.android.material.datepicker.CalendarConstraints.Builder()
+                .setValidator(com.google.android.material.datepicker.DateValidatorPointBackward.now())
+                .build()
+
             val datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText(getString(R.string.date_picker_title))
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setCalendarConstraints(vincoli)
                 .build()
 
             datePicker.addOnPositiveButtonClickListener { millisecondiScelti ->
-                val formatoData = SimpleDateFormat("dd/MM/yyyy", Locale.ITALIAN)
-                val dataFormattata = formatoData.format(Date(millisecondiScelti))
+                val formatoDataLocale = java.text.DateFormat.getDateInstance(
+                    java.text.DateFormat.SHORT,
+                    java.util.Locale.getDefault()
+                )
+                val dataFormattata = formatoDataLocale.format(java.util.Date(millisecondiScelti))
                 binding.textDataNascita.setText(dataFormattata)
             }
 
@@ -71,7 +77,7 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         val altezzaStr = binding.textAltezza.text.toString().trim()
 
         var error = false
-
+        var dataNascitaValida:LocalDate?=null
         if (nome.isEmpty()) {
             binding.layoutNomePaziente.error = getString(R.string.error_nome)
             error = true
@@ -87,7 +93,10 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             error = true
         } else {
             try {
-                val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                val formatter =DateTimeFormatter
+                    .ofLocalizedDate(java.time.format.FormatStyle.SHORT)
+                    .withLocale(Locale.getDefault())
+
                 val dataNascita = LocalDate.parse(dataNascitaStr, formatter)
                 val oggi = LocalDate.now()
                 val etaPaziente = ChronoUnit.YEARS.between(dataNascita, oggi)
@@ -98,6 +107,9 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
                 } else if (etaPaziente > 130) {
                     binding.layoutDataNascita.error = getString(R.string.error_eta_magg_130)
                     error = true
+                }
+                else{
+                    dataNascitaValida=dataNascita
                 }
             } catch (e: DateTimeParseException) {
                 binding.layoutDataNascita.error = getString(R.string.formato_data_non_valido)
@@ -127,11 +139,12 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        if (error) return
+        if (error||dataNascitaValida==null) return
 
         val peso = pesoStr.toDoubleOrNull() ?: 0.0
         val altezza = altezzaStr.toIntOrNull() ?: 0
-        val nuovoPaziente = Paziente(nome, cognome, dataNascitaStr, peso, altezza)
+        val dataDaSalvare=dataNascitaValida.toString()
+        val nuovoPaziente = Paziente(nome, cognome, dataDaSalvare, peso, altezza)
 
         loadingDialog.mostraCaricamento()
 
