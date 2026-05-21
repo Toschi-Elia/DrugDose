@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import it.unisubria.drugdose.databinding.FragmentPazientiBinding
 
@@ -19,6 +20,7 @@ class PazientiFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentPazientiBinding.inflate(inflater, container, false)
         return binding.root
        // return inflater.inflate(R.layout.fragment_pazienti, container, false)

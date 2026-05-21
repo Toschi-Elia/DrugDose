@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +30,13 @@ class RegisterActivity : AppCompatActivity() {
         configuraInterfacciaBiometrica()
 
         loadingDialog = LoadingDialog(this)
+        binding.textPassword.setOnEditorActionListener { _, actionId,_ ->
+            if(actionId==EditorInfo.IME_ACTION_DONE)
+            {
+                binding.btnRegistrati.performClick()
+                true
+            }else false
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.registerRoot) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

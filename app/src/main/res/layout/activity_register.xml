@@ -104,6 +104,10 @@
                                 android:textColor="@color/grey"
                                 android:id="@+id/text_nome"
                                 app:errorEnabled="true"
+                                android:maxLines="1"
+                                android:imeOptions="actionNext"
+                                android:nextFocusForward="@id/text_cognome"
+                                android:nextFocusRight="@id/text_cognome"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
@@ -140,6 +144,10 @@
                                 android:textColor="@color/grey"
                                 android:id="@+id/text_cognome"
                                 app:errorEnabled="true"
+                                android:maxLines="1"
+                                android:imeOptions="actionNext"
+                                android:nextFocusForward="@id/text_mail"
+                                android:nextFocusDown="@id/text_mail"
 
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -172,7 +180,11 @@
                         android:inputType="textEmailAddress"
                         android:textColorHint="@color/grey"
                         android:id="@+id/text_mail"
-                        app:errorEnabled="true"/>
+                        app:errorEnabled="true"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        android:nextFocusForward="@id/text_password"
+                        android:nextFocusDown="@id/text_password"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -207,6 +219,9 @@
                         android:textColorHint="@color/grey"
                         android:id="@+id/text_password"
                         app:errorEnabled="true"
+                        android:maxLines="1"
+                        android:imeOptions="actionDone"
+
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 

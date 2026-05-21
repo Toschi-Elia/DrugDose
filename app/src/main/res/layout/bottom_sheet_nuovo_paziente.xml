@@ -72,7 +72,11 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/es_nome"
                             android:inputType="textPersonName"
-                            android:textColor="@color/grey" />
+                            android:textColor="@color/grey"
+                            android:maxLines="1"
+                            android:imeOptions="actionNext"
+                            android:nextFocusForward="@id/textCognomePaziente"
+                            android:nextFocusRight="@id/textCognomePaziente"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -106,7 +110,10 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/es_cognome"
                             android:inputType="textPersonName"
-                            android:textColor="@color/grey" />
+                            android:textColor="@color/grey"
+                            android:maxLines="1"
+                            android:imeOptions="actionNext"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -137,7 +144,11 @@
                     android:focusable="false"
                     android:cursorVisible="false"
                     android:textColor="@color/grey"
-                    android:textColorHint="@color/grey" />
+                    android:textColorHint="@color/grey"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    android:nextFocusForward="@id/textPeso"
+                    android:nextFocusDown="@id/textPeso"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -177,7 +188,11 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/es_peso"
                             android:inputType="numberDecimal"
-                            android:textColor="@color/grey" />
+                            android:textColor="@color/grey"
+                            android:maxLines="1"
+                            android:imeOptions="actionNext"
+                            android:nextFocusForward="@id/textAltezza"
+                            android:nextFocusRight="@id/textAltezza"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -211,7 +226,9 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/es_altezza"
                             android:inputType="number"
-                            android:textColor="@color/grey" />
+                            android:textColor="@color/grey"
+                            android:maxLines="1"
+                            android:imeOptions="actionDone"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>

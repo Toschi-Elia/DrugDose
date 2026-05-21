@@ -1,13 +1,20 @@
 package it.unisubria.drugdose
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import it.unisubria.drugdose.databinding.BottomSheetNuovoPazienteBinding
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -25,7 +32,7 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = BottomSheetNuovoPazienteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,6 +41,45 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireActivity())
 
+        val patternLocale=android.text.format.DateFormat.getBestDateTimePattern(Locale.getDefault(),"ddMMyyyy")
+        // Pulizia errori in tempo reale
+        val listTesti = listOf(
+            binding.textNomePaziente to binding.layoutNomePaziente,
+            binding.textCognomePaziente to binding.layoutCognomePaziente,
+            binding.textDataNascita to binding.layoutDataNascita,
+            binding.textPeso to binding.layoutPeso,
+            binding.textAltezza to binding.layoutAltezza
+        )
+        listTesti.forEach { (editText, textInputLayout) ->
+            editText.doOnTextChanged { _, _, _, _ ->
+                if (textInputLayout.error != null)
+                    textInputLayout.error = null
+            }
+        }
+
+        // Tasto Avanti Cognome (Abbassa tastiera e apre Calendario)
+        binding.textCognomePaziente.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                binding.textDataNascita.performClick()
+                true
+            } else {
+                false
+            }
+        }
+
+        // Tasto invio Altezza
+        binding.textAltezza.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.btnSalvaPaziente.performClick()
+                true
+            } else {
+                false
+            }
+        }
+
+        // Configurazione Calendario
         binding.textDataNascita.setOnClickListener {
             val vincoli = com.google.android.material.datepicker.CalendarConstraints.Builder()
                 .setValidator(com.google.android.material.datepicker.DateValidatorPointBackward.now())
@@ -43,15 +89,15 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
                 .setTitleText(getString(R.string.date_picker_title))
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .setCalendarConstraints(vincoli)
+                .setTextInputFormat(java.text.SimpleDateFormat(patternLocale, Locale.getDefault()))
                 .build()
 
             datePicker.addOnPositiveButtonClickListener { millisecondiScelti ->
-                val formatoDataLocale = java.text.DateFormat.getDateInstance(
-                    java.text.DateFormat.SHORT,
-                    java.util.Locale.getDefault()
-                )
+                val formatoDataLocale = java.text.SimpleDateFormat(patternLocale, Locale.getDefault())
                 val dataFormattata = formatoDataLocale.format(java.util.Date(millisecondiScelti))
                 binding.textDataNascita.setText(dataFormattata)
+
+
             }
 
             datePicker.show(
@@ -77,7 +123,8 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         val altezzaStr = binding.textAltezza.text.toString().trim()
 
         var error = false
-        var dataNascitaValida:LocalDate?=null
+        var dataNascitaValida: LocalDate? = null
+
         if (nome.isEmpty()) {
             binding.layoutNomePaziente.error = getString(R.string.error_nome)
             error = true
@@ -93,9 +140,8 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             error = true
         } else {
             try {
-                val formatter =DateTimeFormatter
-                    .ofLocalizedDate(java.time.format.FormatStyle.SHORT)
-                    .withLocale(Locale.getDefault())
+                val patternLocale = android.text.format.DateFormat.getBestDateTimePattern(Locale.getDefault(), "ddMMyyyy")
+                val formatter = DateTimeFormatter.ofPattern(patternLocale, Locale.getDefault())
 
                 val dataNascita = LocalDate.parse(dataNascitaStr, formatter)
                 val oggi = LocalDate.now()
@@ -107,9 +153,8 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
                 } else if (etaPaziente > 130) {
                     binding.layoutDataNascita.error = getString(R.string.error_eta_magg_130)
                     error = true
-                }
-                else{
-                    dataNascitaValida=dataNascita
+                } else {
+                    dataNascitaValida = dataNascita
                 }
             } catch (e: DateTimeParseException) {
                 binding.layoutDataNascita.error = getString(R.string.formato_data_non_valido)
@@ -139,23 +184,34 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        if (error||dataNascitaValida==null) return
+        if (error || dataNascitaValida == null) return
 
         val peso = pesoStr.toDoubleOrNull() ?: 0.0
         val altezza = altezzaStr.toIntOrNull() ?: 0
-        val dataDaSalvare=dataNascitaValida.toString()
+        val dataDaSalvare = dataNascitaValida.toString()
         val nuovoPaziente = Paziente(nome, cognome, dataDaSalvare, peso, altezza)
 
         loadingDialog.mostraCaricamento()
 
         pazienteRepo.aggiungiPaziente(nuovoPaziente) { successo, _ ->
             loadingDialog.nascondiCaricamento()
-            if (successo) {
-                Toast.makeText(requireContext(), "Paziente salvato!", Toast.LENGTH_SHORT).show()
-                dismiss()
-            } else {
-                Toast.makeText(requireContext(), "Errore nel salvataggio", Toast.LENGTH_SHORT).show()
-            }
+
+            val vistaPrincipale = requireActivity().findViewById<View>(android.R.id.content)
+                if (successo) {
+                    val snackbar= Snackbar.make(vistaPrincipale,
+                        getString(R.string.paziente_salvato),Snackbar.LENGTH_LONG)
+                    snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.green))
+                    snackbar.show()
+                    dismiss()
+                } else {
+                    val snackbar = Snackbar.make(
+                        vistaPrincipale,
+                        getString(R.string.errore_salvataggio_paziente),
+                        Snackbar.LENGTH_LONG
+                    )
+                    snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.error_red))
+                    snackbar.show()
+                }
         }
     }
 
