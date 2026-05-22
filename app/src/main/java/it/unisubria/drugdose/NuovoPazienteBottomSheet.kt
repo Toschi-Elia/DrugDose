@@ -157,7 +157,7 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
                     dataNascitaValida = dataNascita
                 }
             } catch (e: DateTimeParseException) {
-                binding.layoutDataNascita.error = getString(R.string.formato_data_non_valido)
+                binding.layoutDataNascita.error = getString(R.string.error_formato_data_non_valido)
                 error = true
             }
         }
