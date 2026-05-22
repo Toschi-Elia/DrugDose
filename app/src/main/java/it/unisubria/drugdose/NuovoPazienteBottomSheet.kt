@@ -1,7 +1,6 @@
 package it.unisubria.drugdose
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +11,17 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import it.unisubria.drugdose.databinding.BottomSheetNuovoPazienteBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import java.util.Locale
+import it.unisubria.drugdose.databinding.BottomSheetNuovoPazienteBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
-    private var _binding: BottomSheetNuovoPazienteBinding? = null
+     private var _binding: BottomSheetNuovoPazienteBinding? = null
     private val binding get() = _binding!!
 
     private val pazienteRepo = PatientRepository()
@@ -41,8 +40,8 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         loadingDialog = LoadingDialog(requireActivity())
 
-        val patternLocale=android.text.format.DateFormat.getBestDateTimePattern(Locale.getDefault(),"ddMMyyyy")
-        // Pulizia errori in tempo reale
+        val patternLocale = android.text.format.DateFormat.getBestDateTimePattern(Locale.getDefault(), "ddMMyyyy")
+
         val listTesti = listOf(
             binding.textNomePaziente to binding.layoutNomePaziente,
             binding.textCognomePaziente to binding.layoutCognomePaziente,
@@ -50,6 +49,7 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             binding.textPeso to binding.layoutPeso,
             binding.textAltezza to binding.layoutAltezza
         )
+
         listTesti.forEach { (editText, textInputLayout) ->
             editText.doOnTextChanged { _, _, _, _ ->
                 if (textInputLayout.error != null)
@@ -57,7 +57,6 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        // Tasto Avanti Cognome (Abbassa tastiera e apre Calendario)
         binding.textCognomePaziente.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
                 val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -69,7 +68,6 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        // Tasto invio Altezza
         binding.textAltezza.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 binding.btnSalvaPaziente.performClick()
@@ -79,7 +77,6 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
-        // Configurazione Calendario
         binding.textDataNascita.setOnClickListener {
             val vincoli = com.google.android.material.datepicker.CalendarConstraints.Builder()
                 .setValidator(com.google.android.material.datepicker.DateValidatorPointBackward.now())
@@ -96,8 +93,6 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
                 val formatoDataLocale = java.text.SimpleDateFormat(patternLocale, Locale.getDefault())
                 val dataFormattata = formatoDataLocale.format(java.util.Date(millisecondiScelti))
                 binding.textDataNascita.setText(dataFormattata)
-
-
             }
 
             datePicker.show(
@@ -194,13 +189,25 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         loadingDialog.mostraCaricamento()
 
         pazienteRepo.aggiungiPaziente(nuovoPaziente) { successo, _ ->
+
+            if (!isAdded || context == null) return@aggiungiPaziente
+
             loadingDialog.nascondiCaricamento()
 
-            val vistaPrincipale = requireActivity().findViewById<View>(android.R.id.content)
+            val mainActivity = activity as? MainActivity
+
+            if (mainActivity != null) {
+                val vistaPrincipale = mainActivity.binding.root
+                val bottomNav = mainActivity.binding.bottomNavigation // Assicurati che l'ID sia questo!
+
                 if (successo) {
-                    val snackbar= Snackbar.make(vistaPrincipale,
-                        getString(R.string.paziente_salvato),Snackbar.LENGTH_LONG)
+                    val snackbar = Snackbar.make(
+                        vistaPrincipale,
+                        getString(R.string.paziente_salvato),
+                        Snackbar.LENGTH_LONG
+                    )
                     snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.green))
+                    snackbar.anchorView = bottomNav
                     snackbar.show()
                     dismiss()
                 } else {
@@ -210,8 +217,15 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
                         Snackbar.LENGTH_LONG
                     )
                     snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.error_red))
+                    snackbar.anchorView = bottomNav
                     snackbar.show()
                 }
+            } else {
+                if (successo) {
+                    Toast.makeText(requireContext(), getString(R.string.paziente_salvato), Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
+            }
         }
     }
 
