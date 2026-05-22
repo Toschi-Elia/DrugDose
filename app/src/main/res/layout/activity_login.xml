@@ -160,8 +160,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="@string/usa_biometrica"
-                    android:textColor="@color/primary"/>
+                    android:text="@string/usa_biometria"
+                    android:textColor="@color/primary" />
+                <TextView
+                    android:id="@+id/tv_biometric_helper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:text="@string/Biometric_helper"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_login"

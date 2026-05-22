@@ -15,6 +15,7 @@ import androidx.core.widget.doOnTextChanged
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import it.unisubria.drugdose.databinding.ActivityRegisterBinding
+import android.provider.Settings
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -140,44 +141,61 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        configuraInterfacciaBiometrica()
+    }
+
     //todo insserisci risorse
     private fun configuraInterfacciaBiometrica() {
         val biometricManager = BiometricManager.from(this)
-        val esitoControllo =
-            biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+        val esitoControllo = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+
+        // Reset del listener per evitare doppi click se la funzione viene richiamata
+        binding.checkboxBiometric.setOnClickListener(null)
+        val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
 
         when (esitoControllo) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                // Il telefono ha il sensore E l'utente ha registrato l'impronta!
-                // Mostriamo la checkbox
+                // Sensore OK e impronta registrata
                 binding.checkboxBiometric.visibility = View.VISIBLE
+                binding.checkboxBiometric.isEnabled = true
+                binding.tvBiometricHelper.visibility = View.GONE
 
-                // Opzionale: se nel login vogliamo che la casella sia già spuntata
-                // se l'aveva scelta in passato, la leggiamo dalle SharedPreferences
-                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
-                binding.checkboxBiometric.isChecked = sharedPref.getBoolean("usa_biometria", false)
+                // In registrazione parte deselezionata
+                binding.checkboxBiometric.isChecked = false
+
+                binding.checkboxBiometric.setOnClickListener {
+                    sharedPref.edit().putBoolean("usa_biometria", binding.checkboxBiometric.isChecked).apply()
+                }
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                // Il telefono HA il sensore, ma l'utente non ha mai configurato l'impronta
-                // nelle impostazioni del suo telefono. Meglio nascondere la checkbox.
-                binding.checkboxBiometric.visibility = View.GONE
+                // Sensore OK ma nessuna impronta configurata nel sistema
+                binding.checkboxBiometric.visibility = View.VISIBLE
+                binding.checkboxBiometric.isEnabled = true
+                binding.checkboxBiometric.isChecked = false
+                binding.tvBiometricHelper.visibility = View.VISIBLE
 
-                // (Volendo potresti lasciarla visibile e mostrare un Toast che dice
-                // "Vai nelle impostazioni del telefono a registrare l'impronta", ma nasconderla è più pulito)
+                binding.checkboxBiometric.setOnClickListener {
+                    binding.checkboxBiometric.isChecked = false // Impedisce la spunta
+
+                    // Apre le impostazioni di sistema
+                    val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                        putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                            BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                    }
+                    startActivity(enrollIntent)
+                }
             }
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                // Il telefono è vecchio o non ha proprio il sensore
+                // Hardware assente o rotto
                 binding.checkboxBiometric.visibility = View.GONE
-
-                // Siccome non può usare la biometria, forziamo la preferenza a 'false'
-                // così non cercherà mai di fargli apparire il pop-up all'avvio
-                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                binding.tvBiometricHelper.visibility = View.GONE
                 sharedPref.edit().putBoolean("usa_biometria", false).apply()
             }
-
         }
     }
 
