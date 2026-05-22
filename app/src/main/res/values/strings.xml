@@ -68,5 +68,7 @@
     <string name="error_data_futura">La data non può essere nel futuro</string>
     <string name="error_eta_magg_130"><![CDATA[Data non valida (età > 130 anni)]]></string>
     <string name="error_formato_data_non_valido">Formato data non valido</string>
+    <string name="paziente_salvato">Paziente Salvato con successo!</string>
+    <string name="errore_salvataggio_paziente">Errore di rete durante il salvataggio</string>
 
 </resources>
