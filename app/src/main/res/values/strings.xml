@@ -59,8 +59,9 @@
     <string name="es_peso">Es. 75.5</string>
     <string name="es_altezza">Es. 180</string>
     <string name="es_data_nascita">Seleziona data</string>
-    <string name="es_nome">Es. Marco</string>
+    <string name="es_nome">Es. Mario</string>
     <string name="es_cognome">Es. Rossi</string>
+    <string name="es_nome_cognome">Mario Rossi</string>
     <string name="error_peso_non_valido">Il peso inserito non è valido</string>
     <string name="altezza_non_valida">Altezza non valida</string>
     <string name="date_picker_title">Seleziona data di nascita</string>
@@ -71,5 +72,6 @@
     <string name="error_formato_data_non_valido">Formato data non valido</string>
     <string name="errore_salvataggio_paziente">Errore di rete durante il salvataggio</string>
     <string name="Biometric_helper">Dispositivo non configurato. Clicca per aggiungerlo.</string>
+    <string name="errore_sconosciuto_caricamento">Errore sconosciuto durante il caricamento</string>
 
 </resources>

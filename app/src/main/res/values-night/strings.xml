@@ -65,5 +65,6 @@
     <string name="error_formato_data_non_valido">Formato data non valido</string>
     <string name="errore_salvataggio_paziente">Errore di rete durante il salvataggio</string>
     <string name="Biometric_helper">Dispositivo non configurato. Clicca per aggiungerlo.</string>
+    <string name="errore_sconosciuto_caricamento">Errore sconosciuto durante il caricamento</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,21 +22,39 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var farmaciViewModel: FarmaciViewModel
+
+    // Dati del farmaco selezionato
     private var farmacoSelezionato: Farmaco? = null
     private var formatoSelezionato: Formato? = null
     private var dosaggioStandardSelezionato: DosaggioStandard? = null
     private var regolaSelezionata: RegolaCalcolo? = null
 
+    // Dati del paziente in arrivo dalla lista
+    private var pazienteId: String? = null
+    private var pazienteNome: String? = null
+    private var pazientePeso: Double = 0.0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let { bundle ->
+            pazienteId = bundle.getString("ID_PAZIENTE")
+            pazienteNome = bundle.getString("NOME_PAZIENTE")
+            pazientePeso = bundle.getDouble("PESO_PAZIENTE", 0.0)
+
+
+            if (!pazienteNome.isNullOrEmpty()) {
+                binding.dropdownPaziente.setText(pazienteNome, false)
+            }
+        }
 
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
 
@@ -58,6 +77,19 @@ class HomeFragment : Fragment() {
         }
 
         farmaciViewModel.caricaFarmaci()
+
+        binding.btnCalcolaDose.setOnClickListener {
+            if (pazientePeso <= 0.0) {
+                Toast.makeText(requireContext(), "Seleziona un paziente valido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (farmacoSelezionato == null) {
+                Toast.makeText(requireContext(), "Seleziona un farmaco", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            Toast.makeText(requireContext(), "Calcolo per ${pazientePeso}kg avviato!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

@@ -184,8 +184,13 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         val peso = pesoStr.toDoubleOrNull() ?: 0.0
         val altezza = altezzaStr.toIntOrNull() ?: 0
         val dataDaSalvare = dataNascitaValida.toString()
-        val nuovoPaziente = Paziente(nome, cognome, dataDaSalvare, peso, altezza)
-
+        val nuovoPaziente = Paziente(
+            nome = nome,
+            cognome = cognome,
+            dataNascita = dataDaSalvare,
+            peso = peso,
+            altezza = altezza
+        )
         loadingDialog.mostraCaricamento()
 
         pazienteRepo.aggiungiPaziente(nuovoPaziente) { successo, _ ->
