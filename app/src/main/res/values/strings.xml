@@ -56,8 +56,8 @@
     <string name="peso_kg">Peso (kg)</string>
     <string name="altezza_cm">Altezza (cm)</string>
     <string name="salva_paziente">Salva Paziente</string>
-    <string name="es_peso">Es. 75.5</string>
-    <string name="es_altezza">Es. 180</string>
+    <string name="es_peso">Es. 75.5 kg</string>
+    <string name="es_altezza">Es. 180 cm</string>
     <string name="es_data_nascita">Seleziona data</string>
     <string name="es_nome">Es. Mario</string>
     <string name="es_cognome">Es. Rossi</string>
@@ -73,5 +73,7 @@
     <string name="errore_salvataggio_paziente">Errore di rete durante il salvataggio</string>
     <string name="Biometric_helper">Dispositivo non configurato. Clicca per aggiungerlo.</string>
     <string name="errore_sconosciuto_caricamento">Errore sconosciuto durante il caricamento</string>
+    <string name="errore_medico_non_autenticato">Errore: medico non autenticato</string>
+    <string name="error_dati_non_validi_eliminazione">Dati non validi per l\'eliminazione</string>
 
 </resources>

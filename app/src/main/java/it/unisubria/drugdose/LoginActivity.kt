@@ -272,7 +272,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 //impronta corretta
-                Toast.makeText(applicationContext, "Bentornato in DrugDose", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "Bentornato in DrugDose", Toast.LENGTH_SHORT).show()
                 goHome()
             }
 

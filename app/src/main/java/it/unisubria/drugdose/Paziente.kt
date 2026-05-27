@@ -2,10 +2,11 @@ package it.unisubria.drugdose
 import com.google.firebase.firestore.DocumentId
 
 data class Paziente(
+    @DocumentId
     var id: String="",
-    val nome: String = "",
-    val cognome: String = "",
-    val dataNascita: String = "",
-    val peso: Double = 0.0,
-    val altezza: Int = 0
+    var nome: String = "",
+    var cognome: String = "",
+    var dataNascita: String = "",
+    var peso: Double = 0.0,
+    var altezza: Int = 0
 )

@@ -66,5 +66,7 @@
     <string name="errore_salvataggio_paziente">Errore di rete durante il salvataggio</string>
     <string name="Biometric_helper">Dispositivo non configurato. Clicca per aggiungerlo.</string>
     <string name="errore_sconosciuto_caricamento">Errore sconosciuto durante il caricamento</string>
+    <string name="errore_medico_non_autenticato">Errore: medico non autenticato</string>
+    <string name="error_dati_non_validi_eliminazione">Dati non validi per l\'eliminazione</string>
 
 </resources>

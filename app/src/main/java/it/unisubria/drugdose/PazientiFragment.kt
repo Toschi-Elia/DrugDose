@@ -96,11 +96,7 @@ class PazientiFragment : Fragment() {
             .setNegativeButton("Annulla", null)
             .setPositiveButton("Elimina") { _, _ ->
                 viewModel.eliminaPaziente(paziente)
-                Toast.makeText(
-                    requireContext(),
-                    "Paziente eliminato",
-                    Toast.LENGTH_SHORT
-                ).show()
+
             }
             .show()
     }

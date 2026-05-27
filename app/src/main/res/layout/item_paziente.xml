@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="24dp"
     android:layout_marginBottom="16dp"
+    android:minHeight="125dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -18,13 +19,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:padding="20dp">
 
         <TextView
             android:id="@+id/tv_item_nome_paziente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="12dp"
             android:text="Mario Rossi"
             android:textColor="#1F2937"
             android:textSize="20sp"
@@ -35,13 +37,16 @@
 
         <ImageButton
             android:id="@+id/btn_elimina_paziente"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
             android:src="@android:drawable/ic_menu_delete"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_nome_paziente"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#F44336" />
+            app:layout_constraintTop_toTopOf="@+id/tv_item_nome_paziente"
+            app:tint="#F44336"
+            />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_meta"
@@ -54,34 +59,36 @@
             android:id="@+id/tv_item_data_nascita"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
             android:text="Data: 15/04/1990"
             android:textColor="#6B7280"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline_meta"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_nome_paziente" />
-
-        <TextView
-            android:id="@+id/tv_item_eta"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Età: 36 anni"
-            android:textColor="#6B7280"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_item_data_nascita"
-            app:layout_constraintEnd_toStartOf="@+id/iv_arrow"
-            app:layout_constraintStart_toEndOf="@+id/guideline_meta"
-            app:layout_constraintTop_toTopOf="@+id/tv_item_data_nascita" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_nome_paziente" /> <TextView
+        android:id="@+id/tv_item_eta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Età: 36 anni"
+        android:textColor="#6B7280"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_data_nascita"
+        app:layout_constraintEnd_toStartOf="@+id/iv_arrow"
+        app:layout_constraintStart_toEndOf="@+id/guideline_meta"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_data_nascita" />
 
         <TextView
             android:id="@+id/tv_item_peso"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Peso: 75.0 kg"
             android:textColor="@color/primary"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline_meta"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,9 +98,11 @@
             android:id="@+id/tv_item_altezza"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Alt: 180 cm"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/es_altezza"
             android:textColor="@color/primary"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_peso"
             app:layout_constraintEnd_toStartOf="@+id/iv_arrow"
@@ -109,6 +118,7 @@
             android:src="@android:drawable/ic_media_play"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="#D1D5DB" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
