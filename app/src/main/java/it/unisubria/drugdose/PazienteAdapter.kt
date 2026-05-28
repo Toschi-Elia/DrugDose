@@ -20,7 +20,7 @@ class PazienteAdapter(private val onPazienteClick:(Paziente)->Unit,private val o
     inner class PazienteViewHolder(val binding: ItemPazienteBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(paziente: Paziente)
         {
-            binding.tvItemNomePaziente.text="${paziente.nome} ${paziente.cognome}"
+            binding.tvItemNomePaziente.text="${paziente.nome.formattaMaiusc()} ${paziente.cognome.formattaMaiusc()}"
             binding.tvItemPeso.text="Peso: ${paziente.peso} kg"
             binding.tvItemAltezza.text="Alt: ${paziente.altezza} cm"
 

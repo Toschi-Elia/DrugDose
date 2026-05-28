@@ -111,8 +111,8 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
         binding.layoutDataNascita.error = null
         binding.layoutPeso.error = null
 
-        val nome = binding.textNomePaziente.text.toString().trim()
-        val cognome = binding.textCognomePaziente.text.toString().trim()
+        val nome = binding.textNomePaziente.text.toString().formattaMaiusc()
+        val cognome = binding.textCognomePaziente.text.toString().formattaMaiusc()
         val dataNascitaStr = binding.textDataNascita.text.toString().trim()
         val pesoStr = binding.textPeso.text.toString().trim()
         val altezzaStr = binding.textAltezza.text.toString().trim()

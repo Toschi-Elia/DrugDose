@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
             binding.layoutEmail.error=null
             binding.layoutPassword.error= null
 
-            val email= binding.textEmail.text.toString().trim()
+            val email= binding.textEmail.text.toString().lowercase().trim()
 
             var error=false
             if(email.isEmpty())

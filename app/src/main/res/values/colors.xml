@@ -14,4 +14,12 @@
     <color name="green" >#4CAF50</color>
 
     <color name="error_red">#D11111</color>
+    <color name="border_color">#E0E0E0</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="image_gray">#D1D5DB</color>
+    <color name="background_input_text">#F3F4F6</color>border
+    <color name="sottotitoli_calcoltore">#6B7280</color>
+    <color name="text_input_text_view_calcolatore">#1F2937</color>
+    <color name="error_background_pink">#FEE2E2</color>
+    <color name="error_dark_red">#DC2626</color>
 </resources>

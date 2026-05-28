@@ -70,9 +70,9 @@ class RegisterActivity : AppCompatActivity() {
             binding.layoutEmail.error = null
             binding.layoutPassword.error = null
 
-            val nome = binding.textNome.text.toString().trim()
-            val cognome = binding.textCognome.text.toString().trim()
-            val mail = binding.textMail.text.toString().trim()
+            val nome = binding.textNome.text.toString().formattaMaiusc()
+            val cognome = binding.textCognome.text.toString().formattaMaiusc()
+            val mail = binding.textMail.text.toString().lowercase().trim()
             val psw = binding.textPassword.text.toString()
 
             var error=false

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF121212</color>
+    <color name="grey">#BDBDBD</color>
+
+    <color name="primary">#82B1FF</color>
+    <color name="secondary">#64FFDA</color>
+    <color name="tertiary">#FFB74D</color>
+    <color name="neutral">#121212</color>
+    <color name="icon_grey">#A0AABF</color>
+    <color name="green">#81C784</color>
+    <color name="error_red">#CF6679</color>
+    <color name="border_color">#333333</color>
+
+    <color name="text_secondary">#9CA3AF</color>
+    <color name="sottotitoli_calcoltore">#9CA3AF</color>
+
+    <color name="image_gray">#4B5563</color>
+
+    <color name="background_input_text">#1F2937</color>
+
+    <color name="text_input_text_view_calcolatore">#F3F4F6</color>
+
+    <color name="error_background_pink">#3E1A1E</color>
+    <color name="error_dark_red">#F87171</color>
+</resources>

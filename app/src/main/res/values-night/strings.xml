@@ -68,5 +68,28 @@
     <string name="errore_sconosciuto_caricamento">Errore sconosciuto durante il caricamento</string>
     <string name="errore_medico_non_autenticato">Errore: medico non autenticato</string>
     <string name="error_dati_non_validi_eliminazione">Dati non validi per l\'eliminazione</string>
+    <string name="cerca_paziente">Cerca paziente...</string>
+    <string name="Miei_pazienti">I Miei Pazienti</string>
+    <string name="btn_nuovo_paziente">+ Nuovo</string>
+    <string name="calcolatore">Calcolatore</string>
+    <string name="seleziona_paziente">SELEZIONA PAZIENTE</string>
+    <string name="richiesta_seleziona_paziente">Seleziona un paziente</string>
+    <string name="seleziona_farmaco">SELEZIONA FARMACO</string>
+    <string name="richiesta_seleziona_farmaco">Seleziona un farmaco</string>
+    <string name="scegli_schema">SCEGLI SCHEMA</string>
+    <string name="richiesta_seleziona_schema">Seleziona schema</string>
+    <string name="calcola_dose">Calcola dose</string>
+    <string name="dose_calcolata">DOSE CALCOLATA</string>
+    <string name="frequenza">FREQUENZA</string>
+    <string name="database_farmaci">Database Farmaci</string>
+    <string name="cerca_farmaco">Cerca un farmaco...</string>
+    <string name="fonti_cliniche">FONTI CLINICHE</string>
+    <string name="rcp_aifa">RCP AIFA...</string>
+    <string name="nuovo_utente_txt">Nuovo utente?</string>
+    <string name="registrati">Registrati</string>
+    <string name="utente_gia_registrato">Utente già registrato</string>
+    <string name="menu_farmaci">Farmaci</string>
+    <string name="menu_pazienti">Pazienti</string>
+    <string name="menu_home">Home</string>
 
 </resources>
