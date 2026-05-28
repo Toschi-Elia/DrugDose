@@ -29,4 +29,8 @@ object DoseCalculator {
         val sottoMassimo = pesoMaxKg == null || pesoKg < pesoMaxKg
         return sopraMinimo && sottoMassimo
     }
+
+    fun calcolaDoseFissa(doseFissa: Double): Double {
+        return doseFissa
+    }
 }

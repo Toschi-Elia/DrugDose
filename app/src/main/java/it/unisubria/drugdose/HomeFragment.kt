@@ -32,7 +32,9 @@ class HomeFragment : Fragment() {
     // Dati del paziente in arrivo dalla lista
     private var pazienteId: String? = null
     private var pazienteNome: String? = null
+    private var pazienteDataNascita: String? = null
     private var pazientePeso: Double = 0.0
+    private var pazienteAltezza: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +50,9 @@ class HomeFragment : Fragment() {
         arguments?.let { bundle ->
             pazienteId = bundle.getString("ID_PAZIENTE")
             pazienteNome = bundle.getString("NOME_PAZIENTE")
+            pazienteDataNascita = bundle.getString("DATA_NASCITA_PAZIENTE")
             pazientePeso = bundle.getDouble("PESO_PAZIENTE", 0.0)
+            pazienteAltezza = bundle.getInt("ALTEZZA_PAZIENTE", 0)
 
 
             if (!pazienteNome.isNullOrEmpty()) {

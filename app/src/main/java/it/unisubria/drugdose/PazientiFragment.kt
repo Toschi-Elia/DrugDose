@@ -37,7 +37,9 @@ class PazientiFragment : Fragment() {
                 val bundle = Bundle().apply {
                     putString("ID_PAZIENTE", paziente.id)
                     putString("NOME_PAZIENTE", "${paziente.nome} ${paziente.cognome}")
+                    putString("DATA_NASCITA_PAZIENTE", paziente.dataNascita)
                     putDouble("PESO_PAZIENTE", paziente.peso)
+                    putInt("ALTEZZA_PAZIENTE", paziente.altezza)
                 }
                 val homeFragment= HomeFragment()
                 homeFragment.arguments=bundle
