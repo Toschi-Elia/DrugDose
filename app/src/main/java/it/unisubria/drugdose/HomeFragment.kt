@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import it.unisubria.drugdose.calcolo.DoseCalculator
 import it.unisubria.drugdose.databinding.FragmentHomeBinding
 import it.unisubria.drugdose.models.DosaggioStandard
 import it.unisubria.drugdose.models.Farmaco
@@ -103,6 +104,8 @@ class HomeFragment : Fragment() {
             pazienteDataNascita = paziente?.dataNascita
             pazientePeso = paziente?.peso ?: 0.0
             pazienteAltezza = paziente?.altezza ?: 0
+
+            aggiornaDropdownSchemi(binding.dropdownFormato, farmacoSelezionato)
         }
 
         binding.dropdownFarmaco.setOnItemClickListener { _, _, position, _ ->
@@ -140,36 +143,7 @@ class HomeFragment : Fragment() {
         dosaggioStandardSelezionato = null
         regolaSelezionata = null
 
-        val elementiSchema = mutableListOf<SchemaDropdownItem>()
-
-        if (farmaco != null) {
-            if (!farmaco.regole_calcolo.isNullOrEmpty()) {
-                farmaco.regole_calcolo.forEach { regola ->
-                    elementiSchema.add(SchemaDropdownItem(regola = regola))
-                }
-            } else if (!farmaco.formati.isNullOrEmpty()) {
-                farmaco.formati.forEach { formato ->
-                    if (!formato.regole_calcolo.isNullOrEmpty()) {
-                        formato.regole_calcolo.forEach { regola ->
-                            elementiSchema.add(
-                                SchemaDropdownItem(
-                                    formato = formato,
-                                    regola = regola
-                                )
-                            )
-                        }
-                    } else {
-                        elementiSchema.add(SchemaDropdownItem(formato = formato))
-                    }
-                }
-            } else if (farmaco.dosaggio_standard != null) {
-                elementiSchema.add(
-                    SchemaDropdownItem(
-                        dosaggioStandard = farmaco.dosaggio_standard
-                    )
-                )
-            }
-        }
+        val elementiSchema = creaElementiSchema(farmaco)
 
         val adapter = ArrayAdapter(
             requireContext(),
@@ -179,12 +153,70 @@ class HomeFragment : Fragment() {
         dropdownSchema.setAdapter(adapter)
         dropdownSchema.setText("", false)
 
+        if (elementiSchema.size == 1) {
+            selezionaSchema(elementiSchema.first())
+            dropdownSchema.setText(elementiSchema.first().toString(), false)
+        }
+
         dropdownSchema.setOnItemClickListener { _, _, position, _ ->
             val elemento = dropdownSchema.adapter.getItem(position) as? SchemaDropdownItem
-            formatoSelezionato = elemento?.formato
-            dosaggioStandardSelezionato = elemento?.dosaggioStandard
-            regolaSelezionata = elemento?.regola
+            if (elemento != null) {
+                selezionaSchema(elemento)
+            }
         }
+    }
+
+    private fun creaElementiSchema(farmaco: Farmaco?): List<SchemaDropdownItem> {
+        if (farmaco == null) return emptyList()
+
+        val tuttiGliElementi = mutableListOf<SchemaDropdownItem>()
+
+        if (!farmaco.regole_calcolo.isNullOrEmpty()) {
+            farmaco.regole_calcolo.forEach { regola ->
+                tuttiGliElementi.add(SchemaDropdownItem(regola = regola))
+            }
+        } else if (!farmaco.formati.isNullOrEmpty()) {
+            farmaco.formati.forEach { formato ->
+                if (!formato.regole_calcolo.isNullOrEmpty()) {
+                    formato.regole_calcolo.forEach { regola ->
+                        tuttiGliElementi.add(
+                            SchemaDropdownItem(
+                                formato = formato,
+                                regola = regola
+                            )
+                        )
+                    }
+                } else {
+                    tuttiGliElementi.add(SchemaDropdownItem(formato = formato))
+                }
+            }
+        } else if (farmaco.dosaggio_standard != null) {
+            tuttiGliElementi.add(
+                SchemaDropdownItem(
+                    dosaggioStandard = farmaco.dosaggio_standard
+                )
+            )
+        }
+
+        val etaPaziente = pazienteDataNascita?.let { calcolaEtaDaDataNascita(it) }
+        if (pazientePeso <= 0.0 && etaPaziente == null) return tuttiGliElementi
+
+        val elementiCompatibili = tuttiGliElementi.filter { elemento ->
+            val regola = elemento.regola ?: return@filter true
+            val etaCompatibile = etaPaziente == null ||
+                    DoseCalculator.etaCompatibile(etaPaziente, regola.eta_min, regola.eta_max)
+            val pesoCompatibile = pazientePeso <= 0.0 ||
+                    DoseCalculator.pesoCompatibile(pazientePeso, regola.peso_min_kg, regola.peso_max_kg)
+            etaCompatibile && pesoCompatibile
+        }
+
+        return elementiCompatibili.ifEmpty { tuttiGliElementi }
+    }
+
+    private fun selezionaSchema(elemento: SchemaDropdownItem) {
+        formatoSelezionato = elemento.formato
+        dosaggioStandardSelezionato = elemento.dosaggioStandard
+        regolaSelezionata = elemento.regola
     }
 
     private data class PazienteDropdownItem(val paziente: Paziente) {
