@@ -62,7 +62,7 @@ class PazientiFragment : Fragment() {
             bottomSheet.show(parentFragmentManager, "NuovoPazienteBottomSheet")
         }
 
-        viewModel = ViewModelProvider(this)[PazientiViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[PazientiViewModel::class.java]
 
         viewModel.listaPazienti.observe(viewLifecycleOwner) { pazienti ->
             pazienteAdapter.aggiornaDati(pazienti)

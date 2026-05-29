@@ -107,8 +107,8 @@
                         android:id="@+id/dropdown_paziente"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="@string/richiesta_seleziona_paziente"
                         android:inputType="none"
-                        android:text="@string/richiesta_seleziona_paziente"
                         android:textColor="@color/text_input_text_view_calcolatore" />
                 </com.google.android.material.textfield.TextInputLayout>
 

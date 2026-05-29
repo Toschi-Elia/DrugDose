@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var farmaciViewModel: FarmaciViewModel
+    private lateinit var pazientiViewModel: PazientiViewModel
 
     // Dati del farmaco selezionato
     private var farmacoSelezionato: Farmaco? = null
@@ -57,10 +58,25 @@ class HomeFragment : Fragment() {
 
             if (!pazienteNome.isNullOrEmpty()) {
                 binding.dropdownPaziente.setText(pazienteNome, false)
+            } else {
+                binding.dropdownPaziente.setText("", false)
             }
         }
 
+        pazientiViewModel = ViewModelProvider(requireActivity())[PazientiViewModel::class.java]
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
+
+        binding.dropdownPaziente.threshold = 0
+
+        pazientiViewModel.listaPazienti.observe(viewLifecycleOwner) { listaPazienti ->
+            val elementiPaziente = listaPazienti.map { PazienteDropdownItem(it) }
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                elementiPaziente
+            )
+            binding.dropdownPaziente.setAdapter(adapter)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             farmaciViewModel.farmaci.collect { listaFarmaci ->
@@ -72,6 +88,21 @@ class HomeFragment : Fragment() {
                 )
                 binding.dropdownFarmaco.setAdapter(adapter)
             }
+        }
+
+        binding.dropdownPaziente.setOnClickListener {
+            binding.dropdownPaziente.showDropDown()
+        }
+
+        binding.dropdownPaziente.setOnItemClickListener { _, _, position, _ ->
+            val elemento = binding.dropdownPaziente.adapter.getItem(position) as? PazienteDropdownItem
+            val paziente = elemento?.paziente
+
+            pazienteId = paziente?.id
+            pazienteNome = paziente?.let { "${it.nome} ${it.cognome}" }
+            pazienteDataNascita = paziente?.dataNascita
+            pazientePeso = paziente?.peso ?: 0.0
+            pazienteAltezza = paziente?.altezza ?: 0
         }
 
         binding.dropdownFarmaco.setOnItemClickListener { _, _, position, _ ->
@@ -154,6 +185,10 @@ class HomeFragment : Fragment() {
             dosaggioStandardSelezionato = elemento?.dosaggioStandard
             regolaSelezionata = elemento?.regola
         }
+    }
+
+    private data class PazienteDropdownItem(val paziente: Paziente) {
+        override fun toString(): String = "${paziente.nome} ${paziente.cognome}"
     }
 
     private data class FarmacoDropdownItem(val farmaco: Farmaco) {

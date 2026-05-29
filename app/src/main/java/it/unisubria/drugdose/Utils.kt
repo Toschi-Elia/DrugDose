@@ -1,6 +1,8 @@
 package it.unisubria.drugdose
 
 import android.util.Patterns
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 
  class Utils {
@@ -26,3 +28,11 @@ fun String.formattaMaiusc(): String {
     }
 }
 
+fun calcolaEtaDaDataNascita(dataNascita: String): Int? {
+    return try {
+        val nascita = LocalDate.parse(dataNascita)
+        ChronoUnit.YEARS.between(nascita, LocalDate.now()).toInt()
+    } catch (e: Exception) {
+        null
+    }
+}
