@@ -225,11 +225,15 @@ class HomeFragment : Fragment() {
 
         val risultato = when {
             regola?.dose_per_kg != null -> {
-                formattaNumero(
-                    DoseCalculator.calcolaDosePerKg(
-                        regola.dose_per_kg,
-                        pazientePeso
-                    )
+                RisultatoCalcoloUi(
+                    valore = formattaNumero(
+                        DoseCalculator.calcolaDosePerKg(
+                            regola.dose_per_kg,
+                            pazientePeso
+                        )
+                    ),
+                    unita = "mg",
+                    frequenza = frequenzaRisultato(regola, farmaco)
                 )
             }
 
@@ -239,19 +243,47 @@ class HomeFragment : Fragment() {
                     regola.dose_per_kg_max,
                     pazientePeso
                 )
-                "${formattaNumero(range.first)}-${formattaNumero(range.second)}"
+                RisultatoCalcoloUi(
+                    valore = "${formattaNumero(range.first)}-${formattaNumero(range.second)}",
+                    unita = "mg",
+                    frequenza = frequenzaRisultato(regola, farmaco)
+                )
+            }
+
+            regola?.dose_carico_fissa != null && regola.dose_fissa != null -> {
+                RisultatoCalcoloUi(
+                    valore = "Dose iniziale: ${formattaNumero(regola.dose_carico_fissa)} mg\n" +
+                            "Mantenimento: ${formattaNumero(regola.dose_fissa)} mg",
+                    unita = null,
+                    frequenza = frequenzaRisultato(regola, farmaco),
+                    descrittivo = true
+                )
             }
 
             regola?.dose_fissa != null -> {
-                formattaNumero(DoseCalculator.calcolaDoseFissa(regola.dose_fissa))
+                RisultatoCalcoloUi(
+                    valore = formattaNumero(DoseCalculator.calcolaDoseFissa(regola.dose_fissa)),
+                    unita = "mg",
+                    frequenza = frequenzaRisultato(regola, farmaco)
+                )
             }
 
             formatoSelezionato?.descrizione != null -> {
-                formatoSelezionato?.descrizione.orEmpty()
+                RisultatoCalcoloUi(
+                    valore = formatoSelezionato?.descrizione.orEmpty(),
+                    unita = null,
+                    frequenza = frequenzaRisultato(regola, farmaco),
+                    descrittivo = true
+                )
             }
 
             dosaggioStandardSelezionato != null || farmaco.dosaggio_standard != null -> {
-                (dosaggioStandardSelezionato ?: farmaco.dosaggio_standard)?.descrizione.orEmpty()
+                RisultatoCalcoloUi(
+                    valore = (dosaggioStandardSelezionato ?: farmaco.dosaggio_standard)?.descrizione.orEmpty(),
+                    unita = null,
+                    frequenza = frequenzaRisultato(regola, farmaco),
+                    descrittivo = true
+                )
             }
 
             else -> {
@@ -260,9 +292,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.tvRisultatoValore.text = risultato
-        binding.tvRisultatoUnita.text = unitaRisultato(farmaco)
-        binding.tvRisultatoFrequenza.text = frequenzaRisultato(regola, farmaco)
+        mostraRisultato(risultato)
         binding.tvAlertMessage.text = if (farmaco.alert.isEmpty()) {
             "Nessun alert disponibile per il farmaco selezionato."
         } else {
@@ -270,12 +300,16 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun unitaRisultato(farmaco: Farmaco): String {
-        return if (farmaco.unita_di_misura.contains("mg", ignoreCase = true)) {
-            "mg"
+    private fun mostraRisultato(risultato: RisultatoCalcoloUi) {
+        binding.tvRisultatoValore.text = risultato.valore
+        binding.tvRisultatoValore.textSize = if (risultato.descrittivo) 20f else 36f
+        binding.tvRisultatoUnita.text = risultato.unita.orEmpty()
+        binding.tvRisultatoUnita.visibility = if (risultato.unita.isNullOrBlank()) {
+            View.GONE
         } else {
-            farmaco.unita_di_misura
+            View.VISIBLE
         }
+        binding.tvRisultatoFrequenza.text = risultato.frequenza
     }
 
     private fun frequenzaRisultato(regola: RegolaCalcolo?, farmaco: Farmaco): String {
@@ -293,6 +327,13 @@ class HomeFragment : Fragment() {
             String.format("%.1f", numero)
         }
     }
+
+    private data class RisultatoCalcoloUi(
+        val valore: String,
+        val unita: String?,
+        val frequenza: String,
+        val descrittivo: Boolean = false
+    )
 
     private data class PazienteDropdownItem(val paziente: Paziente) {
         override fun toString(): String = "${paziente.nome} ${paziente.cognome}"
