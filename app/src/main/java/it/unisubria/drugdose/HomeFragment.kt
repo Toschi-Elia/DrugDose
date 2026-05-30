@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import it.unisubria.drugdose.calcolo.DoseCalcolata
 import it.unisubria.drugdose.calcolo.DoseCalculator
 import it.unisubria.drugdose.databinding.FragmentHomeBinding
 import it.unisubria.drugdose.models.DosaggioStandard
@@ -221,75 +222,17 @@ class HomeFragment : Fragment() {
 
     private fun mostraCalcoloDose() {
         val farmaco = farmacoSelezionato ?: return
-        val regola = regolaSelezionata
+        val risultato = DoseCalculator.calcolaDoseDaRegola(
+            farmaco = farmaco,
+            regola = regolaSelezionata,
+            formato = formatoSelezionato,
+            dosaggioStandard = dosaggioStandardSelezionato,
+            pesoKg = pazientePeso
+        )
 
-        val risultato = when {
-            regola?.dose_per_kg != null -> {
-                RisultatoCalcoloUi(
-                    valore = formattaNumero(
-                        DoseCalculator.calcolaDosePerKg(
-                            regola.dose_per_kg,
-                            pazientePeso
-                        )
-                    ),
-                    unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco)
-                )
-            }
-
-            regola?.dose_per_kg_min != null && regola.dose_per_kg_max != null -> {
-                val range = DoseCalculator.calcolaRangeDosePerKg(
-                    regola.dose_per_kg_min,
-                    regola.dose_per_kg_max,
-                    pazientePeso
-                )
-                RisultatoCalcoloUi(
-                    valore = "${formattaNumero(range.first)}-${formattaNumero(range.second)}",
-                    unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco)
-                )
-            }
-
-            regola?.dose_carico_fissa != null && regola.dose_fissa != null -> {
-                RisultatoCalcoloUi(
-                    valore = "Dose iniziale: ${formattaNumero(regola.dose_carico_fissa)} mg\n" +
-                            "Mantenimento: ${formattaNumero(regola.dose_fissa)} mg",
-                    unita = null,
-                    frequenza = frequenzaRisultato(regola, farmaco),
-                    descrittivo = true
-                )
-            }
-
-            regola?.dose_fissa != null -> {
-                RisultatoCalcoloUi(
-                    valore = formattaNumero(DoseCalculator.calcolaDoseFissa(regola.dose_fissa)),
-                    unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco)
-                )
-            }
-
-            formatoSelezionato?.descrizione != null -> {
-                RisultatoCalcoloUi(
-                    valore = formatoSelezionato?.descrizione.orEmpty(),
-                    unita = null,
-                    frequenza = frequenzaRisultato(regola, farmaco),
-                    descrittivo = true
-                )
-            }
-
-            dosaggioStandardSelezionato != null || farmaco.dosaggio_standard != null -> {
-                RisultatoCalcoloUi(
-                    valore = (dosaggioStandardSelezionato ?: farmaco.dosaggio_standard)?.descrizione.orEmpty(),
-                    unita = null,
-                    frequenza = frequenzaRisultato(regola, farmaco),
-                    descrittivo = true
-                )
-            }
-
-            else -> {
-                Toast.makeText(requireContext(), "Seleziona uno schema valido", Toast.LENGTH_SHORT).show()
-                return
-            }
+        if (risultato == null) {
+            Toast.makeText(requireContext(), "Seleziona uno schema valido", Toast.LENGTH_SHORT).show()
+            return
         }
 
         mostraRisultato(risultato)
@@ -300,7 +243,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun mostraRisultato(risultato: RisultatoCalcoloUi) {
+    private fun mostraRisultato(risultato: DoseCalcolata) {
         binding.tvRisultatoValore.text = risultato.valore
         binding.tvRisultatoValore.textSize = if (risultato.descrittivo) 20f else 36f
         binding.tvRisultatoUnita.text = risultato.unita.orEmpty()
@@ -311,29 +254,6 @@ class HomeFragment : Fragment() {
         }
         binding.tvRisultatoFrequenza.text = risultato.frequenza
     }
-
-    private fun frequenzaRisultato(regola: RegolaCalcolo?, farmaco: Farmaco): String {
-        return regola?.descrizione_dose
-            ?: regola?.dose
-            ?: dosaggioStandardSelezionato?.frequenza
-            ?: farmaco.dosaggio_standard?.frequenza
-            ?: "--"
-    }
-
-    private fun formattaNumero(numero: Double): String {
-        return if (numero % 1.0 == 0.0) {
-            numero.toInt().toString()
-        } else {
-            String.format("%.1f", numero)
-        }
-    }
-
-    private data class RisultatoCalcoloUi(
-        val valore: String,
-        val unita: String?,
-        val frequenza: String,
-        val descrittivo: Boolean = false
-    )
 
     private data class PazienteDropdownItem(val paziente: Paziente) {
         override fun toString(): String = "${paziente.nome} ${paziente.cognome}"
