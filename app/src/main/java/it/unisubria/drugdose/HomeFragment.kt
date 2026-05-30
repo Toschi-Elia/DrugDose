@@ -126,7 +126,7 @@ class HomeFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            Toast.makeText(requireContext(), "Calcolo per ${pazientePeso}kg avviato!", Toast.LENGTH_SHORT).show()
+            mostraCalcoloDose()
         }
     }
 
@@ -217,6 +217,81 @@ class HomeFragment : Fragment() {
         formatoSelezionato = elemento.formato
         dosaggioStandardSelezionato = elemento.dosaggioStandard
         regolaSelezionata = elemento.regola
+    }
+
+    private fun mostraCalcoloDose() {
+        val farmaco = farmacoSelezionato ?: return
+        val regola = regolaSelezionata
+
+        val risultato = when {
+            regola?.dose_per_kg != null -> {
+                formattaNumero(
+                    DoseCalculator.calcolaDosePerKg(
+                        regola.dose_per_kg,
+                        pazientePeso
+                    )
+                )
+            }
+
+            regola?.dose_per_kg_min != null && regola.dose_per_kg_max != null -> {
+                val range = DoseCalculator.calcolaRangeDosePerKg(
+                    regola.dose_per_kg_min,
+                    regola.dose_per_kg_max,
+                    pazientePeso
+                )
+                "${formattaNumero(range.first)}-${formattaNumero(range.second)}"
+            }
+
+            regola?.dose_fissa != null -> {
+                formattaNumero(DoseCalculator.calcolaDoseFissa(regola.dose_fissa))
+            }
+
+            formatoSelezionato?.descrizione != null -> {
+                formatoSelezionato?.descrizione.orEmpty()
+            }
+
+            dosaggioStandardSelezionato != null || farmaco.dosaggio_standard != null -> {
+                (dosaggioStandardSelezionato ?: farmaco.dosaggio_standard)?.descrizione.orEmpty()
+            }
+
+            else -> {
+                Toast.makeText(requireContext(), "Seleziona uno schema valido", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        binding.tvRisultatoValore.text = risultato
+        binding.tvRisultatoUnita.text = unitaRisultato(farmaco)
+        binding.tvRisultatoFrequenza.text = frequenzaRisultato(regola, farmaco)
+        binding.tvAlertMessage.text = if (farmaco.alert.isEmpty()) {
+            "Nessun alert disponibile per il farmaco selezionato."
+        } else {
+            farmaco.alert.joinToString(separator = "\n")
+        }
+    }
+
+    private fun unitaRisultato(farmaco: Farmaco): String {
+        return if (farmaco.unita_di_misura.contains("mg", ignoreCase = true)) {
+            "mg"
+        } else {
+            farmaco.unita_di_misura
+        }
+    }
+
+    private fun frequenzaRisultato(regola: RegolaCalcolo?, farmaco: Farmaco): String {
+        return regola?.descrizione_dose
+            ?: regola?.dose
+            ?: dosaggioStandardSelezionato?.frequenza
+            ?: farmaco.dosaggio_standard?.frequenza
+            ?: "--"
+    }
+
+    private fun formattaNumero(numero: Double): String {
+        return if (numero % 1.0 == 0.0) {
+            numero.toInt().toString()
+        } else {
+            String.format("%.1f", numero)
+        }
     }
 
     private data class PazienteDropdownItem(val paziente: Paziente) {

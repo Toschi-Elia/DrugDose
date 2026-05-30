@@ -136,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:text="@string/richiesta_seleziona_farmaco"
+                        android:hint="@string/richiesta_seleziona_farmaco"
                         android:textColor="@color/text_input_text_view_calcolatore" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:text="@string/richiesta_seleziona_schema"
+                        android:hint="@string/richiesta_seleziona_schema"
                         android:textColor="@color/text_input_text_view_calcolatore" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -246,12 +246,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -292,10 +291,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="end">
+                        android:layout_marginTop="20dp">
 
                         <TextView
                             android:layout_width="wrap_content"
