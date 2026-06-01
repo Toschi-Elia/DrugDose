@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +20,7 @@ class PazientiFragment : Fragment() {
 
     private lateinit var viewModel: PazientiViewModel
     private lateinit var pazienteAdapter: PazienteAdapter
+    private var listaPazientiCompleta: List<Paziente> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,10 +63,24 @@ class PazientiFragment : Fragment() {
             bottomSheet.show(parentFragmentManager, "NuovoPazienteBottomSheet")
         }
 
+        binding.searchViewPazienti.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                filtraPazienti(query)
+                binding.searchViewPazienti.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filtraPazienti(newText)
+                return true
+            }
+        })
+
         viewModel = ViewModelProvider(requireActivity())[PazientiViewModel::class.java]
 
         viewModel.listaPazienti.observe(viewLifecycleOwner) { pazienti ->
-            pazienteAdapter.aggiornaDati(pazienti)
+            listaPazientiCompleta = pazienti
+            filtraPazienti(binding.searchViewPazienti.query?.toString())
         }
 
         viewModel.caricamento.observe(viewLifecycleOwner) { inCaricamento ->
@@ -91,6 +106,23 @@ class PazientiFragment : Fragment() {
             }
         }
     }
+
+    private fun filtraPazienti(query: String?) {
+        val testoRicerca = query.orEmpty().trim()
+        val pazientiFiltrati = if (testoRicerca.isBlank()) {
+            listaPazientiCompleta
+        } else {
+            listaPazientiCompleta.filter { paziente ->
+                val nomeCompleto = "${paziente.nome} ${paziente.cognome}"
+                paziente.nome.contains(testoRicerca, ignoreCase = true) ||
+                        paziente.cognome.contains(testoRicerca, ignoreCase = true) ||
+                        nomeCompleto.contains(testoRicerca, ignoreCase = true)
+            }
+        }
+
+        pazienteAdapter.aggiornaDati(pazientiFiltrati)
+    }
+
     private fun mostraDialogConfermaEliminazione(paziente: Paziente) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Elimina Paziente")
