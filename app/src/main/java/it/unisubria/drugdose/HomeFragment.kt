@@ -222,6 +222,12 @@ class HomeFragment : Fragment() {
 
     private fun mostraCalcoloDose() {
         val farmaco = farmacoSelezionato ?: return
+        val erroreBloccante = validaVincoliCalcolo(farmaco, regolaSelezionata)
+        if (erroreBloccante != null) {
+            mostraErroreCalcolo(erroreBloccante)
+            return
+        }
+
         val risultato = DoseCalculator.calcolaDoseDaRegola(
             farmaco = farmaco,
             regola = regolaSelezionata,
@@ -241,6 +247,59 @@ class HomeFragment : Fragment() {
         } else {
             farmaco.alert.joinToString(separator = "\n")
         }
+    }
+
+    private fun validaVincoliCalcolo(farmaco: Farmaco, regola: RegolaCalcolo?): String? {
+        val etaPaziente = pazienteDataNascita?.let { calcolaEtaDaDataNascita(it) }
+
+        if (etaPaziente == null) {
+            return "Calcolo non consentito: data di nascita del paziente non valida."
+        }
+
+        if (etaPaziente < farmaco.eta_minima) {
+            return "Calcolo non consentito: farmaco non indicato sotto i ${farmaco.eta_minima} anni."
+        }
+
+        if (farmacoRichiedeRegola(farmaco) && regola == null) {
+            return "Calcolo non consentito: seleziona uno schema valido."
+        }
+
+        if (regola != null) {
+            val etaCompatibile = DoseCalculator.etaCompatibile(
+                etaPaziente,
+                regola.eta_min,
+                regola.eta_max
+            )
+            if (!etaCompatibile) {
+                return "Calcolo non consentito: età del paziente non compatibile con lo schema selezionato."
+            }
+
+            val pesoCompatibile = DoseCalculator.pesoCompatibile(
+                pazientePeso,
+                regola.peso_min_kg,
+                regola.peso_max_kg
+            )
+            if (!pesoCompatibile) {
+                return "Calcolo non consentito: peso del paziente non compatibile con lo schema selezionato."
+            }
+        }
+
+        return null
+    }
+
+    private fun farmacoRichiedeRegola(farmaco: Farmaco): Boolean {
+        val haRegoleFarmaco = !farmaco.regole_calcolo.isNullOrEmpty()
+        val haRegoleFormato = farmaco.formati?.any { !it.regole_calcolo.isNullOrEmpty() } == true
+        return haRegoleFarmaco || haRegoleFormato
+    }
+
+    private fun mostraErroreCalcolo(messaggio: String) {
+        binding.tvRisultatoValore.text = "--"
+        binding.tvRisultatoValore.textSize = 36f
+        binding.tvRisultatoUnita.text = ""
+        binding.tvRisultatoUnita.visibility = View.GONE
+        binding.tvRisultatoFrequenza.text = "--"
+        binding.tvAlertMessage.text = messaggio
     }
 
     private fun mostraRisultato(risultato: DoseCalcolata) {
