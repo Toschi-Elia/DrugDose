@@ -41,6 +41,22 @@
                 android:textColor="@color/primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/btn_impostazioni"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="@color/icon_grey"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"/>
+
         </LinearLayout>
 
         <!-- Divider opzionale sotto l'header -->

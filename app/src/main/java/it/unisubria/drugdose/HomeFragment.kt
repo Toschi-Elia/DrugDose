@@ -1,17 +1,28 @@
 package it.unisubria.drugdose
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import it.unisubria.drugdose.calcolo.DoseCalcolata
 import it.unisubria.drugdose.calcolo.DoseCalculator
+import it.unisubria.drugdose.databinding.DialogSettingsBinding
 import it.unisubria.drugdose.databinding.FragmentHomeBinding
 import it.unisubria.drugdose.models.DosaggioStandard
 import it.unisubria.drugdose.models.Farmaco
@@ -38,6 +49,7 @@ class HomeFragment : Fragment() {
     private var pazienteDataNascita: String? = null
     private var pazientePeso: Double = 0.0
     private var pazienteAltezza: Int = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,7 +141,9 @@ class HomeFragment : Fragment() {
 
             mostraCalcoloDose()
         }
-    }
+        binding.btnImpostazioni.setOnClickListener { mostraDialogImpostazioni() }
+
+   }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -354,4 +368,73 @@ class HomeFragment : Fragment() {
             } ?: ""
         }
     }
-}
+    private fun mostraDialogImpostazioni() {
+        val binding = DialogSettingsBinding.inflate(layoutInflater)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(binding.root)
+            .create()
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val lingueSupportate = mapOf(
+            "it" to "Italiano",
+            "en" to "English"
+        )
+        val linguaAttualeSalvata = "it"
+
+        for ((codice, nome) in lingueSupportate) {
+            val radioButton = RadioButton(requireContext()).apply {
+                id = View.generateViewId()
+                text = nome
+                tag = codice
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.text_input_text_view_calcolatore))
+                layoutParams = RadioGroup.LayoutParams(
+                    RadioGroup.LayoutParams.MATCH_PARENT,
+                    RadioGroup.LayoutParams.WRAP_CONTENT
+                )
+                if (codice == linguaAttualeSalvata) {
+                    isChecked = true
+                }
+            }
+            binding.rgLingua.addView(radioButton)
+        }
+
+        binding.rgLingua.setOnCheckedChangeListener { group, checkedId ->
+            val bottoneSelezionato = group.findViewById<RadioButton>(checkedId)
+            val nuovoCodiceLingua = bottoneSelezionato.tag as String
+            println("Hai scelto la lingua: $nuovoCodiceLingua")
+        }
+        //tema
+        val sharedPref = requireActivity().getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+        val currentThemeMode = sharedPref.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+        binding.switchTemaScuro.isChecked = when (currentThemeMode) {
+            AppCompatDelegate.MODE_NIGHT_YES -> true
+            AppCompatDelegate.MODE_NIGHT_NO -> false
+            else -> {
+                val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                currentNightMode == Configuration.UI_MODE_NIGHT_YES
+            }
+        }
+
+        binding.switchTemaScuro.setOnCheckedChangeListener { _, isChecked ->
+            val newMode = if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            sharedPref.edit().putInt("theme_mode", newMode).apply()
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            dialog.dismiss()
+        }
+
+        //LOG OUT
+        binding.btnLogout.setOnClickListener {
+            AuthRepository().eseguiLogout()
+            dialog.dismiss()
+
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        dialog.show()
+    }}

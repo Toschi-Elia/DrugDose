@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DrugDose</string>
+    <string name="app_name" translatable="false">DrugDose</string>
     <string name="accesso">Accesso</string>
     <string name="Registrati">Registrati</string>
     <string name="accesso_ospite">Accedi come ospite</string>
@@ -11,7 +11,7 @@
     <string name="password_dimenticata">Password dimenticata?</string>
     <string name="slogan">Clinical dosing precision</string>
     <string name="mail_esempio">nome.cognome@ospedale.it</string>
-    <string name="password_esempio">••••••••</string>
+    <string name="password_esempio" translatable="false">••••••••</string>
 
     <string name="helper_password"><![CDATA[Minimo 8 caratteri, una lettera maiuscola, una minuscola e un carattere speciale (@#$%^&+=!_-)]]></string>
 
@@ -96,5 +96,10 @@
     <string name="menu_farmaci">Farmaci</string>
     <string name="menu_pazienti">Pazienti</string>
     <string name="menu_home">Home</string>
+    <string name="impostazioni">Impostazioni</string>
+    <string name="modalit_scura">Modalità Scura</string>
+    <string name="lingua">Lingua</string>
+    <string name="italiano">Italiano</string>
+    <string name="log_out">LOG OUT</string>
 
 </resources>

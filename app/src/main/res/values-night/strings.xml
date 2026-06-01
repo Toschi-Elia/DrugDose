@@ -91,5 +91,10 @@
     <string name="menu_farmaci">Farmaci</string>
     <string name="menu_pazienti">Pazienti</string>
     <string name="menu_home">Home</string>
+    <string name="impostazioni">Impostazioni</string>
+    <string name="modalit_scura">Modalità Scura</string>
+    <string name="lingua">Lingua</string>
+    <string name="italiano">Italiano</string>
+    <string name="log_out">LOG OUT</string>
 
 </resources>

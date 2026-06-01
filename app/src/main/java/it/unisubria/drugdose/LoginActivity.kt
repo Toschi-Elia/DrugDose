@@ -18,7 +18,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.provider.Settings
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loadingDialog: LoadingDialog

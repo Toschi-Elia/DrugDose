@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import it.unisubria.drugdose.databinding.ActivityRegisterBinding
 import android.provider.Settings
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var loadingDialog: LoadingDialog
