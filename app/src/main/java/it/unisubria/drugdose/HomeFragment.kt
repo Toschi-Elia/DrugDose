@@ -17,6 +17,7 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.models.Formato
 import it.unisubria.drugdose.models.RegolaCalcolo
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -381,7 +383,11 @@ class HomeFragment : Fragment() {
             "it" to "Italiano",
             "en" to "English"
         )
-        val linguaAttualeSalvata = "it"
+        val appLocales= AppCompatDelegate.getApplicationLocales()
+        val linguaAttualeSalvata= if(!appLocales.isEmpty)
+            appLocales.get(0)?.language?:"it"
+        else
+            Locale.getDefault().language
 
         for ((codice, nome) in lingueSupportate) {
             val radioButton = RadioButton(requireContext()).apply {
@@ -403,7 +409,12 @@ class HomeFragment : Fragment() {
         binding.rgLingua.setOnCheckedChangeListener { group, checkedId ->
             val bottoneSelezionato = group.findViewById<RadioButton>(checkedId)
             val nuovoCodiceLingua = bottoneSelezionato.tag as String
-            println("Hai scelto la lingua: $nuovoCodiceLingua")
+
+            // Applica la lingua e riavvia l'interfaccia automaticamente
+            val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(nuovoCodiceLingua)
+            AppCompatDelegate.setApplicationLocales(appLocale)
+
+            dialog.dismiss() // Chiudiamo il dialog
         }
         //tema
         val sharedPref = requireActivity().getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)

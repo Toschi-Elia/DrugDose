@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name" translatable="false">DrugDose</string>
+    <string name="accesso">Sign in</string>
+    <string name="Registrati">Sign up</string>
+    <string name="accesso_ospite">Continue as guest</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="button_accedi">Login</string>
+    <string name="log_in">Log in</string>
+    <string name="usa_biometria">"Use biometrics"</string>
+    <string name="password_dimenticata">Forgot password?</string>
+    <string name="slogan">Clinical dosing precision</string>
+    <string name="mail_esempio">name.surname@hospital.com</string>
+    <string name="password_esempio" translatable="false">••••••••</string>
+
+    <string name="helper_password"><![CDATA[Minimum 8 characters, one uppercase, one lowercase, and one special character (@#$%^&+=!_-)]]></string>
+
+    <string name="error_email_empty">Email is required</string>
+    <string name="error_invalid_email">Invalid email format</string>
+    <string name="error_password_empty">Password is required</string>
+    <string name="error_invalid_credentials">Invalid credentials</string>
+    <string name="error_nome">First name is required</string>
+    <string name="error_cognome">Last name is required</string>
+    <string name="error_psw_not_strong">Weak password</string>
+    <string name="error_data_nascita_obl">Date of birth is required</string>
+    <string name="error_altezza_obl">Height is required</string>
+    <string name="error_peso_obl">Weight is required</string>
+
+    <string name="error_firebase_mail_presente">An account with this email already exists.</string>
+    <string name="error_firebase_no_internet">Please check your internet connection.</string>
+    <string name="error_generic_register">Registration failed. Please try again.</string>
+    <string name="errore_uid_non_trovato">Error: UID not found.</string>
+
+    <string name="error_firebase_credenziali_errate">Incorrect credentials.</string>
+    <string name="error_generic_login">Login failed. Please try again.</string>
+
+    <string name="error_email_non_nel_db">No account associated with this email.</string>
+    <string name="error_generic_psw_dimenticata">Error sending the reset email.</string>
+
+    <string name="sblocco_biometric_title">DrugDose Unlock</string>
+    <string name="sblocco_biometric_subtitle">Authentication required to access medical records</string>
+    <string name="biometric_usa_psw">Use password</string>
+
+    <string name="email_di_reset_toast">Reset email sent to</string>
+    <string name="nuovo_paziente">New Patient</string>
+    <string name="nome">First Name</string>
+    <string name="cognome">Last Name</string>
+    <string name="data_nascita">Date of Birth</string>
+    <string name="peso_kg">Weight (kg)</string>
+    <string name="altezza_cm">Height (cm)</string>
+    <string name="salva_paziente">Save Patient</string>
+    <string name="es_peso">E.g., 75.5 kg</string>
+    <string name="es_altezza">E.g., 180 cm</string>
+    <string name="es_data_nascita">Select date</string>
+    <string name="es_nome">E.g., John</string>
+    <string name="es_cognome">E.g., Doe</string>
+    <string name="es_nome_cognome">John Doe</string>
+    <string name="error_peso_non_valido">Invalid weight entered</string>
+    <string name="altezza_non_valida">Invalid height entered</string>
+    <string name="date_picker_title">Select date of birth</string>
+    <string name="calendario_nascita">BIRTH_CALENDAR</string>
+    <string name="error_data_futura">Date cannot be in the future</string>
+    <string name="error_eta_magg_130"><![CDATA[Invalid date (age > 130 years)]]></string>
+    <string name="paziente_salvato">Patient successfully saved!</string>
+    <string name="error_formato_data_non_valido">Invalid date format</string>
+    <string name="errore_salvataggio_paziente">Network error while saving</string>
+    <string name="Biometric_helper">Device not configured. Tap to set up.</string>
+    <string name="errore_sconosciuto_caricamento">Unknown error during loading</string>
+    <string name="errore_medico_non_autenticato">Error: physician not authenticated</string>
+    <string name="error_dati_non_validi_eliminazione">Invalid data for deletion</string>
+    <string name="cerca_paziente">Search patient...</string>
+    <string name="Miei_pazienti">My Patients</string>
+    <string name="btn_nuovo_paziente">+ New</string>
+    <string name="calcolatore">Calculator</string>
+    <string name="seleziona_paziente">SELECT PATIENT</string>
+    <string name="richiesta_seleziona_paziente">Please select a patient</string>
+    <string name="seleziona_farmaco">SELECT MEDICATION</string>
+    <string name="richiesta_seleziona_farmaco">Please select a medication</string>
+    <string name="scegli_schema">CHOOSE REGIMEN</string>
+    <string name="richiesta_seleziona_schema">Please select a regimen</string>
+    <string name="calcola_dose">Calculate dose</string>
+    <string name="dose_calcolata">CALCULATED DOSE</string>
+    <string name="frequenza">FREQUENCY</string>
+    <string name="database_farmaci">Medication Database</string>
+    <string name="cerca_farmaco">Search for a medication...</string>
+    <string name="indicazione_clinica">CLINICAL INDICATION</string>
+    <string name="fonti_cliniche">CLINICAL SOURCES</string>
+    <string name="rcp_aifa">SmPC...</string>
+    <string name="nuovo_utente_txt">New user?</string>
+    <string name="registrati">Sign up</string>
+    <string name="utente_gia_registrato">User already registered</string>
+    <string name="menu_farmaci">Medications</string>
+    <string name="menu_pazienti">Patients</string>
+    <string name="menu_home">Home</string>
+
+    <string name="impostazioni">Settings</string>
+    <string name="modalit_scura">Dark Mode</string>
+    <string name="lingua">Language</string>
+    <string name="italiano">Italian</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="avviso_calcolatore_titolo">CLINICAL ALERTS / CONTRAINDICATIONS</string>
+    <string name="avviso_calcolatore_sottotitolo">Please select a patient and a medication to view alerts.</string>
+    <string name="item_eta">Age: %1$s years</string>
+    <string name="item_peso">Weight: %1$s kg</string>
+    <string name="item_data">Date: %1$s</string>
+    <string name="item_altezza">Height: %1$s</string>
+    <string name="posologia_formula">DOSAGE AND FORMULATION</string>
+    <string name="limitazioni_avvertenze">LIMITATIONS AND WARNINGS</string>
+    <string name="unita_misura_bs">Unit: %1$s</string>
+    <string name="dosaggio_standard_bs">Dose: %1$s</string>
+    <string name="item_farmaco_formula">Formulation: %1$s - %2$s</string>
+    <string name="bs_farmaco_formula">Formulation: %1$s</string>
+    <string name="bs_unita_misura_dettaglio">Unit: %1$s</string>
+    <string name="bs_limitazioni_testo">Min age: %1$s years\nMax duration: %2$s</string>
+    <string name="bs_dosaggio_standard_dettaglio">Dose: %1$s\nFrequency: %2$s</string>
+    <string name="regole_dosaggio_titolo">Dosage rules</string>
+    <string name="dose_fissa_mg">%1$s mg</string>
+</resources>

@@ -96,5 +96,7 @@
     <string name="lingua">Lingua</string>
     <string name="italiano">Italiano</string>
     <string name="log_out">LOG OUT</string>
+    <string name="avviso_calcolatore_titolo">AVVISI CLINICI / CONTROINDICAZIONI</string>
+    <string name="avviso_calcolatore_sottotitolo">Attendere selezione farmaco e paziente per visualizzare gli alert.</string>
 
 </resources>

@@ -18,19 +18,20 @@ class PazienteAdapter(private val onPazienteClick:(Paziente)->Unit,private val o
         notifyDataSetChanged()
     }
     inner class PazienteViewHolder(val binding: ItemPazienteBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(paziente: Paziente)
-        {
-            binding.tvItemNomePaziente.text="${paziente.nome.formattaMaiusc()} ${paziente.cognome.formattaMaiusc()}"
-            binding.tvItemPeso.text="Peso: ${paziente.peso} kg"
-            binding.tvItemAltezza.text="Alt: ${paziente.altezza} cm"
+        fun bind(paziente: Paziente) {
+            val context = itemView.context
+
+            binding.tvItemNomePaziente.text = "${paziente.nome.formattaMaiusc()} ${paziente.cognome.formattaMaiusc()}"
+
+            binding.tvItemPeso.text = context.getString(R.string.item_peso, paziente.peso.toString())
+            binding.tvItemAltezza.text = context.getString(R.string.item_altezza, paziente.altezza.toString())
 
             val (dataStr, etaStr) = formattaDataEta(paziente.dataNascita)
-            binding.tvItemDataNascita.text = dataStr
-            binding.tvItemEta.text = etaStr
+            binding.tvItemDataNascita.text = context.getString(R.string.item_data, dataStr)
+            binding.tvItemEta.text = context.getString(R.string.item_eta, etaStr)
 
             binding.btnEliminaPaziente.setOnClickListener { onEliminaClick(paziente) }
-            binding.root.setOnClickListener { {onPazienteClick(paziente)} }
-
+            binding.root.setOnClickListener { onPazienteClick(paziente) } // Corrette le doppie graffe!
         }
     }
 
@@ -52,15 +53,14 @@ class PazienteAdapter(private val onPazienteClick:(Paziente)->Unit,private val o
             val dataNascita = LocalDate.parse(dataString)
             val eta = ChronoUnit.YEARS.between(dataNascita, LocalDate.now())
 
-            // formato dinamico in base al paese (es. IT -> dd/MM/yyyy, US -> MM/dd/yyyy)
             val patternLocale = android.text.format.DateFormat.getBestDateTimePattern(Locale.getDefault(), "ddMMyyyy")
             val formatter = DateTimeFormatter.ofPattern(patternLocale, Locale.getDefault())
             val dataFormattata = dataNascita.format(formatter)
 
-            Pair("Data: $dataFormattata", "Età: $eta anni")
+            Pair(dataFormattata, eta.toString())
 
         } catch (e: Exception) {
-            Pair("Data: N/D", "Età: N/D")
+            Pair("-", "-")
         }
     }
     fun aggiornaDati(nuoviPazienti: List<Paziente>) {

@@ -101,5 +101,21 @@
     <string name="lingua">Lingua</string>
     <string name="italiano">Italiano</string>
     <string name="log_out">LOG OUT</string>
-
+    <string name="avviso_calcolatore_titolo">AVVISI CLINICI / CONTROINDICAZIONI</string>
+    <string name="avviso_calcolatore_sottotitolo">Attendere selezione farmaco e paziente per visualizzare gli alert.</string>
+    <string name="item_eta">Età: %1$s anni</string>
+    <string name="item_peso">Peso: %1$s kg</string>
+    <string name="item_data">Data: %1$s</string>
+    <string name="item_altezza">Altezza: %1$s</string>
+    <string name="posologia_formula">POSOLOGIA E FORMULA</string>
+    <string name="limitazioni_avvertenze">LIMITAZIONI E AVVERTENZE</string>
+    <string name="unita_misura_bs">Unità: %1$s</string>
+    <string name="dosaggio_standard_bs">Dose: %1$s</string>
+    <string name="item_farmaco_formula">Formula: %1$s - %2$s</string>
+    <string name="bs_farmaco_formula">Formula: %1$s</string>
+    <string name="bs_unita_misura_dettaglio">Unità di misura: %1$s</string>
+    <string name="bs_limitazioni_testo">Età minima: %1$s anni\nDurata max: %2$s</string>
+    <string name="bs_dosaggio_standard_dettaglio">Dose: %1$s\nFrequenza: %2$s</string>
+    <string name="regole_dosaggio_titolo">Regole di dosaggio</string>
+    <string name="dose_fissa_mg">%1$s mg</string>
 </resources>

@@ -1,5 +1,6 @@
 package it.unisubria.drugdose
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,9 @@ import it.unisubria.drugdose.models.Farmaco
 class FarmaciAdapter(private var lista: List<Farmaco>) :
     RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {
 
-    // ViewHolder con riferimenti alle view della card
     class FarmacoViewHolder(val binding: ItemFarmacoBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    // Crea il layout della card
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FarmacoViewHolder {
         val binding = ItemFarmacoBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -26,30 +25,35 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
         return FarmacoViewHolder(binding)
     }
 
-    // Popola la card con i dati del farmaco
     override fun onBindViewHolder(holder: FarmacoViewHolder, position: Int) {
         val farmaco = lista[position]
 
+        val context = holder.binding.root.context
+
         holder.binding.tvItemNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
         holder.binding.tvItemPrincipioAttivo.text = farmaco.principio_attivo
-        holder.binding.tvItemFormula.text =
-            "Formula: ${farmaco.tipo_di_formula} - ${farmaco.unita_di_misura}"
+        holder.binding.tvItemFormula.text = context.getString(
+            R.string.item_farmaco_formula,
+            farmaco.tipo_di_formula,
+            farmaco.unita_di_misura
+        )
 
-        // Apre il BottomSheet con i dettagli al click
         holder.binding.root.setOnClickListener {
-            val context = holder.binding.root.context
             val dialog = BottomSheetDialog(context)
             val sheetBinding = BottomSheetFarmacoBinding.inflate(LayoutInflater.from(context))
 
-            // Popola il BottomSheet
             sheetBinding.bsNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
             sheetBinding.bsPrincipioAttivo.text = farmaco.principio_attivo
             sheetBinding.bsIndicazione.text = farmaco.indicazione_clinica
 
-            sheetBinding.bsTipoFormula.text = "Formula: ${farmaco.tipo_di_formula}"
-            sheetBinding.bsUnitaMisura.text = "Unità di misura: ${farmaco.unita_di_misura}"
-            sheetBinding.bsLimitazioni.text =
-                "Età minima: ${farmaco.eta_minima} anni\nDurata max: ${farmaco.durata_massima}"
+            sheetBinding.bsTipoFormula.text = context.getString(R.string.bs_farmaco_formula, farmaco.tipo_di_formula)
+            sheetBinding.bsUnitaMisura.text = context.getString(R.string.bs_unita_misura_dettaglio, farmaco.unita_di_misura)
+
+            sheetBinding.bsLimitazioni.text = context.getString(
+                R.string.bs_limitazioni_testo,
+                farmaco.eta_minima.toString(),
+                farmaco.durata_massima
+            )
 
             if (farmaco.alert.isNotEmpty()) {
                 sheetBinding.bsAlert.visibility = View.VISIBLE
@@ -58,16 +62,18 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
                 sheetBinding.bsAlert.visibility = View.GONE
             }
 
-            // Dosaggio standard
             if (farmaco.dosaggio_standard != null) {
                 sheetBinding.bsDosaggioStandard.visibility = View.VISIBLE
-                sheetBinding.bsDosaggioStandard.text =
-                    "Dose: ${farmaco.dosaggio_standard.descrizione}\nFrequenza: ${farmaco.dosaggio_standard.frequenza}"
+                sheetBinding.bsDosaggioStandard.text = context.getString(
+                    R.string.bs_dosaggio_standard_dettaglio,
+                    farmaco.dosaggio_standard.descrizione,
+                    farmaco.dosaggio_standard.frequenza
+                )
             } else {
                 sheetBinding.bsDosaggioStandard.visibility = View.GONE
             }
 
-            val regoleText = creaTestoRegole(farmaco)
+            val regoleText = creaTestoRegole(context, farmaco)
             if (regoleText.isNotBlank()) {
                 sheetBinding.bsRegoleCalcolo.visibility = View.VISIBLE
                 sheetBinding.bsRegoleCalcolo.text = regoleText
@@ -75,7 +81,6 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
                 sheetBinding.bsRegoleCalcolo.visibility = View.GONE
             }
 
-            // Fonti
             if (farmaco.fonti.isNotEmpty()) {
                 sheetBinding.bsFonti.visibility = View.VISIBLE
                 sheetBinding.bsFonti.text = farmaco.fonti.joinToString("\n\n")
@@ -88,20 +93,18 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
         }
     }
 
-    // Restituisce il numero di elementi
     override fun getItemCount(): Int = lista.size
 
-    // Aggiorna la lista e notifica i cambiamenti
     fun aggiorna(nuovaLista: List<Farmaco>) {
         lista = nuovaLista
         notifyDataSetChanged()
     }
 
-    private fun creaTestoRegole(farmaco: Farmaco): String {
+    private fun creaTestoRegole(context: Context, farmaco: Farmaco): String {
         val testo = StringBuilder()
 
         if (!farmaco.regole_calcolo.isNullOrEmpty()) {
-            testo.append("Regole di dosaggio\n")
+            testo.append(context.getString(R.string.regole_dosaggio_titolo)).append("\n")
 
             farmaco.regole_calcolo.forEach { regola ->
                 testo.append("- ")
@@ -112,7 +115,7 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
                 } else if (regola.dose != null) {
                     testo.append(": ").append(regola.dose)
                 } else if (regola.dose_fissa != null) {
-                    testo.append(": ").append(regola.dose_fissa).append(" mg")
+                    testo.append(": ").append(context.getString(R.string.dose_fissa_mg, regola.dose_fissa.toString()))
                 }
 
                 testo.append("\n")
@@ -142,7 +145,8 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
                     } else if (regola.dose != null) {
                         testo.append(": ").append(regola.dose)
                     } else if (regola.dose_fissa != null) {
-                        testo.append(": ").append(regola.dose_fissa).append(" mg")
+
+                        testo.append(": ").append(context.getString(R.string.dose_fissa_mg, regola.dose_fissa.toString()))
                     }
 
                     testo.append("\n")

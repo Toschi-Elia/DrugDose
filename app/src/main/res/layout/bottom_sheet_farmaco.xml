@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/neutral">
@@ -12,7 +13,6 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Maniglia per trascinare il BottomSheet -->
         <View
             android:layout_width="40dp"
             android:layout_height="4dp"
@@ -20,12 +20,11 @@
             android:layout_marginBottom="16dp"
             android:background="@color/border_color" />
 
-        <!-- 1. Intestazione -->
         <TextView
             android:id="@+id/bs_nome_farmaco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RINAZINA"
+            tools:text="RINAZINA"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -35,12 +34,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="nafazolina nitrato 1 mg/ml"
+            tools:text="nafazolina nitrato 1 mg/ml"
             android:textColor="@color/sottotitoli_calcoltore"
             android:textSize="16sp"
             android:textStyle="italic" />
 
-        <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -48,13 +46,11 @@
             android:layout_marginBottom="24dp"
             android:background="@color/border_color" />
 
-        <!-- 2. Informazioni Cliniche -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Icona informativa generica -->
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -81,14 +77,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Decongestionante nasale in corso di riniti e faringiti acute catarrali, di riniti allergiche, di sinusiti acute."
+                    tools:text="Decongestionante nasale in corso di riniti..."
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
         </LinearLayout>
-        
-        <!-- 3. Tipo e Formula -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -117,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="POSOLOGIA E FORMULA"
+                    android:text="@string/posologia_formula"
                     android:textColor="@color/sottotitoli_calcoltore"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -127,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Tipo Formula"
+                    tools:text="Tipo Formula"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
@@ -136,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Unità: mg"
+                    tools:text="Unità: mg"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
@@ -145,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Dose: 1-2 gocce"
+                    tools:text="Dose: 1-2 gocce"
                     android:textColor="@color/text_input_text_view_calcolatore"
                     android:textSize="14sp"
                     android:visibility="gone" />
@@ -155,7 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Regole di dosaggio"
+                    tools:text="Regole di dosaggio"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp"
@@ -163,7 +158,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- 4. Limitazioni e Alert -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -192,7 +186,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LIMITAZIONI E AVVERTENZE"
+                    android:text="@string/limitazioni_avvertenze"
                     android:textColor="@color/sottotitoli_calcoltore"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -202,7 +196,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Età minima e durata max"
+                    tools:text="Età minima e durata max"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp" />
 
@@ -211,14 +205,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="- Attenzione"
+                    tools:text="- Attenzione"
                     android:textColor="@color/error_dark_red"
                     android:textSize="14sp"
                     android:textStyle="italic" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- 5. Fonti -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -257,7 +250,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/rcp_aifa"
+                    tools:text="@string/rcp_aifa"
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:autoLink="web" />
