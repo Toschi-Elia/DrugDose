@@ -5,6 +5,7 @@ import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.models.Formato
 import it.unisubria.drugdose.models.RegolaCalcolo
 import java.util.Locale
+import kotlin.math.sqrt
 
 data class DoseCalcolata(
     val valore: String,
@@ -26,6 +27,24 @@ object DoseCalculator {
     ): Pair<Double, Double> {
         val doseMin = dosePerKgMin * pesoKg
         val doseMax = dosePerKgMax * pesoKg
+        return Pair(doseMin, doseMax)
+    }
+
+    fun calcolaBsa(pesoKg: Double, altezzaCm: Int): Double {
+        return sqrt((altezzaCm * pesoKg) / 3600.0)
+    }
+
+    fun calcolaDosePerM2(dosePerM2: Double, bsa: Double): Double {
+        return dosePerM2 * bsa
+    }
+
+    fun calcolaRangeDosePerM2(
+        dosePerM2Min: Double,
+        dosePerM2Max: Double,
+        bsa: Double
+    ): Pair<Double, Double> {
+        val doseMin = dosePerM2Min * bsa
+        val doseMax = dosePerM2Max * bsa
         return Pair(doseMin, doseMax)
     }
 
@@ -52,7 +71,8 @@ object DoseCalculator {
         regola: RegolaCalcolo?,
         formato: Formato?,
         dosaggioStandard: DosaggioStandard?,
-        pesoKg: Double
+        pesoKg: Double,
+        altezzaCm: Int
     ): DoseCalcolata? {
         return when {
             regola?.dose_per_kg != null -> {
@@ -68,6 +88,29 @@ object DoseCalculator {
                     regola.dose_per_kg_min,
                     regola.dose_per_kg_max,
                     pesoKg
+                )
+                DoseCalcolata(
+                    valore = "${formattaNumero(range.first)}-${formattaNumero(range.second)}",
+                    unita = "mg",
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                )
+            }
+
+            regola?.dose_per_m2 != null -> {
+                val bsa = calcolaBsa(pesoKg, altezzaCm)
+                DoseCalcolata(
+                    valore = formattaNumero(calcolaDosePerM2(regola.dose_per_m2, bsa)),
+                    unita = "mg",
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                )
+            }
+
+            regola?.dose_per_m2_min != null && regola.dose_per_m2_max != null -> {
+                val bsa = calcolaBsa(pesoKg, altezzaCm)
+                val range = calcolaRangeDosePerM2(
+                    regola.dose_per_m2_min,
+                    regola.dose_per_m2_max,
+                    bsa
                 )
                 DoseCalcolata(
                     valore = "${formattaNumero(range.first)}-${formattaNumero(range.second)}",

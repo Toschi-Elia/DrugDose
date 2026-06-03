@@ -111,11 +111,13 @@
                     android:layout_marginBottom="8dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_paziente"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     app:boxBackgroundColor="@color/background_input_text"
+                    app:errorEnabled="true"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="1dp">
 
@@ -139,11 +141,13 @@
                     android:layout_marginBottom="8dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_farmaco"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     app:boxBackgroundColor="@color/background_input_text"
+                    app:errorEnabled="true"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="1dp">
 
@@ -167,11 +171,13 @@
                     android:layout_marginBottom="8dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_formato"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="32dp"
                     app:boxBackgroundColor="@color/background_input_text"
+                    app:errorEnabled="true"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="1dp">
 

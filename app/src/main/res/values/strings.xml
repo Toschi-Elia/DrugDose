@@ -83,6 +83,10 @@
     <string name="scegli_schema">SCEGLI SCHEMA</string>
     <string name="richiesta_seleziona_schema">Seleziona schema</string>
     <string name="calcola_dose">Calcola dose</string>
+    <string name="error_paziente_non_valido">Seleziona un paziente valido</string>
+    <string name="error_farmaco_obbligatorio">Seleziona un farmaco</string>
+    <string name="error_schema_obbligatorio">Seleziona uno schema valido</string>
+    <string name="error_altezza_paziente_non_valida">Calcolo non consentito: altezza del paziente non valida.</string>
     <string name="dose_calcolata">DOSE CALCOLATA</string>
     <string name="frequenza">FREQUENZA</string>
     <string name="database_farmaci">Database Farmaci</string>
@@ -106,7 +110,7 @@
     <string name="item_eta">Età: %1$s anni</string>
     <string name="item_peso">Peso: %1$s kg</string>
     <string name="item_data">Data: %1$s</string>
-    <string name="item_altezza">Altezza: %1$s cm</string>
+    <string name="item_altezza">Altezza: %1$s</string>
     <string name="posologia_formula">POSOLOGIA E FORMULA</string>
     <string name="limitazioni_avvertenze">LIMITAZIONI E AVVERTENZE</string>
     <string name="unita_misura_bs">Unità: %1$s</string>
