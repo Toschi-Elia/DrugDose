@@ -42,8 +42,19 @@ class LoginActivity : BaseActivity() {
             }else false
         }
         binding.btnAccediOspite.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            authRepo.accediComeOspite { successo, errore ->
+                loadingDialog.nascondiCaricamento()
+
+                if (successo) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, errore, Toast.LENGTH_LONG).show()
+                }
+            }
+
 
         }
 
@@ -186,21 +197,17 @@ class LoginActivity : BaseActivity() {
         val esitoControllo =
             biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
 
-        // Puliamo eventuali listener precedenti per evitare problemi se chiamiamo questa funzione più volte
         binding.checkboxBiometric.setOnClickListener(null)
 
         when (esitoControllo) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                // Sensore OK e impronta già configurata nel telefono
                 binding.checkboxBiometric.visibility = View.VISIBLE
                 binding.checkboxBiometric.isEnabled = true
                 binding.tvBiometricHelper.visibility = View.GONE
 
-                // Applica lo stato salvato in precedenza
                 val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
                 binding.checkboxBiometric.isChecked = sharedPref.getBoolean("usa_biometria", false)
 
-                // Salva la scelta quando l'utente attiva/disattiva la spunta
                 binding.checkboxBiometric.setOnClickListener {
                     val isChecked = binding.checkboxBiometric.isChecked
                     sharedPref.edit().putBoolean("usa_biometria", isChecked).apply()
@@ -208,18 +215,16 @@ class LoginActivity : BaseActivity() {
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                // Sensore OK, ma l'utente non ha mai configurato un'impronta
+
                 binding.checkboxBiometric.visibility = View.VISIBLE
                 binding.checkboxBiometric.isEnabled = true // DEVE essere true per poterla cliccare
                 binding.checkboxBiometric.isChecked = false
 
                 binding.tvBiometricHelper.visibility = View.VISIBLE // Mostra il testo di aiuto
 
-                // Se clicca apre le impostazioni
                 binding.checkboxBiometric.setOnClickListener {
                     binding.checkboxBiometric.isChecked = false
 
-                    // Lanciamo la schermata di sistema per aggiungere l'impronta
                     val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                         putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
                             BiometricManager.Authenticators.BIOMETRIC_STRONG)
@@ -231,7 +236,7 @@ class LoginActivity : BaseActivity() {
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                // Se non ha il sensore, nascondiamo tutto
+                // Se non ha il sensore si nasconde
                 binding.checkboxBiometric.visibility = View.GONE
                 binding.tvBiometricHelper.visibility = View.GONE
 
@@ -271,8 +276,6 @@ class LoginActivity : BaseActivity() {
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                //impronta corretta
-                //Toast.makeText(applicationContext, "Bentornato in DrugDose", Toast.LENGTH_SHORT).show()
                 goHome()
             }
 

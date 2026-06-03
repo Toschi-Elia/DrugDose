@@ -106,7 +106,7 @@
     <string name="item_eta">Età: %1$s anni</string>
     <string name="item_peso">Peso: %1$s kg</string>
     <string name="item_data">Data: %1$s</string>
-    <string name="item_altezza">Altezza: %1$s</string>
+    <string name="item_altezza">Altezza: %1$s cm</string>
     <string name="posologia_formula">POSOLOGIA E FORMULA</string>
     <string name="limitazioni_avvertenze">LIMITAZIONI E AVVERTENZE</string>
     <string name="unita_misura_bs">Unità: %1$s</string>
@@ -118,4 +118,8 @@
     <string name="bs_dosaggio_standard_dettaglio">Dose: %1$s\nFrequenza: %2$s</string>
     <string name="regole_dosaggio_titolo">Regole di dosaggio</string>
     <string name="dose_fissa_mg">%1$s mg</string>
+    <string name="dialog_ospite_titolo">Funzione Premium</string>
+    <string name="dialog_ospite_messaggio">La creazione e il salvataggio dei pazienti richiedono un account. Registrati per sbloccare questa funzione e creare il tuo database medico.</string>
+    <string name="dialog_ospite_annulla">Annulla</string>
+    <string name="dialog_ospite_registrati">Registrati</string>
 </resources>

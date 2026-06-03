@@ -13,10 +13,7 @@ class PazienteAdapter(private val onPazienteClick:(Paziente)->Unit,private val o
     RecyclerView.Adapter<PazienteAdapter.PazienteViewHolder>() {
     private var listaPazienti=listOf<Paziente>()
 
-    fun aggionaDati(nuoviPazienti:List<Paziente>){
-        listaPazienti=nuoviPazienti
-        notifyDataSetChanged()
-    }
+
     inner class PazienteViewHolder(val binding: ItemPazienteBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(paziente: Paziente) {
             val context = itemView.context

@@ -98,5 +98,9 @@
     <string name="log_out">LOG OUT</string>
     <string name="avviso_calcolatore_titolo">AVVISI CLINICI / CONTROINDICAZIONI</string>
     <string name="avviso_calcolatore_sottotitolo">Attendere selezione farmaco e paziente per visualizzare gli alert.</string>
+    <string name="dialog_ospite_titolo">Funzione Premium</string>
+    <string name="dialog_ospite_messaggio">La creazione e il salvataggio dei pazienti richiedono un account. Registrati per sbloccare questa funzione e creare il tuo database medico.</string>
+    <string name="dialog_ospite_annulla">Annulla</string>
+    <string name="dialog_ospite_registrati">Registrati</string>
 
 </resources>

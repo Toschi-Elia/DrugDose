@@ -64,6 +64,21 @@ class AuthRepository {
         auth.signOut()
     }
 
+    fun accediComeOspite(onComplete: (Boolean, String?) -> Unit) {
+        auth.signInAnonymously()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onComplete(true, null)
+                } else {
+                    onComplete(false, task.exception?.localizedMessage ?: "Errore durante l'accesso ospite")
+                }
+            }
+    }
+
+    fun isUtenteOspite(): Boolean {
+        val utenteCorrente = auth.currentUser
+        return utenteCorrente != null && utenteCorrente.isAnonymous
+    }
 
 
 }

@@ -1,17 +1,22 @@
 package it.unisubria.drugdose
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import it.unisubria.drugdose.databinding.FragmentPazientiBinding
+import android.app.Dialog
+import it.unisubria.drugdose.databinding.DialogOspiteBinding
 
 class PazientiFragment : Fragment() {
 
@@ -59,8 +64,14 @@ class PazientiFragment : Fragment() {
         }
 
         binding.btnAggiungiPaziente.setOnClickListener {
-            val bottomSheet = NuovoPazienteBottomSheet()
-            bottomSheet.show(parentFragmentManager, "NuovoPazienteBottomSheet")
+            if (AuthRepository().isUtenteOspite()) {
+
+                GestoreOspiti.mostraDialogRegistrazione(requireContext(), layoutInflater)
+
+            } else {
+                val bottomSheet = NuovoPazienteBottomSheet()
+                bottomSheet.show(parentFragmentManager, "NuovoPaziente")
+            }
         }
 
         binding.searchViewPazienti.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
