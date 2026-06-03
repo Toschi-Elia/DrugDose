@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
@@ -111,6 +110,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.dropdownPaziente.setOnItemClickListener { _, _, position, _ ->
+            binding.layoutPaziente.error = null
+
             val elemento = binding.dropdownPaziente.adapter.getItem(position) as? PazienteDropdownItem
             val paziente = elemento?.paziente
 
@@ -124,6 +125,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.dropdownFarmaco.setOnItemClickListener { _, _, position, _ ->
+            binding.layoutFarmaco.error = null
+            binding.layoutFormato.error = null
+
             val elemento = binding.dropdownFarmaco.adapter.getItem(position) as? FarmacoDropdownItem
             farmacoSelezionato = elemento?.farmaco
             aggiornaDropdownSchemi(binding.dropdownFormato, farmacoSelezionato)
@@ -132,12 +136,14 @@ class HomeFragment : Fragment() {
         farmaciViewModel.caricaFarmaci()
 
         binding.btnCalcolaDose.setOnClickListener {
+            pulisciErroriInput()
+
             if (pazientePeso <= 0.0) {
-                Toast.makeText(requireContext(), "Seleziona un paziente valido", Toast.LENGTH_SHORT).show()
+                binding.layoutPaziente.error = getString(R.string.error_paziente_non_valido)
                 return@setOnClickListener
             }
             if (farmacoSelezionato == null) {
-                Toast.makeText(requireContext(), "Seleziona un farmaco", Toast.LENGTH_SHORT).show()
+                binding.layoutFarmaco.error = getString(R.string.error_farmaco_obbligatorio)
                 return@setOnClickListener
             }
 
@@ -176,6 +182,8 @@ class HomeFragment : Fragment() {
         }
 
         dropdownSchema.setOnItemClickListener { _, _, position, _ ->
+            binding.layoutFormato.error = null
+
             val elemento = dropdownSchema.adapter.getItem(position) as? SchemaDropdownItem
             if (elemento != null) {
                 selezionaSchema(elemento)
@@ -238,6 +246,12 @@ class HomeFragment : Fragment() {
 
     private fun mostraCalcoloDose() {
         val farmaco = farmacoSelezionato ?: return
+
+        if (farmacoRichiedeRegola(farmaco) && regolaSelezionata == null) {
+            binding.layoutFormato.error = getString(R.string.error_schema_obbligatorio)
+            return
+        }
+
         val erroreBloccante = validaVincoliCalcolo(farmaco, regolaSelezionata)
         if (erroreBloccante != null) {
             mostraErroreCalcolo(erroreBloccante)
@@ -253,7 +267,7 @@ class HomeFragment : Fragment() {
         )
 
         if (risultato == null) {
-            Toast.makeText(requireContext(), "Seleziona uno schema valido", Toast.LENGTH_SHORT).show()
+            binding.layoutFormato.error = getString(R.string.error_schema_obbligatorio)
             return
         }
 
@@ -307,6 +321,12 @@ class HomeFragment : Fragment() {
         val haRegoleFarmaco = !farmaco.regole_calcolo.isNullOrEmpty()
         val haRegoleFormato = farmaco.formati?.any { !it.regole_calcolo.isNullOrEmpty() } == true
         return haRegoleFarmaco || haRegoleFormato
+    }
+
+    private fun pulisciErroriInput() {
+        binding.layoutPaziente.error = null
+        binding.layoutFarmaco.error = null
+        binding.layoutFormato.error = null
     }
 
     private fun mostraErroreCalcolo(messaggio: String) {

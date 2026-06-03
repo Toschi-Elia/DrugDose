@@ -79,6 +79,9 @@
     <string name="scegli_schema">CHOOSE REGIMEN</string>
     <string name="richiesta_seleziona_schema">Please select a regimen</string>
     <string name="calcola_dose">Calculate dose</string>
+    <string name="error_paziente_non_valido">Please select a valid patient</string>
+    <string name="error_farmaco_obbligatorio">Please select a medication</string>
+    <string name="error_schema_obbligatorio">Please select a valid regimen</string>
     <string name="dose_calcolata">CALCULATED DOSE</string>
     <string name="frequenza">FREQUENCY</string>
     <string name="database_farmaci">Medication Database</string>
