@@ -41,6 +41,8 @@ data class RegolaCalcolo(
     val dose_per_kg_min: Double? = null,
     val dose_per_kg_max: Double? = null,
     val dose_per_m2: Double? = null,
+    val dose_per_m2_min: Double? = null,
+    val dose_per_m2_max: Double? = null,
     val dose_fissa: Double? = null,
     val dose_carico_fissa: Double? = null,
     val dose: String? = null,

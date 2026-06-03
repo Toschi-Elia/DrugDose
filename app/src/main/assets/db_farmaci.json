@@ -258,130 +258,53 @@
     ]
   },
   {
-    "id": "dravyr_001",
-    "nome_farmaco": "DRAVYR",
-    "principio_attivo": "aciclovir compresse 200 mg / 400 mg",
-    "indicazione_clinica": "Infezioni da Herpes simplex e Varicella zoster; utile per test dose pediatrica per peso",
-    "tipo_di_formula": "peso",
-    "regole_calcolo": [
-      {
-        "fascia": "varicella_bambini",
-        "eta_min": 2,
-        "eta_max": 17,
-        "dose_per_kg": 20,
-        "dose": "20 mg/kg/dose",
-        "descrizione_dose": "Dose singola = 20 × peso_kg, 4 volte al giorno; massimo 800 mg per dose",
-        "max_dosi_24h": 4
-      },
-      {
-        "fascia": "adulti_varicella_zoster",
-        "eta_min": 18,
-        "eta_max": 999,
-        "dose_fissa": 800,
-        "dose_singola_mg": 800,
-        "descrizione_dose": "800 mg 5 volte al giorno secondo indicazione",
-        "max_dosi_24h": 5
-      }
-    ],
-    "unita_di_misura": "mg/kg/dose",
-    "durata_massima": "Generalmente 5-7 giorni secondo indicazione clinica",
-    "eta_minima": 2,
+    "id": "32775025",
+    "nome_farmaco": "CISPLATINO PFIZER",
+    "principio_attivo": "Cisplatino",
+    "indicazione_clinica": "Carcinoma germinale metastatico non seminoma; carcinoma avanzato dell'ovaio; carcinoma avanzato della vescica; carcinoma della testa e del collo",
+    "tipo_di_formula": "bsa",
+    "unita_di_misura": "mg/m²",
+    "durata_massima": "Secondo protocollo oncologico",
+    "eta_minima": 0,
     "alert": [
-      "Adeguare in insufficienza renale",
-      "Assicurare idratazione adeguata",
-      "Verificare indicazione e timing dall'esordio"
+      "Uso esclusivamente ospedaliero",
+      "Monitorare funzionalità renale",
+      "Monitorare emocromo",
+      "Monitorare funzionalità uditiva",
+      "Necessaria idratazione prima e dopo il trattamento",
+      "Nefrotossicità dose-dipendente",
+      "Ototossicità cumulativa",
+      "Neurotossicità cumulativa",
+      "Controindicato in gravidanza"
     ],
     "fonti": [
-      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7314/farmaci/28242/stampati?ts=RCP",
-      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7314/farmaci/28242/stampati?ts=FI"
-    ]
-  },
-  {
-    "id": "dupixent_001",
-    "nome_farmaco": "DUPIXENT",
-    "principio_attivo": "dupilumab soluzione iniettabile 200 mg / 300 mg",
-    "indicazione_clinica": "Dermatite atopica da moderata a severa in pazienti candidati a terapia sistemica",
-    "tipo_di_formula": "fasce_peso",
-    "regole_calcolo": [
+      "RCP AIFA Cisplatino Pfizer"
+    ],
+    "formati": [
       {
-        "fascia": "adolescenti_15_60kg",
-        "eta_min": 12,
-        "eta_max": 17,
-        "peso_min_kg": 15,
-        "peso_max_kg": 60,
-        "dose_carico_fissa": 400,
-        "dose_fissa": 200,
-        "dose": "carico 400 mg, poi 200 mg ogni 2 settimane",
-        "descrizione_dose": "2 iniezioni da 200 mg come dose iniziale, poi 200 mg ogni 2 settimane"
-      },
-      {
-        "fascia": "adolescenti_oltre_60kg",
-        "eta_min": 12,
-        "eta_max": 17,
-        "peso_min_kg": 60,
-        "dose_carico_fissa": 600,
-        "dose_fissa": 300,
-        "dose": "carico 600 mg, poi 300 mg ogni 2 settimane",
-        "descrizione_dose": "2 iniezioni da 300 mg come dose iniziale, poi 300 mg ogni 2 settimane"
-      },
-      {
-        "fascia": "adulti",
-        "eta_min": 18,
-        "eta_max": 999,
-        "dose_carico_fissa": 600,
-        "dose_fissa": 300,
-        "dose": "carico 600 mg, poi 300 mg ogni 2 settimane",
-        "descrizione_dose": "Schema standard adulti per dermatite atopica"
+        "tipo": "soluzione_infusione",
+        "descrizione": "50 mg/50 ml",
+        "regole_calcolo": [
+          {
+            "fascia": "protocollo_standard",
+            "eta_min": 0,
+            "eta_max": 120,
+            "dose_per_m2_min": 50,
+            "dose_per_m2_max": 100,
+            "dose": "50-100 mg/m²",
+            "descrizione_dose": "Singola infusione EV ogni 3-4 settimane"
+          },
+          {
+            "fascia": "protocollo_frazionato",
+            "eta_min": 0,
+            "eta_max": 120,
+            "dose_per_m2_min": 15,
+            "dose_per_m2_max": 20,
+            "dose": "15-20 mg/m²",
+            "descrizione_dose": "Una volta al giorno per 5 giorni consecutivi ogni 3-4 settimane"
+          }
+        ]
       }
-    ],
-    "unita_di_misura": "mg per fascia di peso",
-    "durata_massima": "Terapia continuativa con rivalutazione clinica periodica",
-    "eta_minima": 12,
-    "alert": [
-      "Uso specialistico",
-      "Segnalare congiuntivite/cheratite o peggioramento oculare",
-      "Non interrompere bruscamente eventuali corticosteroidi sistemici senza supervisione"
-    ],
-    "fonti": [
-      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/5884/farmaci/45676/stampati?ts=RCP",
-      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/5884/farmaci/45676/stampati?ts=FI"
-    ]
-  },
-  {
-    "id": "enbrel_001",
-    "nome_farmaco": "ENBREL",
-    "principio_attivo": "etanercept soluzione/polvere per iniezione sottocutanea",
-    "indicazione_clinica": "Psoriasi a placche pediatrica e adulta quando indicata terapia sistemica biologica",
-    "tipo_di_formula": "peso",
-    "regole_calcolo": [
-      {
-        "fascia": "psoriasi_pediatrica",
-        "eta_min": 6,
-        "eta_max": 17,
-        "dose_per_kg": 0.8,
-        "dose": "0.8 mg/kg/settimana",
-        "descrizione_dose": "Dose settimanale = 0,8 × peso_kg; massimo 50 mg a settimana"
-      },
-      {
-        "fascia": "adulti",
-        "eta_min": 18,
-        "eta_max": 999,
-        "dose_fissa": 50,
-        "dose_singola_mg": 50,
-        "descrizione_dose": "50 mg una volta a settimana; schemi alternativi secondo RCP"
-      }
-    ],
-    "unita_di_misura": "mg/kg/settimana",
-    "durata_massima": "Terapia specialistica con rivalutazione periodica; valutare risposta dopo periodo previsto dal RCP",
-    "eta_minima": 6,
-    "alert": [
-      "Screening infezioni, inclusa tubercolosi, prima della terapia",
-      "Non iniziare in presenza di infezione attiva clinicamente rilevante",
-      "Uso specialistico e monitoraggio immunosoppressione"
-    ],
-    "fonti": [
-      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/4849/farmaci/34675/stampati?ts=RCP",
-      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/4849/farmaci/34675/stampati?ts=FI"
     ]
   }
 ]
