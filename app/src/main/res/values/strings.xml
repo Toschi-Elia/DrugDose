@@ -86,6 +86,7 @@
     <string name="error_paziente_non_valido">Seleziona un paziente valido</string>
     <string name="error_farmaco_obbligatorio">Seleziona un farmaco</string>
     <string name="error_schema_obbligatorio">Seleziona uno schema valido</string>
+    <string name="error_altezza_paziente_non_valida">Calcolo non consentito: altezza del paziente non valida.</string>
     <string name="dose_calcolata">DOSE CALCOLATA</string>
     <string name="frequenza">FREQUENZA</string>
     <string name="database_farmaci">Database Farmaci</string>

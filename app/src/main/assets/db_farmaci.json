@@ -258,7 +258,7 @@
     ]
   },
   {
-    "id": "32775025",
+    "id": "cisplatino_001",
     "nome_farmaco": "CISPLATINO PFIZER",
     "principio_attivo": "Cisplatino",
     "indicazione_clinica": "Carcinoma germinale metastatico non seminoma; carcinoma avanzato dell'ovaio; carcinoma avanzato della vescica; carcinoma della testa e del collo",
@@ -278,7 +278,8 @@
       "Controindicato in gravidanza"
     ],
     "fonti": [
-      "RCP AIFA Cisplatino Pfizer"
+      "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/40/farmaci/32775/stampati?ts=RCP",
+      "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/40/farmaci/32775/stampati?ts=FI"
     ],
     "formati": [
       {
@@ -288,7 +289,7 @@
           {
             "fascia": "protocollo_standard",
             "eta_min": 0,
-            "eta_max": 120,
+            "eta_max": 999,
             "dose_per_m2_min": 50,
             "dose_per_m2_max": 100,
             "dose": "50-100 mg/m²",
@@ -297,7 +298,7 @@
           {
             "fascia": "protocollo_frazionato",
             "eta_min": 0,
-            "eta_max": 120,
+            "eta_max": 999,
             "dose_per_m2_min": 15,
             "dose_per_m2_max": 20,
             "dose": "15-20 mg/m²",

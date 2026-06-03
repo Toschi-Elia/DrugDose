@@ -263,7 +263,8 @@ class HomeFragment : Fragment() {
             regola = regolaSelezionata,
             formato = formatoSelezionato,
             dosaggioStandard = dosaggioStandardSelezionato,
-            pesoKg = pazientePeso
+            pesoKg = pazientePeso,
+            altezzaCm = pazienteAltezza
         )
 
         if (risultato == null) {
@@ -295,6 +296,10 @@ class HomeFragment : Fragment() {
         }
 
         if (regola != null) {
+            if (regolaRichiedeBsa(regola) && pazienteAltezza <= 0) {
+                return getString(R.string.error_altezza_paziente_non_valida)
+            }
+
             val etaCompatibile = DoseCalculator.etaCompatibile(
                 etaPaziente,
                 regola.eta_min,
@@ -321,6 +326,12 @@ class HomeFragment : Fragment() {
         val haRegoleFarmaco = !farmaco.regole_calcolo.isNullOrEmpty()
         val haRegoleFormato = farmaco.formati?.any { !it.regole_calcolo.isNullOrEmpty() } == true
         return haRegoleFarmaco || haRegoleFormato
+    }
+
+    private fun regolaRichiedeBsa(regola: RegolaCalcolo): Boolean {
+        return regola.dose_per_m2 != null ||
+                regola.dose_per_m2_min != null ||
+                regola.dose_per_m2_max != null
     }
 
     private fun pulisciErroriInput() {

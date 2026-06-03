@@ -82,6 +82,7 @@
     <string name="error_paziente_non_valido">Please select a valid patient</string>
     <string name="error_farmaco_obbligatorio">Please select a medication</string>
     <string name="error_schema_obbligatorio">Please select a valid regimen</string>
+    <string name="error_altezza_paziente_non_valida">Calculation not allowed: invalid patient height.</string>
     <string name="dose_calcolata">CALCULATED DOSE</string>
     <string name="frequenza">FREQUENCY</string>
     <string name="database_farmaci">Medication Database</string>
