@@ -102,5 +102,8 @@
     <string name="dialog_ospite_messaggio">La creazione e il salvataggio dei pazienti richiedono un account. Registrati per sbloccare questa funzione e creare il tuo database medico.</string>
     <string name="dialog_ospite_annulla">Annulla</string>
     <string name="dialog_ospite_registrati">Registrati</string>
-
+    <string name="ospite_titolo_pazienti">Sezione Pazienti Bloccata</string>
+    <string name="ospite_descrizione_pazienti">Per garantire la privacy e la sicurezza dei dati medici, il salvataggio dei pazienti è riservato agli utenti registrati.\n\nCrea il tuo account gratuito in pochi secondi per sbloccare questa funzionalità.</string>
+    <string name="btn_registrati_ora">Registrati Ora</string>
+    <string name="btn_hai_gia_account_accedi">Hai già un account? Accedi</string>
 </resources>

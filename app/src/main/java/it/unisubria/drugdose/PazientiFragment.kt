@@ -5,18 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import it.unisubria.drugdose.databinding.FragmentPazientiBinding
-import android.app.Dialog
-import it.unisubria.drugdose.databinding.DialogOspiteBinding
 
 class PazientiFragment : Fragment() {
 
@@ -47,11 +44,13 @@ class PazientiFragment : Fragment() {
                     putDouble("PESO_PAZIENTE", paziente.peso)
                     putInt("ALTEZZA_PAZIENTE", paziente.altezza)
                 }
-                val homeFragment= HomeFragment()
-                homeFragment.arguments=bundle
+                val homeFragment = HomeFragment()
+                homeFragment.arguments = bundle
 
-                parentFragmentManager.beginTransaction().replace(R.id.fragment_container,homeFragment).addToBackStack(null).commit()
-
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, homeFragment)
+                    .addToBackStack(null)
+                    .commit()
             },
             onEliminaClick = { paziente ->
                 mostraDialogConfermaEliminazione(paziente)
@@ -64,14 +63,8 @@ class PazientiFragment : Fragment() {
         }
 
         binding.btnAggiungiPaziente.setOnClickListener {
-            if (AuthRepository().isUtenteOspite()) {
-
-                GestoreOspiti.mostraDialogRegistrazione(requireContext(), layoutInflater)
-
-            } else {
-                val bottomSheet = NuovoPazienteBottomSheet()
-                bottomSheet.show(parentFragmentManager, "NuovoPaziente")
-            }
+            val bottomSheet = NuovoPazienteBottomSheet()
+            bottomSheet.show(parentFragmentManager, "NuovoPaziente")
         }
 
         binding.searchViewPazienti.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -87,6 +80,7 @@ class PazientiFragment : Fragment() {
             }
         })
 
+        // Configurazione ViewModel
         viewModel = ViewModelProvider(requireActivity())[PazientiViewModel::class.java]
 
         viewModel.listaPazienti.observe(viewLifecycleOwner) { pazienti ->
@@ -106,15 +100,52 @@ class PazientiFragment : Fragment() {
 
                 val snackbar = Snackbar.make(vistaPrincipale, getString(idStringaErrore), Snackbar.LENGTH_LONG)
                 snackbar.setBackgroundTint(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.error_red
-                    )
+                    ContextCompat.getColor(requireContext(), R.color.error_red)
                 )
-
                 bottomNav?.let { snackbar.anchorView = it }
                 snackbar.show()
             }
+        }
+
+        // --- BOTTONI DEL LAYOUT OSPITE ---
+
+        binding.btnVaiARegistrazione.setOnClickListener {
+            startActivity(Intent(requireContext(), RegisterActivity::class.java))
+            requireActivity().finish()
+        }
+
+        binding.btnVaiALogin.setOnClickListener {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
+    }
+
+    private var authListener: FirebaseAuth.AuthStateListener? = null
+
+    override fun onStart() {
+        super.onStart()
+        authListener = FirebaseAuth.AuthStateListener {
+            aggiornaInterfacciaInBaseAllUtente()
+        }
+        FirebaseAuth.getInstance().addAuthStateListener(authListener!!)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        authListener?.let { FirebaseAuth.getInstance().removeAuthStateListener(it) }
+    }
+
+    private fun aggiornaInterfacciaInBaseAllUtente() {
+        if (AuthRepository().isUtenteOspite()) {
+            binding.rvPazienti.visibility = View.GONE
+            binding.btnAggiungiPaziente.visibility = View.GONE
+            binding.cardSearch.visibility = View.GONE
+            binding.layoutOspiteBloccato.visibility = View.VISIBLE
+        } else {
+            binding.layoutOspiteBloccato.visibility = View.GONE
+            binding.rvPazienti.visibility = View.VISIBLE
+            binding.btnAggiungiPaziente.visibility = View.VISIBLE
+            binding.cardSearch.visibility = View.VISIBLE
         }
     }
 
@@ -130,7 +161,6 @@ class PazientiFragment : Fragment() {
                         nomeCompleto.contains(testoRicerca, ignoreCase = true)
             }
         }
-
         pazienteAdapter.aggiornaDati(pazientiFiltrati)
     }
 
@@ -141,7 +171,6 @@ class PazientiFragment : Fragment() {
             .setNegativeButton("Annulla", null)
             .setPositiveButton("Elimina") { _, _ ->
                 viewModel.eliminaPaziente(paziente)
-
             }
             .show()
     }

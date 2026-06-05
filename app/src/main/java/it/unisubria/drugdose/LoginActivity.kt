@@ -245,18 +245,22 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
-    private fun controllaSessioneEBiometria()
-    {
-        val utenteCorrente= auth.currentUser
-        if(utenteCorrente!=null)
-        {
-            val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
-            val usaBiometria = sharedPref.getBoolean("usa_biometria", false)
-            if(usaBiometria)
-                mostraPromtBiometrico()
-            else
-            {
+    private fun controllaSessioneEBiometria() {
+        val utenteCorrente = auth.currentUser
+
+        if (utenteCorrente != null) {
+            if (utenteCorrente.isAnonymous) {
                 auth.signOut()
+            } else {
+
+                val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
+                val usaBiometria = sharedPref.getBoolean("usa_biometria", false)
+
+                if (usaBiometria) {
+                    mostraPromtBiometrico()
+                } else {
+                    auth.signOut()
+                }
             }
         }
     }

@@ -10,8 +10,11 @@ import it.unisubria.drugdose.databinding.BottomSheetFarmacoBinding
 import it.unisubria.drugdose.databinding.ItemFarmacoBinding
 import it.unisubria.drugdose.models.Farmaco
 
-class FarmaciAdapter(private var lista: List<Farmaco>) :
-    RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {
+class FarmaciAdapter(
+    private var lista: List<Farmaco>,
+    private var preferitiSet: MutableSet<String>,
+    private val onStellaClick: (Farmaco, Boolean) -> Unit
+) : RecyclerView.Adapter<FarmaciAdapter.FarmacoViewHolder>() {
 
     class FarmacoViewHolder(val binding: ItemFarmacoBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -27,7 +30,6 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
 
     override fun onBindViewHolder(holder: FarmacoViewHolder, position: Int) {
         val farmaco = lista[position]
-
         val context = holder.binding.root.context
 
         holder.binding.tvItemNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
@@ -37,6 +39,27 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
             farmaco.tipo_di_formula,
             farmaco.unita_di_misura
         )
+
+        val isPreferito = preferitiSet.contains(farmaco.nome_farmaco)
+
+        if (isPreferito) {
+            holder.binding.btnStellaPreferito.setImageResource(R.drawable.ic_star_filled)
+        } else {
+            holder.binding.btnStellaPreferito.setImageResource(R.drawable.ic_star_outline)
+        }
+
+        holder.binding.btnStellaPreferito.setOnClickListener {
+            val diventeraPreferito = !isPreferito
+
+            if (diventeraPreferito) {
+                preferitiSet.add(farmaco.nome_farmaco)
+            } else {
+                preferitiSet.remove(farmaco.nome_farmaco)
+            }
+            notifyItemChanged(position)
+
+            onStellaClick(farmaco, diventeraPreferito)
+        }
 
         holder.binding.root.setOnClickListener {
             val dialog = BottomSheetDialog(context)
@@ -95,8 +118,9 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
 
     override fun getItemCount(): Int = lista.size
 
-    fun aggiorna(nuovaLista: List<Farmaco>) {
+    fun aggiornaDati(nuovaLista: List<Farmaco>, nuoviPreferiti: MutableSet<String>) {
         lista = nuovaLista
+        preferitiSet = nuoviPreferiti
         notifyDataSetChanged()
     }
 
@@ -145,7 +169,6 @@ class FarmaciAdapter(private var lista: List<Farmaco>) :
                     } else if (regola.dose != null) {
                         testo.append(": ").append(regola.dose)
                     } else if (regola.dose_fissa != null) {
-
                         testo.append(": ").append(context.getString(R.string.dose_fissa_mg, regola.dose_fissa.toString()))
                     }
 

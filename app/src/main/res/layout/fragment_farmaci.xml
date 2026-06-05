@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +8,6 @@
     android:background="@color/neutral"
     tools:context=".FarmaciFragment">
 
-    <!-- Top App Bar / Header -->
     <LinearLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
@@ -43,7 +42,6 @@
         android:background="@color/border_color"
         app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
-    <!-- Titolo della schermata -->
     <TextView
         android:id="@+id/tv_title_farmaci"
         android:layout_width="wrap_content"
@@ -57,19 +55,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
-    <!-- Barra di Ricerca -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_search"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
         app:cardBackgroundColor="@color/neutral"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
         app:strokeColor="@color/border_color"
         app:strokeWidth="1dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_farmaci">
+        app:layout_constraintTop_toBottomOf="@id/tv_title_farmaci"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_filtro_preferiti">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view_farmaci"
@@ -81,7 +81,18 @@
             app:searchIcon="@android:drawable/ic_menu_search" />
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Contenitore Lista / Bozza Card -->
+    <ImageButton
+        android:id="@+id/btn_filtro_preferiti"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="24dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_star_outline"
+        app:tint="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card_search"
+        app:layout_constraintBottom_toBottomOf="@id/card_search" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_farmaci"
         android:layout_width="match_parent"

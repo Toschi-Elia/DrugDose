@@ -123,4 +123,8 @@
     <string name="dialog_ospite_messaggio">Creating and saving patients requires an account. Register to unlock this feature and build your medical database.</string>
     <string name="dialog_ospite_annulla">Cancel</string>
     <string name="dialog_ospite_registrati">Register</string>
+    <string name="ospite_titolo_pazienti">Patients Section Locked</string>
+    <string name="ospite_descrizione_pazienti">To ensure the privacy and security of medical data, saving patients is restricted to registered users.\n\nCreate your free account in seconds to unlock this feature.</string>
+    <string name="btn_registrati_ora">Register Now</string>
+    <string name="btn_hai_gia_account_accedi">Already have an account? Log in</string>
 </resources>

@@ -5,26 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import it.unisubria.drugdose.databinding.FragmentFarmaciBinding
 import it.unisubria.drugdose.models.Farmaco
+import it.unisubria.drugdose.repository.PreferitiRepository // Assicurati che l'import sia corretto
 import kotlinx.coroutines.launch
 
 class FarmaciFragment : Fragment() {
 
     private var _binding: FragmentFarmaciBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var adapter: FarmaciAdapter
     private lateinit var farmaciViewModel: FarmaciViewModel
+
     private var listaFarmaciCompleta: List<Farmaco> = emptyList()
+    private var preferitiLocali = mutableSetOf<String>()
+    private var isFiltroAttivo = false
+
+    private val preferitiRepo = PreferitiRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFarmaciBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,47 +42,77 @@ class FarmaciFragment : Fragment() {
 
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
 
-        // 1. Collega l'Adapter alla RecyclerView
-        adapter = FarmaciAdapter(emptyList())
+        adapter = FarmaciAdapter(emptyList(), preferitiLocali) { farmaco, isAggiunto ->
+            if (isAggiunto) {
+                preferitiRepo.aggiungiPreferito(farmaco.nome_farmaco)
+            } else {
+                preferitiRepo.rimuoviPreferito(farmaco.nome_farmaco)
+                if (isFiltroAttivo) applicaFiltro()
+            }
+        }
+
         binding.recyclerFarmaci.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerFarmaci.adapter = adapter
 
+        binding.btnFiltroPreferiti.setOnClickListener {
+            isFiltroAttivo = !isFiltroAttivo
+
+            if (isFiltroAttivo) {
+                binding.btnFiltroPreferiti.setImageResource(R.drawable.ic_star_filled)
+                binding.btnFiltroPreferiti.setColorFilter(ContextCompat.getColor(requireContext(), R.color.primary))
+            } else {
+                binding.btnFiltroPreferiti.setImageResource(R.drawable.ic_star_outline)
+                binding.btnFiltroPreferiti.setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey))
+            }
+
+            applicaFiltro()
+        }
+
         binding.searchViewFarmaci.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                filtraFarmaci(query)
+                applicaFiltro()
                 binding.searchViewFarmaci.clearFocus()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filtraFarmaci(newText)
+                applicaFiltro()
                 return true
             }
         })
 
-        // 2. Osserva i farmaci caricati dal ViewModel condiviso
-        viewLifecycleOwner.lifecycleScope.launch {
-            farmaciViewModel.farmaci.collect { listaFarmaci ->
-                listaFarmaciCompleta = listaFarmaci
-                filtraFarmaci(binding.searchViewFarmaci.query?.toString())
-            }
-        }
+        preferitiRepo.getPreferiti { preferitiScaricati ->
+            preferitiLocali = preferitiScaricati
 
-        // 3. Chiede il caricamento. Il ViewModel evita chiamate duplicate.
-        farmaciViewModel.caricaFarmaci()
+            viewLifecycleOwner.lifecycleScope.launch {
+                farmaciViewModel.farmaci.collect { listaFarmaci ->
+                    listaFarmaciCompleta = listaFarmaci
+                    applicaFiltro()
+                }
+            }
+
+            farmaciViewModel.caricaFarmaci()
+        }
     }
 
-    private fun filtraFarmaci(query: String?) {
-        val testoRicerca = query.orEmpty().trim()
-        val farmaciFiltrati = if (testoRicerca.isBlank()) {
-            listaFarmaciCompleta
+    private fun applicaFiltro() {
+        val queryTesto = binding.searchViewFarmaci.query?.toString().orEmpty().trim()
+
+        val listaFiltrataPreferiti = if (isFiltroAttivo) {
+            listaFarmaciCompleta.filter { preferitiLocali.contains(it.nome_farmaco) }
         } else {
-            listaFarmaciCompleta.filter { farmaco ->
-                farmaco.nome_farmaco.contains(testoRicerca, ignoreCase = true)
+            listaFarmaciCompleta
+        }
+
+        val listaFinale = if (queryTesto.isBlank()) {
+            listaFiltrataPreferiti
+        } else {
+            listaFiltrataPreferiti.filter { farmaco ->
+                farmaco.nome_farmaco.contains(queryTesto, ignoreCase = true)
             }
         }
 
-        adapter.aggiorna(farmaciFiltrati)
+        adapter.aggiornaDati(listaFinale, preferitiLocali)
     }
 
     override fun onDestroyView() {

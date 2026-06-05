@@ -224,21 +224,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:drawablePadding="8dp"
-            android:text="HIPAA COMPLIANT SYSTEM"
-            android:textColor="@color/grey"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/icon_key"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_form"
-            app:layout_constraintVertical_bias="1.0" />
+
 
 
 
