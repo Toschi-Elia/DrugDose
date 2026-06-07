@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Timestamp
 import it.unisubria.drugdose.calcolo.DoseCalcolata
 import it.unisubria.drugdose.calcolo.DoseCalculator
 import it.unisubria.drugdose.databinding.BottomSheetStoricoBinding
@@ -281,6 +282,7 @@ class HomeFragment : Fragment() {
         }
 
         mostraRisultato(risultato)
+        storicoViewModel.salvaCalcolo(creaCalcoloStorico(farmaco, risultato))
         binding.tvAlertMessage.text = if (farmaco.alert.isEmpty()) {
             "Nessun alert disponibile per il farmaco selezionato."
         } else {
@@ -391,6 +393,27 @@ class HomeFragment : Fragment() {
 
         dialog.setContentView(sheetBinding.root)
         dialog.show()
+    }
+
+    private fun creaCalcoloStorico(
+        farmaco: Farmaco,
+        risultato: DoseCalcolata
+    ): CalcoloStorico {
+        return CalcoloStorico(
+            dataOra = Timestamp.now(),
+            pazienteId = pazienteId.orEmpty(),
+            pazienteNome = pazienteNome.orEmpty(),
+            pazienteDataNascita = pazienteDataNascita.orEmpty(),
+            pazientePesoKg = pazientePeso,
+            pazienteAltezzaCm = pazienteAltezza,
+            farmacoId = farmaco.id,
+            farmacoNome = farmaco.nome_farmaco,
+            principioAttivo = farmaco.principio_attivo,
+            schema = binding.dropdownFormato.text?.toString().orEmpty(),
+            doseValore = risultato.valore,
+            doseUnita = risultato.unita.orEmpty(),
+            frequenza = risultato.frequenza
+        )
     }
 
     private data class PazienteDropdownItem(val paziente: Paziente) {
