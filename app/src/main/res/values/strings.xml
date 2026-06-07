@@ -130,6 +130,7 @@
     <string name="ospite_descrizione_pazienti">Per garantire la privacy e la sicurezza dei dati medici, il salvataggio dei pazienti è riservato agli utenti registrati.\n\nCrea il tuo account gratuito in pochi secondi per sbloccare questa funzionalità.</string>
     <string name="btn_registrati_ora">Registrati Ora</string>
     <string name="btn_hai_gia_account_accedi">Hai già un account? Accedi</string>
+    <string name="cronologia">Cronologia</string>
     <string name="cronologia_calcoli">Cronologia calcoli</string>
     <string name="cronologia_calcoli_sottotitolo">Ultime dosi calcolate</string>
     <string name="nessun_calcolo_salvato">Nessun calcolo salvato.</string>

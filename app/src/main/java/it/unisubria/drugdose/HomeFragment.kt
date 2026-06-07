@@ -18,12 +18,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import it.unisubria.drugdose.calcolo.DoseCalcolata
 import it.unisubria.drugdose.calcolo.DoseCalculator
+import it.unisubria.drugdose.databinding.BottomSheetStoricoBinding
 import it.unisubria.drugdose.databinding.DialogSettingsBinding
 import it.unisubria.drugdose.databinding.FragmentHomeBinding
+import it.unisubria.drugdose.models.CalcoloStorico
 import it.unisubria.drugdose.models.DosaggioStandard
 import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.models.Formato
@@ -37,6 +42,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var farmaciViewModel: FarmaciViewModel
     private lateinit var pazientiViewModel: PazientiViewModel
+    private lateinit var storicoViewModel: StoricoViewModel
 
     // Dati del farmaco selezionato
     private var farmacoSelezionato: Farmaco? = null
@@ -80,6 +86,7 @@ class HomeFragment : Fragment() {
 
         pazientiViewModel = ViewModelProvider(requireActivity())[PazientiViewModel::class.java]
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
+        storicoViewModel = ViewModelProvider(requireActivity())[StoricoViewModel::class.java]
 
         binding.dropdownPaziente.threshold = 0
 
@@ -150,6 +157,7 @@ class HomeFragment : Fragment() {
             mostraCalcoloDose()
         }
         binding.btnImpostazioni.setOnClickListener { mostraDialogImpostazioni() }
+        binding.btnCronologia.setOnClickListener { mostraBottomSheetStorico() }
 
    }
 
@@ -359,6 +367,30 @@ class HomeFragment : Fragment() {
             View.VISIBLE
         }
         binding.tvRisultatoFrequenza.text = risultato.frequenza
+    }
+
+    private fun mostraBottomSheetStorico() {
+        val dialog = BottomSheetDialog(requireContext())
+        val sheetBinding = BottomSheetStoricoBinding.inflate(layoutInflater)
+        val adapter = StoricoAdapter()
+
+        sheetBinding.recyclerStorico.layoutManager = LinearLayoutManager(requireContext())
+        sheetBinding.recyclerStorico.adapter = adapter
+
+        val observer = Observer<List<CalcoloStorico>> { listaCalcoli ->
+            adapter.aggiornaDati(listaCalcoli)
+            val listaVuota = listaCalcoli.isEmpty()
+            sheetBinding.tvStoricoVuoto.visibility = if (listaVuota) View.VISIBLE else View.GONE
+            sheetBinding.recyclerStorico.visibility = if (listaVuota) View.GONE else View.VISIBLE
+        }
+
+        storicoViewModel.listaCalcoli.observe(viewLifecycleOwner, observer)
+        dialog.setOnDismissListener {
+            storicoViewModel.listaCalcoli.removeObserver(observer)
+        }
+
+        dialog.setContentView(sheetBinding.root)
+        dialog.show()
     }
 
     private data class PazienteDropdownItem(val paziente: Paziente) {

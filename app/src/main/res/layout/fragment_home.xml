@@ -69,16 +69,35 @@
 
         <TextView
             android:id="@+id/tv_title_calcolatore"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
             android:text="@string/calcolatore"
             android:textColor="@color/text_input_text_view_calcolatore"
             android:textSize="28sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/btn_cronologia"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cronologia"
+            style="@style/Widget.DrugDose.Button.bottoneSecondario"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="24dp"
+            android:minWidth="0dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/cronologia"
+            android:textColor="@color/primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title_calcolatore"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_title_calcolatore" />
 
         <!-- Card Input (Paziente, Farmaco, Schema) -->
         <com.google.android.material.card.MaterialCardView
