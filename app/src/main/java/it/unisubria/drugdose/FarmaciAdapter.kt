@@ -38,7 +38,7 @@ class FarmaciAdapter(
         holder.binding.tvItemPrincipioAttivo.text = farmaco.principioAttivoLocalizzato(languageCode)
         holder.binding.tvItemFormula.text = context.getString(
             R.string.item_farmaco_formula,
-            farmaco.tipo_di_formula,
+            farmaco.tipoFormulaLocalizzato(languageCode),
             farmaco.unitaMisuraLocalizzata(languageCode)
         )
 
@@ -71,7 +71,10 @@ class FarmaciAdapter(
             sheetBinding.bsPrincipioAttivo.text = farmaco.principioAttivoLocalizzato(languageCode)
             sheetBinding.bsIndicazione.text = farmaco.indicazioneClinicaLocalizzata(languageCode)
 
-            sheetBinding.bsTipoFormula.text = context.getString(R.string.bs_farmaco_formula, farmaco.tipo_di_formula)
+            sheetBinding.bsTipoFormula.text = context.getString(
+                R.string.bs_farmaco_formula,
+                farmaco.tipoFormulaLocalizzato(languageCode)
+            )
             sheetBinding.bsUnitaMisura.text = context.getString(
                 R.string.bs_unita_misura_dettaglio,
                 farmaco.unitaMisuraLocalizzata(languageCode)
@@ -161,7 +164,7 @@ class FarmaciAdapter(
                 val titoloFormato = if (formato.descrizioneLocalizzata(languageCode) != null) {
                     formato.descrizioneLocalizzata(languageCode)
                 } else {
-                    formato.tipo
+                    formato.tipoLocalizzato(languageCode)
                 }
 
                 testo.append(titoloFormato).append("\n")

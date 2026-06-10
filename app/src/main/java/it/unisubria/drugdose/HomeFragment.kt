@@ -447,7 +447,7 @@ class HomeFragment : Fragment() {
     ) {
         override fun toString(): String {
             if (formato != null && regola != null) {
-                val nomeFormato = formato.descrizioneLocalizzata(languageCode) ?: formato.tipo
+                val nomeFormato = formato.descrizioneLocalizzata(languageCode) ?: formato.tipoLocalizzato(languageCode)
                 return "$nomeFormato - ${regola.fasciaLocalizzata(languageCode)}"
             }
 
@@ -464,7 +464,7 @@ class HomeFragment : Fragment() {
             }
 
             if (formato != null) {
-                return formato.descrizioneLocalizzata(languageCode) ?: formato.tipo
+                return formato.descrizioneLocalizzata(languageCode) ?: formato.tipoLocalizzato(languageCode)
             }
 
             return dosaggioStandard?.let {

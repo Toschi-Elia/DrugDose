@@ -37,6 +37,10 @@ data class Farmaco(
         return testoLocalizzatoObbligatorio(unita_di_misura, unita_di_misura_en, languageCode)
     }
 
+    fun tipoFormulaLocalizzato(languageCode: String): String {
+        return etichettaTecnicaLocalizzata(tipo_di_formula, tipoFormulaLabels, languageCode)
+    }
+
     fun durataMassimaLocalizzata(languageCode: String): String {
         return testoLocalizzatoObbligatorio(durata_massima, durata_massima_en, languageCode)
     }
@@ -73,6 +77,10 @@ data class Formato(
         return testoLocalizzato(descrizione, descrizione_en, languageCode)
     }
 
+    fun tipoLocalizzato(languageCode: String): String {
+        return etichettaTecnicaLocalizzata(tipo, formatoLabels, languageCode)
+    }
+
     fun limiteGravidanzaLocalizzato(languageCode: String): String? {
         return testoLocalizzato(limite_gravidanza, limite_gravidanza_en, languageCode)
     }
@@ -103,7 +111,11 @@ data class RegolaCalcolo(
     val ripetibile_dopo_ore_en: String? = null
 ) {
     fun fasciaLocalizzata(languageCode: String): String {
-        return testoLocalizzatoObbligatorio(fascia, fascia_en, languageCode).replace('_', ' ')
+        return testoLocalizzato(
+            fascia,
+            fascia_en.takeIf { it.isNotBlank() } ?: fasciaLabels[fascia],
+            languageCode
+        )?.replace('_', ' ').orEmpty()
     }
 
     fun doseLocalizzata(languageCode: String): String? {
@@ -150,3 +162,45 @@ private fun listaLocalizzata(
         listaItaliana
     }
 }
+
+private fun etichettaTecnicaLocalizzata(
+    value: String,
+    englishLabels: Map<String, String>,
+    languageCode: String
+): String {
+    return if (languageCode.lowercase(Locale.ROOT).startsWith("en")) {
+        englishLabels[value] ?: value.replace('_', ' ')
+    } else {
+        value.replace('_', ' ')
+    }
+}
+
+private val tipoFormulaLabels = mapOf(
+    "bsa" to "BSA",
+    "fasce_eta" to "age bands",
+    "fasce_peso" to "weight bands",
+    "fissa" to "fixed",
+    "fissa_topica" to "fixed topical",
+    "peso" to "weight-based"
+)
+
+private val formatoLabels = mapOf(
+    "capsule_5mg" to "5 mg capsules",
+    "fiale_15mg_2ml" to "15 mg/2 mL ampoules",
+    "soluzione_infusione" to "infusion solution"
+)
+
+private val fasciaLabels = mapOf(
+    "adulti" to "adults",
+    "adulti_e_12plus" to "adults and 12+",
+    "bambini_20_40kg" to "children 20-40 kg",
+    "bambini_2_6_anni" to "children 2-6 years",
+    "bambini_7_12_anni" to "children 7-12 years",
+    "bambini_oltre_40kg" to "children over 40 kg",
+    "dose_iniziale" to "initial dose",
+    "iniziale" to "initial",
+    "massima" to "maximum",
+    "protocollo_frazionato" to "fractionated protocol",
+    "protocollo_standard" to "standard protocol",
+    "range_mantenimento" to "maintenance range"
+)
