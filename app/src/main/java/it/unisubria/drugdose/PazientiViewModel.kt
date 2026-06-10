@@ -10,7 +10,6 @@ class PazientiViewModel: ViewModel() {
     private val _listaPazienti = MutableLiveData<List<Paziente>>()
     val listaPazienti: LiveData<List<Paziente>> get() = _listaPazienti
 
-    // CORREZIONE QUI: Adesso entrambe le variabili sono Int?
     private val _errore = MutableLiveData<Int?>()
     val errore: LiveData<Int?> get() = _errore
 
@@ -26,7 +25,6 @@ class PazientiViewModel: ViewModel() {
         repository.ascoltaPazienti { pazienti, eccezione ->
             _caricamento.value = false
             if(eccezione != null) {
-                // Ora funziona perché _errore accetta i numeri (Int)
                 _errore.value = R.string.errore_sconosciuto_caricamento
             } else {
                 _listaPazienti.value = pazienti

@@ -19,7 +19,6 @@ class AuthRepository {
                     {
                         val utenteMap=hashMapOf("nome" to nome, "cognome" to cognome, "email" to email)
 
-                        //creazione il doc
                         db.collection("medici").document(userId).set(utenteMap).addOnSuccessListener{ onResult(true, null)}
                         .addOnFailureListener { eccezioneDb ->onResult(false, eccezioneDb) }
                     } else {

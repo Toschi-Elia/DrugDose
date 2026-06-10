@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import it.unisubria.drugdose.databinding.FragmentFarmaciBinding
 import it.unisubria.drugdose.models.Farmaco
-import it.unisubria.drugdose.repository.PreferitiRepository // Assicurati che l'import sia corretto
+import it.unisubria.drugdose.repository.PreferitiRepository
 import kotlinx.coroutines.launch
 
 class FarmaciFragment : Fragment() {

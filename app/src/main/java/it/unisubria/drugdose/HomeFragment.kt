@@ -522,9 +522,8 @@ class HomeFragment : Fragment() {
             val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(nuovoCodiceLingua)
             AppCompatDelegate.setApplicationLocales(appLocale)
 
-            dialog.dismiss() // Chiudiamo il dialog
+            dialog.dismiss()
         }
-        //tema
         val sharedPref = requireActivity().getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
         val currentThemeMode = sharedPref.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
@@ -544,7 +543,6 @@ class HomeFragment : Fragment() {
             dialog.dismiss()
         }
 
-        //LOG OUT
         binding.btnLogout.setOnClickListener {
             AuthRepository().eseguiLogout()
             dialog.dismiss()

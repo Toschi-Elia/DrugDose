@@ -63,7 +63,6 @@ class LoginActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        //pulizia codice dopo errori
         val listTesti = listOf(
             binding.textEmail to binding.layoutEmail,
             binding.textPassword to binding.layoutPassword
@@ -217,10 +216,10 @@ class LoginActivity : BaseActivity() {
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
 
                 binding.checkboxBiometric.visibility = View.VISIBLE
-                binding.checkboxBiometric.isEnabled = true // DEVE essere true per poterla cliccare
+                binding.checkboxBiometric.isEnabled = true
                 binding.checkboxBiometric.isChecked = false
 
-                binding.tvBiometricHelper.visibility = View.VISIBLE // Mostra il testo di aiuto
+                binding.tvBiometricHelper.visibility = View.VISIBLE
 
                 binding.checkboxBiometric.setOnClickListener {
                     binding.checkboxBiometric.isChecked = false
@@ -236,7 +235,6 @@ class LoginActivity : BaseActivity() {
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                // Se non ha il sensore si nasconde
                 binding.checkboxBiometric.visibility = View.GONE
                 binding.tvBiometricHelper.visibility = View.GONE
 
@@ -271,7 +269,6 @@ class LoginActivity : BaseActivity() {
         val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                // L'utente annulla. forziamo il logout
                 auth.signOut()
                 Toast.makeText(applicationContext,"Accesso biometrico annullato. Inserisci la password.",
                     Toast.LENGTH_LONG
@@ -292,7 +289,6 @@ class LoginActivity : BaseActivity() {
             .setSubtitle(getString(R.string.sblocco_biometric_subtitle))
             . setNegativeButtonText(getString(R.string.biometric_usa_psw))
             .build()
-        //appare pop-up
         biometricPrompt.authenticate(promptInfo)
     }
     private fun goHome()
@@ -303,5 +299,3 @@ class LoginActivity : BaseActivity() {
     }
 
 }
-
-

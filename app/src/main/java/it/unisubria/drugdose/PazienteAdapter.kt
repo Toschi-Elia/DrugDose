@@ -28,7 +28,7 @@ class PazienteAdapter(private val onPazienteClick:(Paziente)->Unit,private val o
             binding.tvItemEta.text = context.getString(R.string.item_eta, etaStr)
 
             binding.btnEliminaPaziente.setOnClickListener { onEliminaClick(paziente) }
-            binding.root.setOnClickListener { onPazienteClick(paziente) } // Corrette le doppie graffe!
+            binding.root.setOnClickListener { onPazienteClick(paziente) }
         }
     }
 

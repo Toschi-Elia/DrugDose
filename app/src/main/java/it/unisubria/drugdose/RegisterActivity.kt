@@ -146,23 +146,19 @@ class RegisterActivity : BaseActivity() {
         configuraInterfacciaBiometrica()
     }
 
-    //todo insserisci risorse
     private fun configuraInterfacciaBiometrica() {
         val biometricManager = BiometricManager.from(this)
         val esitoControllo = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
 
-        // Reset del listener per evitare doppi click se la funzione viene richiamata
         binding.checkboxBiometric.setOnClickListener(null)
         val sharedPref = getSharedPreferences("ImpostazioniApp", Context.MODE_PRIVATE)
 
         when (esitoControllo) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                // Sensore OK e impronta registrata
                 binding.checkboxBiometric.visibility = View.VISIBLE
                 binding.checkboxBiometric.isEnabled = true
                 binding.tvBiometricHelper.visibility = View.GONE
 
-                // In registrazione parte deselezionata
                 binding.checkboxBiometric.isChecked = false
 
                 binding.checkboxBiometric.setOnClickListener {
@@ -171,16 +167,14 @@ class RegisterActivity : BaseActivity() {
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                // Sensore OK ma nessuna impronta configurata nel sistema
                 binding.checkboxBiometric.visibility = View.VISIBLE
                 binding.checkboxBiometric.isEnabled = true
                 binding.checkboxBiometric.isChecked = false
                 binding.tvBiometricHelper.visibility = View.VISIBLE
 
                 binding.checkboxBiometric.setOnClickListener {
-                    binding.checkboxBiometric.isChecked = false // Impedisce la spunta
+                    binding.checkboxBiometric.isChecked = false
 
-                    // Apre le impostazioni di sistema
                     val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                         putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
                             BiometricManager.Authenticators.BIOMETRIC_STRONG)
@@ -191,7 +185,6 @@ class RegisterActivity : BaseActivity() {
 
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                // Hardware assente o rotto
                 binding.checkboxBiometric.visibility = View.GONE
                 binding.tvBiometricHelper.visibility = View.GONE
                 sharedPref.edit().putBoolean("usa_biometria", false).apply()

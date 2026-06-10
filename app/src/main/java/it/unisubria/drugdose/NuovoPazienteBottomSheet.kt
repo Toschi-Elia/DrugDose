@@ -203,7 +203,7 @@ class NuovoPazienteBottomSheet : BottomSheetDialogFragment() {
 
             if (mainActivity != null) {
                 val vistaPrincipale = mainActivity.binding.root
-                val bottomNav = mainActivity.binding.bottomNavigation // Assicurati che l'ID sia questo!
+                val bottomNav = mainActivity.binding.bottomNavigation
 
                 if (successo) {
                     val snackbar = Snackbar.make(

@@ -80,7 +80,6 @@ class PazientiFragment : Fragment() {
             }
         })
 
-        // Configurazione ViewModel
         viewModel = ViewModelProvider(requireActivity())[PazientiViewModel::class.java]
 
         viewModel.listaPazienti.observe(viewLifecycleOwner) { pazienti ->
@@ -106,8 +105,6 @@ class PazientiFragment : Fragment() {
                 snackbar.show()
             }
         }
-
-        // --- BOTTONI DEL LAYOUT OSPITE ---
 
         binding.btnVaiARegistrazione.setOnClickListener {
             startActivity(Intent(requireContext(), RegisterActivity::class.java))
