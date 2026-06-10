@@ -12,7 +12,6 @@
     <string name="slogan">Clinical dosing precision</string>
     <string name="mail_esempio">nome.cognome@ospedale.it</string>
     <string name="password_esempio" translatable="false">••••••••</string>
-
     <string name="helper_password"><![CDATA[Minimo 8 caratteri, una lettera maiuscola, una minuscola e un carattere speciale (@#$%^&+=!_-)]]></string>
 
 <!--    errori-->
@@ -116,7 +115,7 @@
     <string name="item_eta">Età: %1$s anni</string>
     <string name="item_peso">Peso: %1$s kg</string>
     <string name="item_data">Data: %1$s</string>
-    <string name="item_altezza">Altezza: %1$s</string>
+    <string name="item_altezza">Altezza: %1$s cm</string>
     <string name="posologia_formula">POSOLOGIA E FORMULA</string>
     <string name="limitazioni_avvertenze">LIMITAZIONI E AVVERTENZE</string>
     <string name="unita_misura_bs">Unità: %1$s</string>

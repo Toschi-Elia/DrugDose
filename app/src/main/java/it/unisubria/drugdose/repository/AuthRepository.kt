@@ -30,13 +30,13 @@ class AuthRepository {
             }
     }
 
-    fun eseguiLogin(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+    fun eseguiLogin(email: String, password: String, onResult: (Boolean, Exception?) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onResult(true, null)
                 } else {
-                    onResult(false, task.exception?.message)
+                    onResult(false, task.exception)
                 }
             }
     }
