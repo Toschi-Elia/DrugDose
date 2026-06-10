@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.models
 import com.google.firebase.firestore.DocumentId
 
 data class Paziente(

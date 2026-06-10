@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.home
 
 import android.app.AlertDialog
 import android.content.Context
@@ -24,6 +24,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.auth.LoginActivity
 import it.unisubria.drugdose.calcolo.DoseCalcolata
 import it.unisubria.drugdose.calcolo.DoseCalculator
 import it.unisubria.drugdose.databinding.BottomSheetStoricoBinding
@@ -33,7 +35,14 @@ import it.unisubria.drugdose.models.CalcoloStorico
 import it.unisubria.drugdose.models.DosaggioStandard
 import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.models.Formato
+import it.unisubria.drugdose.models.Paziente
 import it.unisubria.drugdose.models.RegolaCalcolo
+import it.unisubria.drugdose.repository.AuthRepository
+import it.unisubria.drugdose.ui.farmaci.FarmaciViewModel
+import it.unisubria.drugdose.ui.pazienti.PazientiViewModel
+import it.unisubria.drugdose.ui.storico.StoricoAdapter
+import it.unisubria.drugdose.ui.storico.StoricoViewModel
+import it.unisubria.drugdose.util.calcolaEtaDaDataNascita
 import kotlinx.coroutines.launch
 import java.util.Locale
 

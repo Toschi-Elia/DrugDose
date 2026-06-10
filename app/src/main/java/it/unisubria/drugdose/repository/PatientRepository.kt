@@ -1,11 +1,9 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.repository
 
-import android.provider.Settings.Global.getString
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
-import java.sql.ClientInfoStatus
+import it.unisubria.drugdose.models.Paziente
 
 class PatientRepository {
     private val auth= FirebaseAuth.getInstance()

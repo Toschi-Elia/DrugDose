@@ -1,10 +1,13 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.auth
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -12,11 +15,13 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import it.unisubria.drugdose.MainActivity
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.common.BaseActivity
+import it.unisubria.drugdose.common.LoadingDialog
 import it.unisubria.drugdose.databinding.ActivityLoginBinding
-import androidx.biometric.BiometricManager
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.provider.Settings
+import it.unisubria.drugdose.repository.AuthRepository
+import it.unisubria.drugdose.util.isValidEmail
 
 class LoginActivity : BaseActivity() {
 

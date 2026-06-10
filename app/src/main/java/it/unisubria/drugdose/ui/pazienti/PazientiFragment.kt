@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.pazienti
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import it.unisubria.drugdose.MainActivity
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.auth.LoginActivity
+import it.unisubria.drugdose.auth.RegisterActivity
 import it.unisubria.drugdose.databinding.FragmentPazientiBinding
+import it.unisubria.drugdose.models.Paziente
+import it.unisubria.drugdose.repository.AuthRepository
+import it.unisubria.drugdose.ui.home.HomeFragment
 
 class PazientiFragment : Fragment() {
 

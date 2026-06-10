@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.farmaci
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

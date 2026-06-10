@@ -1,21 +1,29 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.auth
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import it.unisubria.drugdose.MainActivity
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.common.BaseActivity
+import it.unisubria.drugdose.common.LoadingDialog
 import it.unisubria.drugdose.databinding.ActivityRegisterBinding
-import android.provider.Settings
+import it.unisubria.drugdose.repository.AuthRepository
+import it.unisubria.drugdose.repository.UidNotFoundException
+import it.unisubria.drugdose.util.formattaMaiusc
+import it.unisubria.drugdose.util.isStrongPassword
+import it.unisubria.drugdose.util.isValidEmail
 
 class RegisterActivity : BaseActivity() {
 

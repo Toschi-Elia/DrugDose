@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.util
 
 import android.util.Patterns
 import java.time.LocalDate

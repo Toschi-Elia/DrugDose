@@ -3,11 +3,14 @@ package it.unisubria.drugdose
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import it.unisubria.drugdose.common.BaseActivity
 import it.unisubria.drugdose.databinding.ActivityMainBinding
+import it.unisubria.drugdose.ui.farmaci.FarmaciFragment
+import it.unisubria.drugdose.ui.home.HomeFragment
+import it.unisubria.drugdose.ui.pazienti.PazientiFragment
 
 class MainActivity : BaseActivity() {
 

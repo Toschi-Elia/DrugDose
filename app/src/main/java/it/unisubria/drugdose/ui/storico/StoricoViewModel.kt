@@ -1,10 +1,12 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.storico
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ListenerRegistration
+import it.unisubria.drugdose.R
 import it.unisubria.drugdose.models.CalcoloStorico
+import it.unisubria.drugdose.repository.StoricoRepository
 
 class StoricoViewModel : ViewModel() {
     private val repository = StoricoRepository()

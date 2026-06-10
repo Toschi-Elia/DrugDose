@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.farmaci
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import it.unisubria.drugdose.R
 import it.unisubria.drugdose.databinding.BottomSheetFarmacoBinding
 import it.unisubria.drugdose.databinding.ItemFarmacoBinding
 import it.unisubria.drugdose.models.Farmaco

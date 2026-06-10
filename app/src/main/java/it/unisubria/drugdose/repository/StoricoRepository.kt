@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.repository
 
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth

@@ -1,8 +1,11 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.pazienti
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.models.Paziente
+import it.unisubria.drugdose.repository.PatientRepository
 
 class PazientiViewModel: ViewModel() {
     private val repository = PatientRepository()

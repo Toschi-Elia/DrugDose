@@ -1,8 +1,9 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.storico
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import it.unisubria.drugdose.R
 import it.unisubria.drugdose.databinding.ItemCalcoloStoricoBinding
 import it.unisubria.drugdose.models.CalcoloStorico
 import java.text.DateFormat

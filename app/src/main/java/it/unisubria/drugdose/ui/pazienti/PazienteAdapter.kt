@@ -1,9 +1,12 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.pazienti
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import it.unisubria.drugdose.R
 import it.unisubria.drugdose.databinding.ItemPazienteBinding
+import it.unisubria.drugdose.models.Paziente
+import it.unisubria.drugdose.util.formattaMaiusc
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit

@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.farmaci
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.common.LoadingDialog
 import it.unisubria.drugdose.databinding.FragmentFarmaciBinding
 import it.unisubria.drugdose.models.Farmaco
 import it.unisubria.drugdose.repository.PreferitiRepository

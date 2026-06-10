@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.common
 
 import android.app.Dialog
 import android.content.Context
@@ -6,7 +6,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
-import it.unisubria.drugdose.RegisterActivity
+import it.unisubria.drugdose.auth.RegisterActivity
 import it.unisubria.drugdose.databinding.DialogOspiteBinding
 
 object GestoreOspiti {

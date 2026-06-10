@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.common
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color

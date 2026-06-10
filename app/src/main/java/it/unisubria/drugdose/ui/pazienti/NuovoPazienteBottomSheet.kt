@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.ui.pazienti
 
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +13,13 @@ import androidx.core.widget.doOnTextChanged
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import it.unisubria.drugdose.MainActivity
+import it.unisubria.drugdose.R
+import it.unisubria.drugdose.common.LoadingDialog
 import it.unisubria.drugdose.databinding.BottomSheetNuovoPazienteBinding
+import it.unisubria.drugdose.models.Paziente
+import it.unisubria.drugdose.repository.PatientRepository
+import it.unisubria.drugdose.util.formattaMaiusc
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException

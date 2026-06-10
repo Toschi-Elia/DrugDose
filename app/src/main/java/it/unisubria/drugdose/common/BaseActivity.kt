@@ -1,4 +1,4 @@
-package it.unisubria.drugdose
+package it.unisubria.drugdose.common
 
 import android.content.Context
 import android.os.Bundle
