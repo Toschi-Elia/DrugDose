@@ -22,10 +22,13 @@ class FarmaciFragment : Fragment() {
 
     private lateinit var adapter: FarmaciAdapter
     private lateinit var farmaciViewModel: FarmaciViewModel
+    private var loadingDialog: LoadingDialog? = null
 
     private var listaFarmaciCompleta: List<Farmaco> = emptyList()
     private var preferitiLocali = mutableSetOf<String>()
     private var isFiltroAttivo = false
+    private var farmaciCaricati = false
+    private var caricamentoFarmaciInCorso = false
 
     private val preferitiRepo = PreferitiRepository()
 
@@ -41,6 +44,10 @@ class FarmaciFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         farmaciViewModel = ViewModelProvider(requireActivity())[FarmaciViewModel::class.java]
+        loadingDialog = LoadingDialog(requireContext())
+        farmaciCaricati = farmaciViewModel.farmaci.value.isNotEmpty()
+        caricamentoFarmaciInCorso = farmaciViewModel.caricamento.value
+        aggiornaVisibilitaCaricamento()
 
         adapter = FarmaciAdapter(emptyList(), preferitiLocali) { farmaco, isAggiunto ->
             if (isAggiunto) {
@@ -81,17 +88,32 @@ class FarmaciFragment : Fragment() {
             }
         })
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            farmaciViewModel.caricamento.collect { isCaricamento ->
+                caricamentoFarmaciInCorso = isCaricamento
+                aggiornaVisibilitaCaricamento()
+            }
+        }
+
         preferitiRepo.getPreferiti { preferitiScaricati ->
+            if (_binding == null) return@getPreferiti
+
             preferitiLocali = preferitiScaricati
+            listaFarmaciCompleta = farmaciViewModel.farmaci.value
+            farmaciCaricati = listaFarmaciCompleta.isNotEmpty()
+            applicaFiltro()
 
             viewLifecycleOwner.lifecycleScope.launch {
                 farmaciViewModel.farmaci.collect { listaFarmaci ->
                     listaFarmaciCompleta = listaFarmaci
+                    farmaciCaricati = listaFarmaci.isNotEmpty()
                     applicaFiltro()
+                    aggiornaVisibilitaCaricamento()
                 }
             }
 
             farmaciViewModel.caricaFarmaci()
+            aggiornaVisibilitaCaricamento()
         }
     }
 
@@ -115,7 +137,19 @@ class FarmaciFragment : Fragment() {
         adapter.aggiornaDati(listaFinale, preferitiLocali)
     }
 
+    private fun aggiornaVisibilitaCaricamento() {
+        val deveMostrareCaricamento = !farmaciCaricati && caricamentoFarmaciInCorso
+
+        if (deveMostrareCaricamento) {
+            loadingDialog?.mostraCaricamento()
+        } else {
+            loadingDialog?.nascondiCaricamento()
+        }
+    }
+
     override fun onDestroyView() {
+        loadingDialog?.nascondiCaricamento()
+        loadingDialog = null
         super.onDestroyView()
         _binding = null
     }
