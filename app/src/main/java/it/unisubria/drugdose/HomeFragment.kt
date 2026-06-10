@@ -204,10 +204,16 @@ class HomeFragment : Fragment() {
         if (farmaco == null) return emptyList()
 
         val tuttiGliElementi = mutableListOf<SchemaDropdownItem>()
+        val languageCode = codiceLinguaCorrente()
 
         if (!farmaco.regole_calcolo.isNullOrEmpty()) {
             farmaco.regole_calcolo.forEach { regola ->
-                tuttiGliElementi.add(SchemaDropdownItem(regola = regola))
+                tuttiGliElementi.add(
+                    SchemaDropdownItem(
+                        regola = regola,
+                        languageCode = languageCode
+                    )
+                )
             }
         } else if (!farmaco.formati.isNullOrEmpty()) {
             farmaco.formati.forEach { formato ->
@@ -216,18 +222,25 @@ class HomeFragment : Fragment() {
                         tuttiGliElementi.add(
                             SchemaDropdownItem(
                                 formato = formato,
-                                regola = regola
+                                regola = regola,
+                                languageCode = languageCode
                             )
                         )
                     }
                 } else {
-                    tuttiGliElementi.add(SchemaDropdownItem(formato = formato))
+                    tuttiGliElementi.add(
+                        SchemaDropdownItem(
+                            formato = formato,
+                            languageCode = languageCode
+                        )
+                    )
                 }
             }
         } else if (farmaco.dosaggio_standard != null) {
             tuttiGliElementi.add(
                 SchemaDropdownItem(
-                    dosaggioStandard = farmaco.dosaggio_standard
+                    dosaggioStandard = farmaco.dosaggio_standard,
+                    languageCode = languageCode
                 )
             )
         }
@@ -273,7 +286,8 @@ class HomeFragment : Fragment() {
             formato = formatoSelezionato,
             dosaggioStandard = dosaggioStandardSelezionato,
             pesoKg = pazientePeso,
-            altezzaCm = pazienteAltezza
+            altezzaCm = pazienteAltezza,
+            languageCode = codiceLinguaCorrente()
         )
 
         if (risultato == null) {
@@ -283,10 +297,11 @@ class HomeFragment : Fragment() {
 
         mostraRisultato(risultato)
         storicoViewModel.salvaCalcolo(creaCalcoloStorico(farmaco, risultato))
-        binding.tvAlertMessage.text = if (farmaco.alert.isEmpty()) {
-            "Nessun alert disponibile per il farmaco selezionato."
+        val alert = farmaco.alertLocalizzati(codiceLinguaCorrente())
+        binding.tvAlertMessage.text = if (alert.isEmpty()) {
+            getString(R.string.alert_farmaco_non_disponibile)
         } else {
-            farmaco.alert.joinToString(separator = "\n")
+            alert.joinToString(separator = "\n")
         }
     }
 
@@ -294,15 +309,15 @@ class HomeFragment : Fragment() {
         val etaPaziente = pazienteDataNascita?.let { calcolaEtaDaDataNascita(it) }
 
         if (etaPaziente == null) {
-            return "Calcolo non consentito: data di nascita del paziente non valida."
+            return getString(R.string.error_data_nascita_paziente_non_valida)
         }
 
         if (etaPaziente < farmaco.eta_minima) {
-            return "Calcolo non consentito: farmaco non indicato sotto i ${farmaco.eta_minima} anni."
+            return getString(R.string.error_farmaco_eta_minima, farmaco.eta_minima.toString())
         }
 
         if (farmacoRichiedeRegola(farmaco) && regola == null) {
-            return "Calcolo non consentito: seleziona uno schema valido."
+            return getString(R.string.error_schema_calcolo_non_valido)
         }
 
         if (regola != null) {
@@ -316,7 +331,7 @@ class HomeFragment : Fragment() {
                 regola.eta_max
             )
             if (!etaCompatibile) {
-                return "Calcolo non consentito: età del paziente non compatibile con lo schema selezionato."
+                return getString(R.string.error_eta_schema_non_compatibile)
             }
 
             val pesoCompatibile = DoseCalculator.pesoCompatibile(
@@ -325,7 +340,7 @@ class HomeFragment : Fragment() {
                 regola.peso_max_kg
             )
             if (!pesoCompatibile) {
-                return "Calcolo non consentito: peso del paziente non compatibile con lo schema selezionato."
+                return getString(R.string.error_peso_schema_non_compatibile)
             }
         }
 
@@ -408,7 +423,7 @@ class HomeFragment : Fragment() {
             pazienteAltezzaCm = pazienteAltezza,
             farmacoId = farmaco.id,
             farmacoNome = farmaco.nome_farmaco,
-            principioAttivo = farmaco.principio_attivo,
+            principioAttivo = farmaco.principioAttivoLocalizzato(codiceLinguaCorrente()),
             schema = binding.dropdownFormato.text?.toString().orEmpty(),
             doseValore = risultato.valore,
             doseUnita = risultato.unita.orEmpty(),
@@ -427,35 +442,42 @@ class HomeFragment : Fragment() {
     private data class SchemaDropdownItem(
         val formato: Formato? = null,
         val regola: RegolaCalcolo? = null,
-        val dosaggioStandard: DosaggioStandard? = null
+        val dosaggioStandard: DosaggioStandard? = null,
+        val languageCode: String
     ) {
         override fun toString(): String {
             if (formato != null && regola != null) {
-                val nomeFormato = formato.descrizione ?: formato.tipo
-                return "$nomeFormato - ${regola.fascia.replace('_', ' ')}"
+                val nomeFormato = formato.descrizioneLocalizzata(languageCode) ?: formato.tipo
+                return "$nomeFormato - ${regola.fasciaLocalizzata(languageCode)}"
             }
 
             if (regola != null) {
-                if (regola.descrizione_dose != null) {
-                    return "${regola.fascia.replace('_', ' ')} - ${regola.descrizione_dose}"
+                if (regola.descrizioneDoseLocalizzata(languageCode) != null) {
+                    return "${regola.fasciaLocalizzata(languageCode)} - ${regola.descrizioneDoseLocalizzata(languageCode)}"
                 }
 
-                if (regola.dose != null) {
-                    return "${regola.fascia.replace('_', ' ')} - ${regola.dose}"
+                if (regola.doseLocalizzata(languageCode) != null) {
+                    return "${regola.fasciaLocalizzata(languageCode)} - ${regola.doseLocalizzata(languageCode)}"
                 }
 
-                return regola.fascia.replace('_', ' ')
+                return regola.fasciaLocalizzata(languageCode)
             }
 
             if (formato != null) {
-                return formato.descrizione ?: formato.tipo
+                return formato.descrizioneLocalizzata(languageCode) ?: formato.tipo
             }
 
             return dosaggioStandard?.let {
-                "${it.descrizione} - ${it.frequenza}"
+                "${it.descrizioneLocalizzata(languageCode)} - ${it.frequenzaLocalizzata(languageCode)}"
             } ?: ""
         }
     }
+
+    private fun codiceLinguaCorrente(): String {
+        val locales = resources.configuration.locales
+        return locales.get(0)?.language ?: Locale.getDefault().language
+    }
+
     private fun mostraDialogImpostazioni() {
         val binding = DialogSettingsBinding.inflate(layoutInflater)
 

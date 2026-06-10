@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import it.unisubria.drugdose.databinding.BottomSheetFarmacoBinding
 import it.unisubria.drugdose.databinding.ItemFarmacoBinding
 import it.unisubria.drugdose.models.Farmaco
+import java.util.Locale
 
 class FarmaciAdapter(
     private var lista: List<Farmaco>,
@@ -31,13 +32,14 @@ class FarmaciAdapter(
     override fun onBindViewHolder(holder: FarmacoViewHolder, position: Int) {
         val farmaco = lista[position]
         val context = holder.binding.root.context
+        val languageCode = codiceLinguaCorrente(context)
 
         holder.binding.tvItemNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
-        holder.binding.tvItemPrincipioAttivo.text = farmaco.principio_attivo
+        holder.binding.tvItemPrincipioAttivo.text = farmaco.principioAttivoLocalizzato(languageCode)
         holder.binding.tvItemFormula.text = context.getString(
             R.string.item_farmaco_formula,
             farmaco.tipo_di_formula,
-            farmaco.unita_di_misura
+            farmaco.unitaMisuraLocalizzata(languageCode)
         )
 
         val isPreferito = preferitiSet.contains(farmaco.nome_farmaco)
@@ -66,21 +68,25 @@ class FarmaciAdapter(
             val sheetBinding = BottomSheetFarmacoBinding.inflate(LayoutInflater.from(context))
 
             sheetBinding.bsNomeFarmaco.text = farmaco.nome_farmaco.uppercase()
-            sheetBinding.bsPrincipioAttivo.text = farmaco.principio_attivo
-            sheetBinding.bsIndicazione.text = farmaco.indicazione_clinica
+            sheetBinding.bsPrincipioAttivo.text = farmaco.principioAttivoLocalizzato(languageCode)
+            sheetBinding.bsIndicazione.text = farmaco.indicazioneClinicaLocalizzata(languageCode)
 
             sheetBinding.bsTipoFormula.text = context.getString(R.string.bs_farmaco_formula, farmaco.tipo_di_formula)
-            sheetBinding.bsUnitaMisura.text = context.getString(R.string.bs_unita_misura_dettaglio, farmaco.unita_di_misura)
+            sheetBinding.bsUnitaMisura.text = context.getString(
+                R.string.bs_unita_misura_dettaglio,
+                farmaco.unitaMisuraLocalizzata(languageCode)
+            )
 
             sheetBinding.bsLimitazioni.text = context.getString(
                 R.string.bs_limitazioni_testo,
                 farmaco.eta_minima.toString(),
-                farmaco.durata_massima
+                farmaco.durataMassimaLocalizzata(languageCode)
             )
 
-            if (farmaco.alert.isNotEmpty()) {
+            val alert = farmaco.alertLocalizzati(languageCode)
+            if (alert.isNotEmpty()) {
                 sheetBinding.bsAlert.visibility = View.VISIBLE
-                sheetBinding.bsAlert.text = farmaco.alert.joinToString("\n") { "- $it" }
+                sheetBinding.bsAlert.text = alert.joinToString("\n") { "- $it" }
             } else {
                 sheetBinding.bsAlert.visibility = View.GONE
             }
@@ -89,14 +95,14 @@ class FarmaciAdapter(
                 sheetBinding.bsDosaggioStandard.visibility = View.VISIBLE
                 sheetBinding.bsDosaggioStandard.text = context.getString(
                     R.string.bs_dosaggio_standard_dettaglio,
-                    farmaco.dosaggio_standard.descrizione,
-                    farmaco.dosaggio_standard.frequenza
+                    farmaco.dosaggio_standard.descrizioneLocalizzata(languageCode),
+                    farmaco.dosaggio_standard.frequenzaLocalizzata(languageCode)
                 )
             } else {
                 sheetBinding.bsDosaggioStandard.visibility = View.GONE
             }
 
-            val regoleText = creaTestoRegole(context, farmaco)
+            val regoleText = creaTestoRegole(context, farmaco, languageCode)
             if (regoleText.isNotBlank()) {
                 sheetBinding.bsRegoleCalcolo.visibility = View.VISIBLE
                 sheetBinding.bsRegoleCalcolo.text = regoleText
@@ -124,7 +130,7 @@ class FarmaciAdapter(
         notifyDataSetChanged()
     }
 
-    private fun creaTestoRegole(context: Context, farmaco: Farmaco): String {
+    private fun creaTestoRegole(context: Context, farmaco: Farmaco, languageCode: String): String {
         val testo = StringBuilder()
 
         if (!farmaco.regole_calcolo.isNullOrEmpty()) {
@@ -132,12 +138,12 @@ class FarmaciAdapter(
 
             farmaco.regole_calcolo.forEach { regola ->
                 testo.append("- ")
-                testo.append(regola.fascia.replace('_', ' '))
+                testo.append(regola.fasciaLocalizzata(languageCode))
 
-                if (regola.descrizione_dose != null) {
-                    testo.append(": ").append(regola.descrizione_dose)
-                } else if (regola.dose != null) {
-                    testo.append(": ").append(regola.dose)
+                if (regola.descrizioneDoseLocalizzata(languageCode) != null) {
+                    testo.append(": ").append(regola.descrizioneDoseLocalizzata(languageCode))
+                } else if (regola.doseLocalizzata(languageCode) != null) {
+                    testo.append(": ").append(regola.doseLocalizzata(languageCode))
                 } else if (regola.dose_fissa != null) {
                     testo.append(": ").append(context.getString(R.string.dose_fissa_mg, regola.dose_fissa.toString()))
                 }
@@ -152,8 +158,8 @@ class FarmaciAdapter(
                     testo.append("\n\n")
                 }
 
-                val titoloFormato = if (formato.descrizione != null) {
-                    formato.descrizione
+                val titoloFormato = if (formato.descrizioneLocalizzata(languageCode) != null) {
+                    formato.descrizioneLocalizzata(languageCode)
                 } else {
                     formato.tipo
                 }
@@ -162,12 +168,12 @@ class FarmaciAdapter(
 
                 formato.regole_calcolo.forEach { regola ->
                     testo.append("- ")
-                    testo.append(regola.fascia.replace('_', ' '))
+                    testo.append(regola.fasciaLocalizzata(languageCode))
 
-                    if (regola.descrizione_dose != null) {
-                        testo.append(": ").append(regola.descrizione_dose)
-                    } else if (regola.dose != null) {
-                        testo.append(": ").append(regola.dose)
+                    if (regola.descrizioneDoseLocalizzata(languageCode) != null) {
+                        testo.append(": ").append(regola.descrizioneDoseLocalizzata(languageCode))
+                    } else if (regola.doseLocalizzata(languageCode) != null) {
+                        testo.append(": ").append(regola.doseLocalizzata(languageCode))
                     } else if (regola.dose_fissa != null) {
                         testo.append(": ").append(context.getString(R.string.dose_fissa_mg, regola.dose_fissa.toString()))
                     }
@@ -178,5 +184,10 @@ class FarmaciAdapter(
         }
 
         return testo.toString().trim()
+    }
+
+    private fun codiceLinguaCorrente(context: Context): String {
+        val locales = context.resources.configuration.locales
+        return locales.get(0)?.language ?: Locale.getDefault().language
     }
 }

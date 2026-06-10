@@ -83,6 +83,12 @@
     <string name="error_farmaco_obbligatorio">Please select a medication</string>
     <string name="error_schema_obbligatorio">Please select a valid regimen</string>
     <string name="error_altezza_paziente_non_valida">Calculation not allowed: invalid patient height.</string>
+    <string name="error_data_nascita_paziente_non_valida">Calculation not allowed: invalid patient date of birth.</string>
+    <string name="error_farmaco_eta_minima">Calculation not allowed: medication not indicated under %1$s years of age.</string>
+    <string name="error_schema_calcolo_non_valido">Calculation not allowed: select a valid regimen.</string>
+    <string name="error_eta_schema_non_compatibile">Calculation not allowed: patient age is not compatible with the selected regimen.</string>
+    <string name="error_peso_schema_non_compatibile">Calculation not allowed: patient weight is not compatible with the selected regimen.</string>
+    <string name="alert_farmaco_non_disponibile">No alerts available for the selected medication.</string>
     <string name="dose_calcolata">CALCULATED DOSE</string>
     <string name="frequenza">FREQUENCY</string>
     <string name="database_farmaci">Medication Database</string>
@@ -127,4 +133,11 @@
     <string name="ospite_descrizione_pazienti">To ensure the privacy and security of medical data, saving patients is restricted to registered users.\n\nCreate your free account in seconds to unlock this feature.</string>
     <string name="btn_registrati_ora">Register Now</string>
     <string name="btn_hai_gia_account_accedi">Already have an account? Log in</string>
+    <string name="cronologia">History</string>
+    <string name="cronologia_calcoli">Calculation history</string>
+    <string name="cronologia_calcoli_sottotitolo">Latest calculated doses</string>
+    <string name="nessun_calcolo_salvato">No saved calculations.</string>
+    <string name="storico_schema">Regimen: %1$s</string>
+    <string name="storico_dose">Dose: %1$s</string>
+    <string name="storico_frequenza">Frequency: %1$s</string>
 </resources>

@@ -72,14 +72,15 @@ object DoseCalculator {
         formato: Formato?,
         dosaggioStandard: DosaggioStandard?,
         pesoKg: Double,
-        altezzaCm: Int
+        altezzaCm: Int,
+        languageCode: String = Locale.getDefault().language
     ): DoseCalcolata? {
         return when {
             regola?.dose_per_kg != null -> {
                 DoseCalcolata(
                     valore = formattaNumero(calcolaDosePerKg(regola.dose_per_kg, pesoKg)),
                     unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode)
                 )
             }
 
@@ -92,7 +93,7 @@ object DoseCalculator {
                 DoseCalcolata(
                     valore = "${formattaNumero(range.first)}-${formattaNumero(range.second)}",
                     unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode)
                 )
             }
 
@@ -101,7 +102,7 @@ object DoseCalculator {
                 DoseCalcolata(
                     valore = formattaNumero(calcolaDosePerM2(regola.dose_per_m2, bsa)),
                     unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode)
                 )
             }
 
@@ -115,16 +116,16 @@ object DoseCalculator {
                 DoseCalcolata(
                     valore = "${formattaNumero(range.first)}-${formattaNumero(range.second)}",
                     unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode)
                 )
             }
 
             regola?.dose_carico_fissa != null && regola.dose_fissa != null -> {
                 DoseCalcolata(
-                    valore = "Dose iniziale: ${formattaNumero(regola.dose_carico_fissa)} mg\n" +
-                            "Mantenimento: ${formattaNumero(regola.dose_fissa)} mg",
+                    valore = "${etichettaDoseIniziale(languageCode)}: ${formattaNumero(regola.dose_carico_fissa)} mg\n" +
+                            "${etichettaMantenimento(languageCode)}: ${formattaNumero(regola.dose_fissa)} mg",
                     unita = null,
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard),
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode),
                     descrittivo = true
                 )
             }
@@ -133,15 +134,15 @@ object DoseCalculator {
                 DoseCalcolata(
                     valore = formattaNumero(calcolaDoseFissa(regola.dose_fissa)),
                     unita = "mg",
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard)
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode)
                 )
             }
 
-            formato?.descrizione != null -> {
+            formato?.descrizioneLocalizzata(languageCode) != null -> {
                 DoseCalcolata(
-                    valore = formato.descrizione,
+                    valore = formato.descrizioneLocalizzata(languageCode).orEmpty(),
                     unita = null,
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard),
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode),
                     descrittivo = true
                 )
             }
@@ -149,9 +150,9 @@ object DoseCalculator {
             dosaggioStandard != null || farmaco.dosaggio_standard != null -> {
                 val dosaggio = dosaggioStandard ?: farmaco.dosaggio_standard
                 DoseCalcolata(
-                    valore = dosaggio?.descrizione.orEmpty(),
+                    valore = dosaggio?.descrizioneLocalizzata(languageCode).orEmpty(),
                     unita = null,
-                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard),
+                    frequenza = frequenzaRisultato(regola, farmaco, dosaggioStandard, languageCode),
                     descrittivo = true
                 )
             }
@@ -163,13 +164,22 @@ object DoseCalculator {
     private fun frequenzaRisultato(
         regola: RegolaCalcolo?,
         farmaco: Farmaco,
-        dosaggioStandard: DosaggioStandard?
+        dosaggioStandard: DosaggioStandard?,
+        languageCode: String
     ): String {
-        return regola?.descrizione_dose
-            ?: regola?.dose
-            ?: dosaggioStandard?.frequenza
-            ?: farmaco.dosaggio_standard?.frequenza
+        return regola?.descrizioneDoseLocalizzata(languageCode)
+            ?: regola?.doseLocalizzata(languageCode)
+            ?: dosaggioStandard?.frequenzaLocalizzata(languageCode)
+            ?: farmaco.dosaggio_standard?.frequenzaLocalizzata(languageCode)
             ?: "--"
+    }
+
+    private fun etichettaDoseIniziale(languageCode: String): String {
+        return if (languageCode.lowercase(Locale.ROOT).startsWith("en")) "Initial dose" else "Dose iniziale"
+    }
+
+    private fun etichettaMantenimento(languageCode: String): String {
+        return if (languageCode.lowercase(Locale.ROOT).startsWith("en")) "Maintenance" else "Mantenimento"
     }
 
     private fun formattaNumero(numero: Double): String {

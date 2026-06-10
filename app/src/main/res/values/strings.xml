@@ -87,6 +87,12 @@
     <string name="error_farmaco_obbligatorio">Seleziona un farmaco</string>
     <string name="error_schema_obbligatorio">Seleziona uno schema valido</string>
     <string name="error_altezza_paziente_non_valida">Calcolo non consentito: altezza del paziente non valida.</string>
+    <string name="error_data_nascita_paziente_non_valida">Calcolo non consentito: data di nascita del paziente non valida.</string>
+    <string name="error_farmaco_eta_minima">Calcolo non consentito: farmaco non indicato sotto i %1$s anni.</string>
+    <string name="error_schema_calcolo_non_valido">Calcolo non consentito: seleziona uno schema valido.</string>
+    <string name="error_eta_schema_non_compatibile">Calcolo non consentito: età del paziente non compatibile con lo schema selezionato.</string>
+    <string name="error_peso_schema_non_compatibile">Calcolo non consentito: peso del paziente non compatibile con lo schema selezionato.</string>
+    <string name="alert_farmaco_non_disponibile">Nessun alert disponibile per il farmaco selezionato.</string>
     <string name="dose_calcolata">DOSE CALCOLATA</string>
     <string name="frequenza">FREQUENZA</string>
     <string name="database_farmaci">Database Farmaci</string>
