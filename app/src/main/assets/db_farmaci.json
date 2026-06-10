@@ -2,16 +2,31 @@
   {
     "id": "rinazina_001",
     "nome_farmaco": "RINAZINA",
+
     "principio_attivo": "nafazolina nitrato 1 mg/ml",
+    "principio_attivo_en": "naphazoline nitrate 1 mg/ml",
+
     "indicazione_clinica": "Decongestionante nasale in corso di riniti e faringiti acute catarrali, di riniti allergiche, di sinusiti acute",
+    "indicazione_clinica_en": "Nasal decongestant for acute catarrhal rhinitis and pharyngitis, allergic rhinitis, and acute sinusitis",
+
     "tipo_di_formula": "fissa",
+
     "dosaggio_standard": {
       "descrizione": "1-2 nebulizzazioni o gocce per narice",
-      "frequenza": "2-3 volte al giorno"
+      "descrizione_en": "1-2 sprays or drops per nostril",
+
+      "frequenza": "2-3 volte al giorno",
+      "frequenza_en": "2-3 times daily"
     },
+
     "unita_di_misura": "nebulizzazioni/gocce",
+    "unita_di_misura_en": "sprays/drops",
+
     "durata_massima": "1 settimana",
+    "durata_massima_en": "1 week",
+
     "eta_minima": 12,
+
     "alert": [
       "Controindicato sotto i 12 anni",
       "Controindicato per malattie cardiache gravi, ipertensione, glaucoma, ipertiroidismo",
@@ -19,6 +34,15 @@
       "Non usare in concomitanza con antidepressivi",
       "Contiene benzalconio cloruro (possibile broncospasmo)"
     ],
+
+    "alert_en": [
+      "Contraindicated in children under 12 years of age",
+      "Contraindicated in severe heart disease, hypertension, glaucoma, and hyperthyroidism",
+      "Risk of urinary retention in patients with prostatic hypertrophy",
+      "Do not use concomitantly with antidepressants",
+      "Contains benzalkonium chloride (may cause bronchospasm)"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/1136/farmaci/590/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/1136/farmaci/590/stampati?ts=FI"
@@ -27,23 +51,39 @@
   {
     "id": "folina_001",
     "nome_farmaco": "FOLINA",
+
     "principio_attivo": "acido folico",
+    "principio_attivo_en": "folic acid",
+
     "indicazione_clinica": "Trattamento degli stati di carenza di folati per aumentata richiesta, insufficiente assorbimento o ridotto apporto",
+    "indicazione_clinica_en": "Treatment of folate deficiency states due to increased requirements, inadequate absorption, or insufficient dietary intake",
+
     "tipo_di_formula": "fissa",
+
     "formati": [
       {
         "tipo": "capsule_5mg",
         "descrizione": "1-3 capsule al giorno",
-        "limite_gravidanza": "5 mg/die (1 capsula)"
+        "descrizione_en": "1-3 capsules daily",
+
+        "limite_gravidanza": "5 mg/die (1 capsula)",
+        "limite_gravidanza_en": "5 mg/day (1 capsule)"
       },
       {
         "tipo": "fiale_15mg_2ml",
-        "descrizione": "1 fiala al giorno per via intramuscolare"
+        "descrizione": "1 fiala al giorno per via intramuscolare",
+        "descrizione_en": "1 ampoule daily by intramuscular injection"
       }
     ],
+
     "unita_di_misura": "capsule/fiale",
+    "unita_di_misura_en": "capsules/ampoules",
+
     "durata_massima": "Non specificata (terapia cronica possibile sotto controllo)",
+    "durata_massima_en": "Not specified (long-term therapy may be continued under medical supervision)",
+
     "eta_minima": 0,
+
     "alert": [
       "Controindicato nei pazienti con tumori",
       "Controindicato nell'anemia perniciosa (carenza B12)",
@@ -52,6 +92,16 @@
       "Evitare l'assunzione con alcol",
       "Attenzione all'interazione con antiepilettici (ne riduce l'efficacia)"
     ],
+
+    "alert_en": [
+      "Contraindicated in patients with neoplastic diseases",
+      "Contraindicated in pernicious anemia (vitamin B12 deficiency)",
+      "Capsules contain soy: do not use in patients allergic to soy or peanuts",
+      "During pregnancy, do not exceed the maximum dose of 5 mg/day",
+      "Avoid alcohol consumption",
+      "Use caution with antiepileptic drugs, as folic acid may reduce their effectiveness"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7046/farmaci/2309/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7046/farmaci/2309/stampati?ts=FI"
@@ -60,9 +110,15 @@
   {
     "id": "xamamina_001",
     "nome_farmaco": "XAMAMINA MAL DI VIAGGIO",
+
     "principio_attivo": "dimenidrinato",
+    "principio_attivo_en": "dimenhydrinate",
+
     "indicazione_clinica": "Prevenzione e trattamento di mal di mare, d'aereo, d'auto e di treno",
+    "indicazione_clinica_en": "Prevention and treatment of motion sickness, including sea, air, car, and train travel sickness",
+
     "tipo_di_formula": "fasce_eta",
+
     "regole_calcolo": [
       {
         "fascia": "adulti_e_12plus",
@@ -70,7 +126,10 @@
         "eta_max": 999,
         "dose_fissa": 50,
         "dose_singola_mg": 50,
+
         "descrizione_dose": "1 capsula da 50mg",
+        "descrizione_dose_en": "1 capsule of 50 mg",
+
         "ripetibile_dopo_ore": "3-4",
         "max_dosi_24h": 4
       },
@@ -80,7 +139,10 @@
         "eta_max": 12,
         "dose_fissa": 25,
         "dose_singola_mg": 25,
+
         "descrizione_dose": "1-2 capsule da 25mg",
+        "descrizione_dose_en": "1-2 capsules of 25 mg",
+
         "max_dosi_24h": 3
       },
       {
@@ -89,13 +151,22 @@
         "eta_max": 6,
         "dose_fissa": 25,
         "dose_singola_mg": 25,
+
         "descrizione_dose": "1 capsula da 25mg",
+        "descrizione_dose_en": "1 capsule of 25 mg",
+
         "max_dosi_24h": 3
       }
     ],
+
     "unita_di_misura": "capsule",
+    "unita_di_misura_en": "capsules",
+
     "durata_massima": "Brevi periodi di trattamento",
+    "durata_massima_en": "Short-term treatment only",
+
     "eta_minima": 2,
+
     "alert": [
       "Controindicato sotto i 2 anni, in gravidanza e allattamento",
       "Provoca sonnolenza: non guidare veicoli o macchinari",
@@ -104,6 +175,16 @@
       "Cautela con glaucoma, ipertrofia prostatica, ritenzione urinaria e asma",
       "Contiene sorbitolo e parabeni"
     ],
+
+    "alert_en": [
+      "Contraindicated in children under 2 years of age, during pregnancy, and while breastfeeding",
+      "May cause drowsiness: do not drive or operate machinery",
+      "Do not take with alcohol or sedative medications",
+      "May mask the symptoms of ototoxic drugs",
+      "Use caution in patients with glaucoma, prostatic hypertrophy, urinary retention, or asthma",
+      "Contains sorbitol and parabens"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/28/farmaci/2955/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/28/farmaci/2955/stampati?ts=FI"
@@ -112,21 +193,43 @@
   {
     "id": "efacti_001",
     "nome_farmaco": "EFACTI",
+
     "principio_attivo": "ivermectina 10 mg/g crema",
+    "principio_attivo_en": "ivermectin 10 mg/g cream",
+
     "indicazione_clinica": "Trattamento topico delle lesioni infiammatorie della rosacea papulo-pustolosa nell'adulto",
+    "indicazione_clinica_en": "Topical treatment of inflammatory lesions of papulopustular rosacea in adults",
+
     "tipo_di_formula": "fissa_topica",
+
     "dosaggio_standard": {
       "descrizione": "Applicare una piccola quantità una volta al giorno sulle aree interessate del viso",
-      "frequenza": "1 volta al giorno"
+      "descrizione_en": "Apply a small amount once daily to the affected areas of the face",
+
+      "frequenza": "1 volta al giorno",
+      "frequenza_en": "Once daily"
     },
+
     "unita_di_misura": "applicazione topica",
+    "unita_di_misura_en": "topical application",
+
     "durata_massima": "Fino a 4 mesi secondo valutazione clinica",
+    "durata_massima_en": "Up to 4 months according to clinical assessment",
+
     "eta_minima": 18,
+
     "alert": [
       "Uso cutaneo: evitare occhi, labbra e mucose",
       "Non adatto a calcolo mg/kg: incluso perché dermatologico e presente nel catalogo AIFA",
       "Valutare gravidanza/allattamento e ipersensibilità agli eccipienti"
     ],
+
+    "alert_en": [
+      "For cutaneous use only: avoid contact with eyes, lips, and mucous membranes",
+      "Not suitable for mg/kg dose calculation: included because it is a dermatological drug listed in the AIFA catalogue",
+      "Assess pregnancy/breastfeeding status and hypersensitivity to excipients before use"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7073/farmaci/43463/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/7073/farmaci/43463/stampati?ts=FI"
@@ -135,37 +238,63 @@
   {
     "id": "aisoskin_001",
     "nome_farmaco": "AISOSKIN",
+
     "principio_attivo": "isotretinoina capsule molli 10 mg / 20 mg",
+    "principio_attivo_en": "isotretinoin soft capsules 10 mg / 20 mg",
+
     "indicazione_clinica": "Acne grave resistente a terapia standard con antibatterici sistemici e trattamento topico",
+    "indicazione_clinica_en": "Severe acne resistant to standard therapy with systemic antibacterial agents and topical treatment",
+
     "tipo_di_formula": "peso",
+
     "regole_calcolo": [
       {
         "fascia": "dose_iniziale",
         "eta_min": 12,
         "eta_max": 999,
+
         "dose_per_kg": 0.5,
         "dose": "0.5 mg/kg/die",
-        "descrizione_dose": "Dose giornaliera = 0,5 × peso_kg; assumere con cibo in 1-2 somministrazioni"
+
+        "descrizione_dose": "Dose giornaliera = 0,5 × peso_kg; assumere con cibo in 1-2 somministrazioni",
+        "descrizione_dose_en": "Daily dose = 0.5 × body weight (kg); take with food in 1-2 divided doses"
       },
       {
         "fascia": "range_mantenimento",
         "eta_min": 12,
         "eta_max": 999,
+
         "dose_per_kg_min": 0.5,
         "dose_per_kg_max": 1,
         "dose": "0.5-1 mg/kg/die",
-        "descrizione_dose": "Titolare in base a risposta e tollerabilità; monitorare dose cumulativa"
+
+        "descrizione_dose": "Titolare in base a risposta e tollerabilità; monitorare dose cumulativa",
+        "descrizione_dose_en": "Adjust according to clinical response and tolerability; monitor cumulative dose"
       }
     ],
+
     "unita_di_misura": "mg/kg/die",
+    "unita_di_misura_en": "mg/kg/day",
+
     "durata_massima": "Tipicamente 16-24 settimane; secondo RCP e controllo specialistico",
+    "durata_massima_en": "Typically 16-24 weeks; according to the SmPC and specialist supervision",
+
     "eta_minima": 12,
+
     "alert": [
       "Altamente teratogena: programma di prevenzione della gravidanza",
       "Controindicata in gravidanza/allattamento",
       "Monitorare funzionalità epatica e lipidi",
       "Evitare associazione con tetracicline"
     ],
+
+    "alert_en": [
+      "Highly teratogenic: pregnancy prevention programme required",
+      "Contraindicated during pregnancy and breastfeeding",
+      "Monitor liver function and lipid levels",
+      "Avoid concomitant use with tetracyclines"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/646/farmaci/35258/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/646/farmaci/35258/stampati?ts=FI"
@@ -174,36 +303,62 @@
   {
     "id": "sandimmun_001",
     "nome_farmaco": "SANDIMMUN",
+
     "principio_attivo": "ciclosporina capsule molli / soluzione orale",
+    "principio_attivo_en": "ciclosporin soft capsules / oral solution",
+
     "indicazione_clinica": "Psoriasi severa o dermatite atopica severa quando la terapia sistemica è appropriata",
+    "indicazione_clinica_en": "Severe psoriasis or severe atopic dermatitis when systemic therapy is appropriate",
+
     "tipo_di_formula": "peso",
+
     "regole_calcolo": [
       {
         "fascia": "iniziale",
         "eta_min": 16,
         "eta_max": 999,
+
         "dose_per_kg": 2.5,
         "dose": "2.5 mg/kg/die",
-        "descrizione_dose": "Dose giornaliera = 2,5 × peso_kg, divisa in 2 somministrazioni"
+
+        "descrizione_dose": "Dose giornaliera = 2,5 × peso_kg, divisa in 2 somministrazioni",
+        "descrizione_dose_en": "Daily dose = 2.5 × body weight (kg), divided into 2 doses"
       },
       {
         "fascia": "massima",
         "eta_min": 16,
         "eta_max": 999,
+
         "dose_per_kg": 5,
         "dose": "5 mg/kg/die",
-        "descrizione_dose": "Non superare 5 × peso_kg al giorno salvo diversa indicazione specialistica"
+
+        "descrizione_dose": "Non superare 5 × peso_kg al giorno salvo diversa indicazione specialistica",
+        "descrizione_dose_en": "Do not exceed 5 × body weight (kg) per day unless otherwise prescribed by a specialist"
       }
     ],
+
     "unita_di_misura": "mg/kg/die",
+    "unita_di_misura_en": "mg/kg/day",
+
     "durata_massima": "Terapia specialistica con rivalutazione periodica",
+    "durata_massima_en": "Specialist treatment with periodic reassessment",
+
     "eta_minima": 16,
+
     "alert": [
       "Richiede monitoraggio pressione arteriosa, creatinina e funzionalità renale",
       "Interazioni importanti tramite CYP3A4/P-gp",
       "Non sostituire formulazione senza controllo medico",
       "Uso specialistico"
     ],
+
+    "alert_en": [
+      "Requires monitoring of blood pressure, serum creatinine, and renal function",
+      "Significant drug interactions via CYP3A4 and P-glycoprotein pathways",
+      "Do not switch formulations without medical supervision",
+      "Specialist use only"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/25306/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/25306/stampati?ts=FI"
@@ -212,46 +367,76 @@
   {
     "id": "lamisil_001",
     "nome_farmaco": "LAMISIL",
+
     "principio_attivo": "terbinafina cloridrato 250 mg compresse",
+    "principio_attivo_en": "terbinafine hydrochloride 250 mg tablets",
+
     "indicazione_clinica": "Micosi cutanee e onicomicosi da dermatofiti quando è indicata terapia sistemica",
+    "indicazione_clinica_en": "Dermatophyte skin infections and onychomycosis when systemic therapy is indicated",
+
     "tipo_di_formula": "fasce_peso",
+
     "regole_calcolo": [
       {
         "fascia": "bambini_20_40kg",
         "eta_min": 2,
         "eta_max": 17,
+
         "peso_min_kg": 20,
         "peso_max_kg": 40,
+
         "dose_fissa": 125,
         "dose_singola_mg": 125,
-        "descrizione_dose": "125 mg una volta al giorno"
+
+        "descrizione_dose": "125 mg una volta al giorno",
+        "descrizione_dose_en": "125 mg once daily"
       },
       {
         "fascia": "bambini_oltre_40kg",
         "eta_min": 2,
         "eta_max": 17,
+
         "peso_min_kg": 40,
+
         "dose_fissa": 250,
         "dose_singola_mg": 250,
-        "descrizione_dose": "250 mg una volta al giorno"
+
+        "descrizione_dose": "250 mg una volta al giorno",
+        "descrizione_dose_en": "250 mg once daily"
       },
       {
         "fascia": "adulti",
         "eta_min": 18,
         "eta_max": 999,
+
         "dose_fissa": 250,
         "dose_singola_mg": 250,
-        "descrizione_dose": "250 mg una volta al giorno"
+
+        "descrizione_dose": "250 mg una volta al giorno",
+        "descrizione_dose_en": "250 mg once daily"
       }
     ],
+
     "unita_di_misura": "mg/die per fascia di peso",
+    "unita_di_misura_en": "mg/day according to weight range",
+
     "durata_massima": "Variabile: cute 2-6 settimane, unghie più lunga secondo sede e risposta",
+    "durata_massima_en": "Variable: skin infections 2-6 weeks; nail infections may require longer treatment depending on site and response",
+
     "eta_minima": 2,
+
     "alert": [
       "Valutare funzionalità epatica prima/durante terapia",
       "Sospendere e valutare se segni di epatotossicità",
       "Controllare interazioni farmacologiche"
     ],
+
+    "alert_en": [
+      "Assess liver function before and during treatment",
+      "Discontinue treatment and evaluate if signs of hepatotoxicity occur",
+      "Check for potential drug interactions"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/28176/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/114/farmaci/28176/stampati?ts=FI"
@@ -260,12 +445,23 @@
   {
     "id": "cisplatino_001",
     "nome_farmaco": "CISPLATINO PFIZER",
+
     "principio_attivo": "Cisplatino",
+    "principio_attivo_en": "Cisplatin",
+
     "indicazione_clinica": "Carcinoma germinale metastatico non seminoma; carcinoma avanzato dell'ovaio; carcinoma avanzato della vescica; carcinoma della testa e del collo",
+    "indicazione_clinica_en": "Metastatic non-seminomatous germ cell carcinoma; advanced ovarian carcinoma; advanced bladder carcinoma; head and neck carcinoma",
+
     "tipo_di_formula": "bsa",
+
     "unita_di_misura": "mg/m²",
+    "unita_di_misura_en": "mg/m²",
+
     "durata_massima": "Secondo protocollo oncologico",
+    "durata_massima_en": "According to the oncology treatment protocol",
+
     "eta_minima": 0,
+
     "alert": [
       "Uso esclusivamente ospedaliero",
       "Monitorare funzionalità renale",
@@ -277,32 +473,57 @@
       "Neurotossicità cumulativa",
       "Controindicato in gravidanza"
     ],
+
+    "alert_en": [
+      "For hospital use only",
+      "Monitor renal function",
+      "Monitor complete blood count",
+      "Monitor hearing function",
+      "Adequate hydration is required before and after treatment",
+      "Dose-dependent nephrotoxicity",
+      "Cumulative ototoxicity",
+      "Cumulative neurotoxicity",
+      "Contraindicated during pregnancy"
+    ],
+
     "fonti": [
       "RCP AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/40/farmaci/32775/stampati?ts=RCP",
       "Foglio Illustrativo AIFA: https://api.aifa.gov.it/aifa-bdf-eif-be/1.0.0/organizzazione/40/farmaci/32775/stampati?ts=FI"
     ],
+
     "formati": [
       {
         "tipo": "soluzione_infusione",
+
         "descrizione": "50 mg/50 ml",
+        "descrizione_en": "50 mg/50 mL",
+
         "regole_calcolo": [
           {
             "fascia": "protocollo_standard",
             "eta_min": 0,
             "eta_max": 999,
+
             "dose_per_m2_min": 50,
             "dose_per_m2_max": 100,
+
             "dose": "50-100 mg/m²",
-            "descrizione_dose": "Singola infusione EV ogni 3-4 settimane"
+
+            "descrizione_dose": "Singola infusione EV ogni 3-4 settimane",
+            "descrizione_dose_en": "Single intravenous infusion every 3-4 weeks"
           },
           {
             "fascia": "protocollo_frazionato",
             "eta_min": 0,
             "eta_max": 999,
+
             "dose_per_m2_min": 15,
             "dose_per_m2_max": 20,
+
             "dose": "15-20 mg/m²",
-            "descrizione_dose": "Una volta al giorno per 5 giorni consecutivi ogni 3-4 settimane"
+
+            "descrizione_dose": "Una volta al giorno per 5 giorni consecutivi ogni 3-4 settimane",
+            "descrizione_dose_en": "Once daily for 5 consecutive days every 3-4 weeks"
           }
         ]
       }
