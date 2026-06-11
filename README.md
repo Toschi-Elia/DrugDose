@@ -70,6 +70,15 @@ Se il paziente non è compatibile con il farmaco o con lo schema scelto, l'app m
 
 ## Avvio del progetto
 
+Avvio su dispositivo fisico 
+
+Test su Dispositivo Fisico Android
+1. Scarica il file `DrugDose_v1.0.apk` (o l'ultima versione disponibile) dalla sezione **Releases** di questo repository.
+2. Trasferisci il file sul tuo smartphone.
+3. Apri il file tramite il gestore file del telefono. 
+4. Se il sistema mostra un avviso di sicurezza, clicca su **Impostazioni** e abilita temporaneamente l'opzione **"Consenti l'installazione da questa fonte / Origini sconosciute"**.
+5. Clicca su **Installa** e avvia l'applicazione.
+
 Per aprire il progetto:
 
 1. Clonare il repository.
